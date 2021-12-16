@@ -6,6 +6,8 @@ import com.codecool.PawPrint.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/reg")
 public class RegistrationController {
@@ -23,5 +25,13 @@ public class RegistrationController {
         userService.registerUser(user);
     }
 
+    @PostMapping("/{username}")
+    public boolean checkPreviusUserName(@PathVariable String username){
+        List<User> allUser = userService.getAllUser();
 
+        for(User user: allUser){
+            return !user.getUserName().equals(username);
+        }
+        return true;
+    }
 }

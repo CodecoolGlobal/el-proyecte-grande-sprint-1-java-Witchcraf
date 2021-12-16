@@ -1,6 +1,6 @@
 package com.codecool.PawPrint.model.entity;
 
-import com.codecool.PawPrint.model.service.Service;
+import com.codecool.PawPrint.model.service.ServiceOffered;
 import com.codecool.PawPrint.model.contact.Contact;
 import lombok.Data;
 
@@ -23,7 +23,7 @@ public class User {
     private UserType type;
     private Set<Pet> pets;
     private Set<User> friends;
-    private Set<Service> services;
+    private Set<ServiceOffered> services;
     private Set<Search> savedSearches;
 
     public User(String userName, LocalDateTime registrationTime, String email, String password, UserType type) {

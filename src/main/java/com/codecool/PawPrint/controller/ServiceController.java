@@ -37,8 +37,8 @@ public class ServiceController {
     }
 
     @PostMapping(value = "/search/save/{userId}")
-    public String saveSearch(@PathVariable String userId, @RequestBody Set<ServiceOffered> service) {
-        // userService.saveSearch(Integer.parseInt(userId), new Search(service));
+    public String saveSearch(@PathVariable String userId, @RequestBody Set<ServiceOffered> services) {
+        userService.saveSearch(Integer.parseInt(userId), services);
         return "redirect:";
     }
 }

@@ -1,6 +1,6 @@
 package com.codecool.PawPrint.model.entity;
 
-import com.codecool.PawPrint.model.service.Service;
+import com.codecool.PawPrint.model.service.ServiceOffered;
 import lombok.Data;
 
 import java.util.HashSet;
@@ -11,9 +11,9 @@ public class Search {
 
     private int id;
     private String name = "MySearch";
-    private Set<Service> searchedServices = new HashSet<>();
+    private Set<ServiceOffered> searchedServices = new HashSet<>();
 
-    public Search(Set<Service> searchedServices) {
+    public Search(Set<ServiceOffered> searchedServices) {
         this.searchedServices = searchedServices;
     }
 

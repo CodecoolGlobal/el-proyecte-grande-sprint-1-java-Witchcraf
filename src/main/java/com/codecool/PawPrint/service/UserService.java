@@ -1,6 +1,6 @@
 package com.codecool.PawPrint.service;
 
-import com.codecool.PawPrint.model.User;
+import com.codecool.PawPrint.model.entity.User;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;

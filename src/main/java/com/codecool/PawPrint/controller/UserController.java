@@ -1,6 +1,6 @@
 package com.codecool.PawPrint.controller;
 
-import com.codecool.PawPrint.model.User;
+import com.codecool.PawPrint.model.entity.User;
 import com.codecool.PawPrint.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

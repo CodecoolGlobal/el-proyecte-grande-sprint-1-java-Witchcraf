@@ -27,10 +27,8 @@ public class RegistrationController {
 
     @PostMapping("/{username}")
     public boolean checkPreviusUserName(@PathVariable String username){
-        List<User> allUser = userService.getAllUser();
-
-        for(User user: allUser){
-            return !user.getUserName().equals(username);
+        if(userService.findUserByName(username) != null){
+            return false;
         }
         return true;
     }

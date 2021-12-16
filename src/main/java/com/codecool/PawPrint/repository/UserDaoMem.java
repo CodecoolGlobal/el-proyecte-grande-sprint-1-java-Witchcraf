@@ -31,6 +31,17 @@ public class UserDaoMem implements UserDao{
     }
 
     @Override
+    public User findByName(String name) {
+        User currentUser = null;
+        for (User user : data) {
+            if(user.getUserName() == name){
+                currentUser = user;
+            }
+        }
+        return currentUser;
+    }
+
+    @Override
     public List<User> getAll() {
         return data;
     }

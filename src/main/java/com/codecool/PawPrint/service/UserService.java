@@ -4,14 +4,12 @@ import com.codecool.PawPrint.model.entity.User;
 import com.codecool.PawPrint.repository.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.LinkedList;
 import java.util.List;
 
 @Service
 public class UserService {
 
-    private UserDao userDao;
+    private final UserDao userDao;
 
     @Autowired
     public UserService(UserDao userDao) {

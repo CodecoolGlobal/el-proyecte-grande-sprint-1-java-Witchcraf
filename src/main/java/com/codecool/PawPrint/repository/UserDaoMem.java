@@ -8,7 +8,7 @@ import java.util.List;
 
 @Component
 public class UserDaoMem implements UserDao{
-    private List<User> data = new ArrayList<>();
+    private final List<User> data = new ArrayList<>();
 
     private UserDaoMem() {
     }

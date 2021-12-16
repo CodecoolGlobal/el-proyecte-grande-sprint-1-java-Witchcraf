@@ -24,6 +24,7 @@ public class User {
     private Set<Pet> pets;
     private Set<User> friends;
     private Set<Service> services;
+    private Set<Search> savedSearches;
 
     public User(String userName, LocalDateTime registrationTime, String email, String password, UserType type) {
         this.userName = userName;

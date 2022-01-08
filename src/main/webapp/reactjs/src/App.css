@@ -36,3 +36,9 @@
     transform: rotate(360deg);
   }
 }
+
+.jumbotron{
+  /*background-image: url("background.jpg");
+  background-size: 200vh;
+  height: 300px;*/
+}

@@ -5,6 +5,8 @@ import {BrowserRouter,Routes,Route} from "react-router-dom";
 import Home from "./pages/home";
 import Search from "./pages/search";
 import ServiceProviders from "./pages/serviceProviders";
+import Login from "./pages/login";
+import Profile from "./pages/profile";
 
 function App() {
     return (
@@ -13,6 +15,8 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/search" element={<Search />} />
                 <Route path="/service-providers" element={<ServiceProviders />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/profile" element={<Profile />} />
             </Routes>
         </BrowserRouter>
     );

@@ -2,7 +2,7 @@ import React from 'react';
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 
 
-function BSNavBar() {
+function HeaderSection() {
     return (
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
                 <Container>
@@ -32,4 +32,4 @@ function BSNavBar() {
     );
 }
 
-export default BSNavBar;
+export default HeaderSection;

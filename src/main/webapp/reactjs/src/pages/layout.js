@@ -1,5 +1,5 @@
 import React from 'react';
-import BSNavBar from '../component/BSNavBar'
+import HeaderSection from '../component/HeaderSection'
 import Footer from "../component/footer";
 import '../App.css';
 
@@ -7,7 +7,7 @@ import '../App.css';
 const Layout = ({title = "Title", children}) => {
     return (
         <div>
-            <BSNavBar />
+            <HeaderSection />
             <div className="jumbotron">
                 <h1>{title}</h1>
             </div>

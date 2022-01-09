@@ -20,12 +20,14 @@ class Initializer implements CommandLineRunner {
 
     @Override
     public void run(String... strings) {
-        repository.add(new User("Pete", LocalDateTime.now(), "pete@gmail.com", "1234", UserType.NORMAL));
+        User pete = new User("Pete", LocalDateTime.now(), "pete@gmail.com", "1234", UserType.NORMAL);
+        pete.setId(1);
+        repository.add(pete);
         repository.add(new User("admin", LocalDateTime.now(), "admin", "admin", UserType.ADMIN));
         repository.add(new User("Eve", LocalDateTime.now(), "eve@gmail.com", "1234", UserType.NORMAL));
         repository.add(new User("John", LocalDateTime.now(), "john@gmail.com", "1234", UserType.NORMAL));
         repository.add(new User("Rob", LocalDateTime.now(), "rob@gmail.com", "1234", UserType.NORMAL));
-        User first = repository.findByName("Pete");
-        System.out.println(first.getEmail());
+        User first = repository.findById(1);
+        System.out.println(first.getUserName());
     }
 }

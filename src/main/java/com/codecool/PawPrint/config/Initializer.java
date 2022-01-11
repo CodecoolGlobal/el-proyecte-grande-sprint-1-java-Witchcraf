@@ -8,7 +8,9 @@ import com.codecool.PawPrint.model.entity.UserType;
 import com.codecool.PawPrint.model.service.ServiceOffered;
 import com.codecool.PawPrint.model.service.ServiceSubtype;
 import com.codecool.PawPrint.model.service.ServiceType;
+import com.codecool.PawPrint.repository.ServiceDao;
 import com.codecool.PawPrint.repository.UserDao;
+import com.codecool.PawPrint.service.ServiceService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -20,9 +22,11 @@ import java.time.LocalDateTime;
 class Initializer implements CommandLineRunner {
 
     private final UserDao repository;
+    private final ServiceDao dao;
 
-    public Initializer(UserDao repository) {
+    public Initializer(UserDao repository, ServiceDao dao) {
         this.repository = repository;
+        this.dao = dao;
     }
 
     @Override
@@ -50,11 +54,11 @@ class Initializer implements CommandLineRunner {
 
 
         //init contact
-        Contact petecon = new Contact(pete, null);
-        Contact admincon = new Contact(admin, null);
-        Contact evecon = new Contact(eve, null);
-        Contact johncon = new Contact(John, null);
-        Contact robCon= new Contact(rob, null);
+        Contact petecon = new Contact(pete);
+        Contact admincon = new Contact(admin);
+        Contact evecon = new Contact(eve);
+        Contact johncon = new Contact(John);
+        Contact robCon= new Contact(rob);
 
 
         //init address
@@ -63,16 +67,21 @@ class Initializer implements CommandLineRunner {
         Address eveAddress = new Address(evecon, "eng", "london");
 
         //set address to contact
-        petecon.setAddress(peteAdress);
+        /*petecon.setAddress(peteAdress);
         admincon.setAddress(amindAdd);
-        evecon.setAddress(eveAddress);
+        evecon.setAddress(eveAddress);*/
 
         // init ServiceOffered
-        ServiceOffered restA = new ServiceOffered(PetType.CAT, ServiceType.RESTAURANT, ServiceSubtype.COSMETICS, admincon);
-        ServiceOffered hospA = new ServiceOffered(PetType.DOG, ServiceType.HOSPITAL, ServiceSubtype.HOSPITAL, petecon);
-        ServiceOffered sheltA = new ServiceOffered(PetType.CATANDDOG, ServiceType.SHELTER, ServiceSubtype.WASHANDVAU, evecon);
+        ServiceOffered restA = new ServiceOffered("resta", PetType.CAT, ServiceType.RESTAURANT, ServiceSubtype.COSMETICS, admincon);
+        ServiceOffered hospA = new ServiceOffered("hospa", PetType.DOG, ServiceType.HOSPITAL, ServiceSubtype.HOSPITAL, petecon);
+        ServiceOffered sheltA = new ServiceOffered("shelta", PetType.CATANDDOG, ServiceType.SHELTER, ServiceSubtype.WASHANDVAU, evecon);
 
+        dao.add(restA);
+        dao.add(hospA);
+        dao.add(sheltA);
 
+        ServiceOffered firstServ = dao.findByName("resta");
+        System.out.println(firstServ);
 
         /*String country,
         String city,

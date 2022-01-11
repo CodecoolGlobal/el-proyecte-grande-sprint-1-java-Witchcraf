@@ -43,10 +43,27 @@ public class ServiceDaoMem implements ServiceDao {
         return foundServices;
     }
 
+    @Override
+    public Set<ServiceOffered> findServices(PetType petType, String country) {
+        Set<ServiceOffered> foundServices = new HashSet<>();
+        Set<PetType> petTypeEquivalentSet = convertPetType(petType);
+
+        for (ServiceOffered serviceOffered : services) {
+            if (checkSearchCondition(serviceOffered, petTypeEquivalentSet, country)) {
+                foundServices.add(serviceOffered);
+            }
+        }
+        return foundServices;
+    }
+
     private boolean checkSearchCondition(ServiceOffered serviceOffered, Set<PetType> petTypeEquivalentSet, String country, String city, String district, ServiceType serviceType, ServiceSubtype serviceSubtype) {
         return serviceOffered.getServiceType().equals(serviceType) && serviceOffered.getServiceSubtype().equals(serviceSubtype)
                 && petTypeEquivalentSet.contains(serviceOffered.getPetType()) && serviceOffered.getContact().getAddress().getCountry().equals(country)
                 && serviceOffered.getContact().getAddress().getCity().equals(city) && serviceOffered.getContact().getAddress().getDistrict().equals(district);
+    }
+
+    private boolean checkSearchCondition(ServiceOffered serviceOffered, Set<PetType> petTypeEquivalentSet, String country) {
+        return petTypeEquivalentSet.contains(serviceOffered.getPetType()) && serviceOffered.getContact().getAddress().getCountry().equals(country);
     }
 
     private Set<PetType> convertPetType(PetType petType) {

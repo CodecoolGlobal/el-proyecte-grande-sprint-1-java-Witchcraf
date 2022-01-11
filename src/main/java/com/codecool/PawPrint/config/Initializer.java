@@ -1,7 +1,7 @@
 package com.codecool.PawPrint.config;
 
 import com.codecool.PawPrint.model.contact.Address;
-import com.codecool.PawPrint.model.contact.Contact;
+//import com.codecool.PawPrint.model.contact.Contact;
 import com.codecool.PawPrint.model.entity.PetType;
 import com.codecool.PawPrint.model.entity.User;
 import com.codecool.PawPrint.model.entity.UserType;
@@ -11,6 +11,7 @@ import com.codecool.PawPrint.model.service.ServiceType;
 import com.codecool.PawPrint.repository.ServiceDao;
 import com.codecool.PawPrint.repository.UserDao;
 import com.codecool.PawPrint.service.ServiceService;
+import io.swagger.models.Contact;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -53,35 +54,35 @@ class Initializer implements CommandLineRunner {
         System.out.println(first.getUserName());
 
 
-        //init contact
-        Contact petecon = new Contact(pete);
-        Contact admincon = new Contact(admin);
-        Contact evecon = new Contact(eve);
-        Contact johncon = new Contact(John);
-        Contact robCon= new Contact(rob);
-
-
-        //init address
-        Address peteAdress = new Address(petecon.getId(), "Hun", "Bud", "6");
-        Address adminAdd = new Address(admincon.getId(), "Codecool", "Codecool", "5");
-        Address eveAddress = new Address(evecon.getId(), "eng", "london", "4");
-
-        //set address to contact
-        petecon.setAddress(peteAdress);
-//        admincon.setAddress(adminAdd);
-//        evecon.setAddress(eveAddress);
-
-        // init ServiceOffered
-        ServiceOffered restA = new ServiceOffered("cosmeticsA", PetType.CAT, ServiceType.WELLNESS, ServiceSubtype.COSMETICS, petecon);
-        ServiceOffered hospA = new ServiceOffered("hospa", PetType.DOG, ServiceType.HOSPITAL, ServiceSubtype.HOSPITAL, petecon);
-        ServiceOffered sheltA = new ServiceOffered("shelta", PetType.CATANDDOG, ServiceType.SHELTER, ServiceSubtype.WASHANDVAU, evecon);
-
-        dao.add(restA);
-        dao.add(hospA);
-        dao.add(sheltA);
-
-        ServiceOffered firstServ = dao.findByName("cosmeticsA");
-        System.out.println(firstServ);
+//        //init contact
+//        Contact petecon = new Contact(pete);
+//        Contact admincon = new Contact(admin);
+//        Contact evecon = new Contact(eve);
+//        Contact johncon = new Contact(John);
+//        Contact robCon= new Contact(rob);
+//
+//
+//        //init address
+//        Address peteAdress = new Address(petecon.getId(), "Hun", "Bud", "6");
+//        Address adminAdd = new Address(admincon.getId(), "Codecool", "Codecool", "5");
+//        Address eveAddress = new Address(evecon.getId(), "eng", "london", "4");
+//
+//        //set address to contact
+//        petecon.setAddress(peteAdress);
+////        admincon.setAddress(adminAdd);
+////        evecon.setAddress(eveAddress);
+//
+//        // init ServiceOffered
+//        ServiceOffered restA = new ServiceOffered("cosmeticsA", PetType.CAT, ServiceType.WELLNESS, ServiceSubtype.COSMETICS, petecon);
+//        ServiceOffered hospA = new ServiceOffered("hospa", PetType.DOG, ServiceType.HOSPITAL, ServiceSubtype.HOSPITAL, petecon);
+//        ServiceOffered sheltA = new ServiceOffered("shelta", PetType.CATANDDOG, ServiceType.SHELTER, ServiceSubtype.WASHANDVAU, evecon);
+//
+//        dao.add(restA);
+//        dao.add(hospA);
+//        dao.add(sheltA);
+//
+//        ServiceOffered firstServ = dao.findByName("cosmeticsA");
+//        System.out.println(firstServ);
 
         /*String country,
         String city,

@@ -13,8 +13,8 @@ public class Contact {
     private String businessPhone;
     private String businessEmail;
 
-    public Contact(User user, Address address) {
+    public Contact(User user) {
         this.user = user;
-        this.address = address;
+//        this.address = address;
     }
 }

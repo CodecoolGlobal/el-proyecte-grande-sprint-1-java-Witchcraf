@@ -62,23 +62,24 @@ class Initializer implements CommandLineRunner {
 
 
         //init address
-        Address peteAdress = new Address(petecon, "Hun", "Bud");
-        Address amindAdd = new Address(admincon, "Codecool", "Codeccol");
-        Address eveAddress = new Address(evecon, "eng", "london");
+        Address peteAdress = new Address(petecon.getId(), "Hun", "Bud", "6");
+        Address amindAdd = new Address(admincon.getId(), "Codecool", "Codecool", "5");
+        Address eveAddress = new Address(evecon.getId(), "eng", "london", "4");
 
         //set address to contact
-        /*petecon.setAddress(peteAdress);
-        admincon.setAddress(amindAdd);
-        evecon.setAddress(eveAddress);*/
+        petecon.setAddress(peteAdress);
+//        admincon.setAddress(amindAdd);
+//        evecon.setAddress(eveAddress);
 
         // init ServiceOffered
         ServiceOffered restA = new ServiceOffered("resta", PetType.CAT, ServiceType.RESTAURANT, ServiceSubtype.COSMETICS, admincon);
-        ServiceOffered hospA = new ServiceOffered("hospa", PetType.DOG, ServiceType.HOSPITAL, ServiceSubtype.HOSPITAL, petecon);
-        ServiceOffered sheltA = new ServiceOffered("shelta", PetType.CATANDDOG, ServiceType.SHELTER, ServiceSubtype.WASHANDVAU, evecon);
+        restA.setContact(petecon);
+//        ServiceOffered hospA = new ServiceOffered("hospa", PetType.DOG, ServiceType.HOSPITAL, ServiceSubtype.HOSPITAL, petecon);
+//        ServiceOffered sheltA = new ServiceOffered("shelta", PetType.CATANDDOG, ServiceType.SHELTER, ServiceSubtype.WASHANDVAU, evecon);
 
         dao.add(restA);
-        dao.add(hospA);
-        dao.add(sheltA);
+//        dao.add(hospA);
+//        dao.add(sheltA);
 
         ServiceOffered firstServ = dao.findByName("resta");
         System.out.println(firstServ);

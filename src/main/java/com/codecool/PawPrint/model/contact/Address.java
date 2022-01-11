@@ -6,7 +6,7 @@ import lombok.Data;
 public class Address {
 
     private int id;
-    private Contact contact;
+    private int contactId;
     private String country;
     private String district;
     private String city;
@@ -16,9 +16,10 @@ public class Address {
     private String door;
     private String bell;
 
-    public Address(Contact contact, String country, String city) {
-        this.contact = contact;
+    public Address(int contactId, String country, String city, String district) {
+        this.contactId = contactId;
         this.country = country;
         this.city = city;
+        this.district = district;
     }
 }

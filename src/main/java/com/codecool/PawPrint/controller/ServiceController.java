@@ -29,8 +29,8 @@ public class ServiceController {
     }
 
     @GetMapping(path="/service/{name}", produces = "application/json")
-    public ServiceOffered getService(@PathVariable String name) {
-        return serviceService.getService(name);
+    public Set<ServiceOffered> getService(@PathVariable String name) {
+        return serviceService.findServices(name);
     }
 
     @GetMapping(value = "/search")
@@ -46,9 +46,9 @@ public class ServiceController {
 
     @GetMapping(value = "/searchT")
     @ResponseBody
-    public Set<ServiceOffered> getServices(@RequestParam PetType petType, @RequestParam String country) {
+    public Set<ServiceOffered> getServiceCountry(@RequestParam String country) {
 
-        return serviceService.findServices(petType, country);
+        return serviceService.findServices(country);
 
     }
 

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 
 @Component
@@ -62,7 +63,7 @@ class Initializer implements CommandLineRunner {
 
 
         //init address
-        Address peteAdress = new Address(petecon.getId(), "Hun", "Bud", "6");
+        Address peteAdress = new Address(petecon.getId(), "Hungary", "Bud", "6");
         Address adminAdd = new Address(admincon.getId(), "Codecool", "Codecool", "5");
         Address eveAddress = new Address(evecon.getId(), "eng", "london", "4");
 
@@ -80,8 +81,9 @@ class Initializer implements CommandLineRunner {
         dao.add(hospA);
         dao.add(sheltA);
 
-        ServiceOffered firstServ = dao.findByName("cosmeticsA");
-        System.out.println(firstServ);
+        ServiceOffered firstServ = dao.findByName("Hungary");
+
+        System.out.println(firstServ.getContact().getAddress().getCountry());
 
         /*String country,
         String city,

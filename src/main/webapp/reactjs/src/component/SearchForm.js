@@ -1,197 +1,56 @@
-import React from 'react';
-import CheckBox from "../component/CheckBox";
-import Input from "../component/Input";
-import Select from "../component/Select";
-import Button from "../component/Button";
+import React, {useEffect, useState} from 'react';
+import {Container, Form} from 'react-bootstrap';
+import {CountryDropdown} from 'react-country-region-selector';
 
-class SearchForm extends React.Component {
-    constructor(props) {
-        super(props);
+import 'bootstrap/dist/css/bootstrap.css';
+import 'react-bootstrap-country-select/dist/react-bootstrap-country-select.css';
 
-        this.state = {
-            newUser: {
-                name: "",
-                age: "",
-                gender: "",
-                skills: [],
-                about: ""
-            },
 
-            genderOptions: ["Restaurant", "Wellness", "Hospital", "Shelter"],
-            skillOptions: ["Dog", "Cat"]
-        };
-        this.handleTextArea = this.handleTextArea.bind(this);
-        this.handleAge = this.handleAge.bind(this);
-        this.handleFullName = this.handleFullName.bind(this);
-        this.handleFormSubmit = this.handleFormSubmit.bind(this);
-        this.handleClearForm = this.handleClearForm.bind(this);
-        this.handleCheckBox = this.handleCheckBox.bind(this);
-        this.handleInput = this.handleInput.bind(this);
-    }
+function SearchForm() {
+    const [country, setCountry] = useState("");
+    const [region, setRegion] = useState("");
+    const [result, setResult] = useState([]);
+    const [isSubmit, setSubmit] = useState(false);
 
-    /* This lifecycle hook gets executed when the component mounts */
-
-    handleFullName(e) {
-        let value = e.target.value;
-        this.setState(
-            prevState => ({
-                newUser: {
-                    ...prevState.newUser,
-                    name: value
-                }
-            }),
-            () => console.log(this.state.newUser)
-        );
-    }
-
-    handleAge(e) {
-        let value = e.target.value;
-        this.setState(
-            prevState => ({
-                newUser: {
-                    ...prevState.newUser,
-                    age: value
-                }
-            }),
-            () => console.log(this.state.newUser)
-        );
-    }
-
-    handleInput(e) {
-        let value = e.target.value;
-        let name = e.target.name;
-        this.setState(
-            prevState => ({
-                newUser: {
-                    ...prevState.newUser,
-                    [name]: value
-                }
-            }),
-            () => console.log(this.state.newUser)
-        );
-    }
-
-    handleTextArea(e) {
-        console.log("Inside handleTextArea");
-        let value = e.target.value;
-        this.setState(
-            prevState => ({
-                newUser: {
-                    ...prevState.newUser,
-                    about: value
-                }
-            }),
-            () => console.log(this.state.newUser)
-        );
-    }
-
-    handleCheckBox(e) {
-        const newSelection = e.target.value;
-        let newSelectionArray;
-
-        if (this.state.newUser.skills.indexOf(newSelection) > -1) {
-            newSelectionArray = this.state.newUser.skills.filter(
-                s => s !== newSelection
-            );
-        } else {
-            newSelectionArray = [...this.state.newUser.skills, newSelection];
+    useEffect(() => {
+        console.log("effect")
+        const getSearchResults = async () => {
+            const resultsFromAPI = await fetchResults();
+            setResult(resultsFromAPI);
         }
+        getSearchResults()
+    }, [isSubmit])
 
-        this.setState(prevState => ({
-            newUser: { ...prevState.newUser, skills: newSelectionArray }
-        }));
+    //FetchResuls
+    const fetchResults = async () => {
+        const res = await fetch(`http://localhost:8080/api/service/${country}`)
+        console.log(res)
+        return await res.json()
     }
 
-    handleFormSubmit(e) {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        let userData = this.state.newUser;
-
-        fetch("http://example.com", {
-            method: "POST",
-            body: JSON.stringify(userData),
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            }
-        }).then(response => {
-            response.json().then(data => {
-                console.log("Successful" + data);
-            });
-        });
+        setSubmit(true)
+        console.log(isSubmit)
     }
 
-    handleClearForm(e) {
-        e.preventDefault();
-        this.setState({
-            newUser: {
-                name: "",
-                age: "",
-                gender: "",
-                skills: [],
-                about: ""
-            }
-        });
-    }
+    console.log(country)
 
-    render() {
-        return (
-            <form className="container-fluid" onSubmit={this.handleFormSubmit}>
-                <Input
-                    inputType={"text"}
-                    title={"Full Name"}
-                    name={"name"}
-                    value={this.state.newUser.name}
-                    placeholder={"Enter your name"}
-                    handleChange={this.handleInput}
-                />{" "}
-                {/* Name of the user */}
-                <Input
-                    inputType={"number"}
-                    name={"age"}
-                    title={"Age"}
-                    value={this.state.newUser.age}
-                    placeholder={"Enter your age"}
-                    handleChange={this.handleAge}
-                />{" "}
-                {/* Age */}
-                <Select
-                    title={"Gender"}
-                    name={"gender"}
-                    options={this.state.genderOptions}
-                    value={this.state.newUser.gender}
-                    placeholder={"Select Gender"}
-                    handleChange={this.handleInput}
-                />{" "}
-                {/* Age Selection */}
-                <CheckBox
-                    title={"Skills"}
-                    name={"skills"}
-                    options={this.state.skillOptions}
-                    selectedOptions={this.state.newUser.skills}
-                    handleChange={this.handleCheckBox}
-                />{" "}
-                {/* About you */}
-                <Button
-                    action={this.handleFormSubmit}
-                    type={"primary"}
-                    title={"Submit"}
-                    style={buttonStyle}
-                />{" "}
-                {/*Submit */}
-                <Button
-                    action={this.handleClearForm}
-                    type={"secondary"}
-                    title={"Clear"}
-                    style={buttonStyle}
-                />{" "}
-                {/* Clear the form */}
+
+    return (
+        <Container>
+            <form onSubmit={handleSubmit}>
+                <Form.Group controlId="form.country">
+                    <CountryDropdown
+                        value={country}
+                        onChange={(val) => setCountry(val)} />
+                </Form.Group>
+                <button type="submit">Submit</button>
             </form>
-        );
-    }
+        </Container>
+    )
+
+
 }
 
-const buttonStyle = {
-    margin: "10px 10px 10px 10px"
-};
-
-export default SearchForm
+export default SearchForm;

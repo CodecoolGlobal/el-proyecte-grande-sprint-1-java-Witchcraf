@@ -72,8 +72,7 @@ class Initializer implements CommandLineRunner {
 //        evecon.setAddress(eveAddress);
 
         // init ServiceOffered
-        ServiceOffered restA = new ServiceOffered("resta", PetType.CAT, ServiceType.RESTAURANT, ServiceSubtype.COSMETICS, admincon);
-        restA.setContact(petecon);
+        ServiceOffered restA = new ServiceOffered("cosmeticsA", PetType.CAT, ServiceType.WELLNESS, ServiceSubtype.COSMETICS, petecon);
 //        ServiceOffered hospA = new ServiceOffered("hospa", PetType.DOG, ServiceType.HOSPITAL, ServiceSubtype.HOSPITAL, petecon);
 //        ServiceOffered sheltA = new ServiceOffered("shelta", PetType.CATANDDOG, ServiceType.SHELTER, ServiceSubtype.WASHANDVAU, evecon);
 
@@ -81,7 +80,7 @@ class Initializer implements CommandLineRunner {
 //        dao.add(hospA);
 //        dao.add(sheltA);
 
-        ServiceOffered firstServ = dao.findByName("resta");
+        ServiceOffered firstServ = dao.findByName("cosmeticsA");
         System.out.println(firstServ);
 
         /*String country,

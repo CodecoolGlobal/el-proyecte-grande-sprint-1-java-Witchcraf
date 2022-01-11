@@ -28,10 +28,18 @@ public class ServiceController {
     @ResponseBody
     public Set<ServiceOffered> getServices(@RequestParam PetType petType, @RequestParam String country,
                                            @RequestParam String city, @RequestParam String district,
-                                           @RequestParam ServiceType serviceType, @RequestParam ServiceSubtype serviceSubtype,
+                                           @RequestParam ServiceType serviceType, @RequestParam(required = false) ServiceSubtype serviceSubtype,
                                            @RequestParam(required = false) int userId) {
 
         return serviceService.findServices(petType, country, city, district, serviceType, serviceSubtype);
+
+    }
+
+    @GetMapping(value = "/searchT")
+    @ResponseBody
+    public Set<ServiceOffered> getServices(@RequestParam PetType petType, @RequestParam String country) {
+
+        return serviceService.findServices(petType, country);
 
     }
 

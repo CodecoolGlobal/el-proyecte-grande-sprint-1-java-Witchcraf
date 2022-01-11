@@ -24,4 +24,8 @@ public class ServiceService {
                                            ServiceType serviceType, ServiceSubtype serviceSubtype) {
         return serviceDao.findServices(petType, country, city, district, serviceType, serviceSubtype);
     }
+
+    public Set<ServiceOffered> findServices(PetType petType, String country) {
+        return serviceDao.findServices(petType, country);
+    }
 }

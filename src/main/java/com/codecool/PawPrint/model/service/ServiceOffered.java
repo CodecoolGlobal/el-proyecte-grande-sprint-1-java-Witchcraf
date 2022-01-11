@@ -8,6 +8,7 @@ import lombok.Data;
 public class ServiceOffered {
 
     private int id;
+    private String name;
     private PetType petType;
     private double rating;
     private Contact contact;
@@ -17,7 +18,8 @@ public class ServiceOffered {
     private String service;
     private int serviceLog;
 
-    public ServiceOffered(PetType petType, ServiceType serviceType, ServiceSubtype serviceSubtype, Contact contact) {
+    public ServiceOffered(String name, PetType petType, ServiceType serviceType, ServiceSubtype serviceSubtype, Contact contact) {
+        this.name = name;
         this.petType = petType;
         this.serviceType = serviceType;
         this.serviceSubtype = serviceSubtype;

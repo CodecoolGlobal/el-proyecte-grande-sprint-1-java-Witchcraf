@@ -17,7 +17,7 @@ public class ServiceDaoMem implements ServiceDao {
 
     @Override
     public void add(ServiceOffered service) {
-
+        services.add(service);
     }
 
     @Override
@@ -27,7 +27,7 @@ public class ServiceDaoMem implements ServiceDao {
 
     @Override
     public ServiceOffered findByName(String name) {
-        return null;
+        return services.stream().filter(service -> service.getName().equals(name)).findFirst().orElse(null);
     }
 
     @Override

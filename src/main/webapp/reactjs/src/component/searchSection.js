@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
+import SearchForm from './form';
+
 
 function SearchSection({alt,topLine,heading,description}){
     return (<Package.Wrapper
@@ -16,6 +18,7 @@ function SearchSection({alt,topLine,heading,description}){
                         </h2>
                         <h1 className="display-3">{heading}</h1>
                         <p> {description} </p>
+                        <SearchForm />
 
 
                     </Package.Box2Content>

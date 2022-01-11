@@ -1,40 +1,31 @@
 import React, {useEffect, useState} from 'react';
 import Layout from "../layout";
-import { indexImgWithSearchField} from "./data";
+import {indexImgWithSearchField} from "./data";
 import SearchSection from "../../component/searchSection";
+import Content from "../../component/content";
 
 function Home(){
     const [users, setUsers] = useState([]);
 
-    /*useEffect(() => {
+    useEffect(() => {
         const getUsers = async () => {
             const usersFromServer = await fetchAllUser();
-            setUsers(usersFromServer)
+            setUsers(usersFromServer);
 
         }
         getUsers()
-    }, [users])*/
+    }, [])
 
     // Fetch Users
     const fetchAllUser = async () => {
-        const res = await fetch( `/api/getAll`).then(res => console.log(res))
-        //console.log(res)
-        /*const data = await res.json()
-        console.log(data)*/
-        //return res;
+        const res = await fetch( `http://localhost:8080/api/user/all`);
+        return await res.json();
     }
-    fetchAllUser()
-
-
 
     return (
         <Layout title="This is the home page">
             <SearchSection {...indexImgWithSearchField} />
-            <>
-                {users.map((user, index) => (
-                    <p key={index}>{user.name}</p>
-                ))}
-            </>
+            <Content users={users} />
         </Layout>
     );
 }

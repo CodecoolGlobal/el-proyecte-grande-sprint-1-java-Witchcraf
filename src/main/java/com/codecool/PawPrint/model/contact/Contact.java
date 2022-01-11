@@ -1,7 +1,9 @@
 package com.codecool.PawPrint.model.contact;
 
 import com.codecool.PawPrint.model.entity.User;
+import lombok.Data;
 
+@Data
 public class Contact {
 
     private int id;

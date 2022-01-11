@@ -4,11 +4,12 @@ import com.codecool.PawPrint.model.entity.User;
 import com.codecool.PawPrint.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
+
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api")
 public class UserController {
 
     private final UserService userService;
@@ -19,7 +20,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping(path="/all", produces = "application/json")
+    @GetMapping(path="/user/all", produces = "application/json")
     public List<User> getAllUser() {
         return userService.getAllUser();
     }

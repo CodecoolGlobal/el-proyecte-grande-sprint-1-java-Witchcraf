@@ -31,7 +31,7 @@ public class ServiceController {
     public Set<ServiceOffered> getServices(@RequestParam PetType petType, @RequestParam String country,
                                            @RequestParam String city, @RequestParam String district,
                                            @RequestParam ServiceType serviceType, @RequestParam ServiceSubtype serviceSubtype,
-                                           @RequestParam Optional<Integer> userId) {
+                                           @RequestParam(required = false) int userId) {
 
         return serviceService.findServices(petType, country, city, district, serviceType, serviceSubtype);
 

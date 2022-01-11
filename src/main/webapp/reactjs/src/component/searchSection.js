@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
-import SearchForm from './form';
+import SearchForm from './SearchForm';
 
 
 function SearchSection({alt,topLine,heading,description}){
@@ -17,10 +17,7 @@ function SearchSection({alt,topLine,heading,description}){
                             {topLine}
                         </h2>
                         <h1 className="display-3">{heading}</h1>
-                        <p> {description} </p>
                         <SearchForm />
-
-
                     </Package.Box2Content>
                 </Package.Box2>
             </div>
@@ -61,7 +58,7 @@ const Package = {
   `
 };
 
-const Form = {
+/*const Form = {
     Input: styled.input`
     display: block;
     width: 100%;
@@ -79,7 +76,7 @@ const Form = {
     color: #ffffff;
     box-shadow: 0 0.75rem 0.5rem -0.5rem #a8e6cd;
   `
-};
+};*/
 /*         <form className="mt-5">
                             <h3 className="mb-4">Reservations</h3>
                             <div className="form-group">

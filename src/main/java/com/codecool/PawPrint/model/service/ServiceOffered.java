@@ -17,6 +17,7 @@ public class ServiceOffered {
     private ServiceSubtype serviceSubtype;
     private String service;
     private int serviceLog;
+    private String description;
 
     public ServiceOffered(String name, PetType petType, ServiceType serviceType, ServiceSubtype serviceSubtype, Contact contact) {
         this.name = name;

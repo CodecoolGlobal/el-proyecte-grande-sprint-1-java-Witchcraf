@@ -17,7 +17,7 @@ public class ServiceDaoMem implements ServiceDao {
 
     @Override
     public void add(ServiceOffered service) {
-
+        services.add(service);
     }
 
     @Override
@@ -27,10 +27,22 @@ public class ServiceDaoMem implements ServiceDao {
 
     @Override
     public ServiceOffered findByName(String name) {
-        return null;
+        ServiceOffered current = null;
+        for (ServiceOffered service : services) {
+            if (service.getName().equals(name)){
+                current = service;
+            }
+
+        }
+        return current;
     }
 
     @Override
+    public Set<ServiceOffered> findServices(PetType petType, String country, String city, String district, ServiceType service, ServiceSubtype serviceType) {
+        return null;
+    }
+
+    /*@Override
     public Set<ServiceOffered> findServices(PetType petType, String country, String city, String district, ServiceType serviceType, ServiceSubtype serviceSubtype) {
         Set<ServiceOffered> foundServices = new HashSet<>();
         Set<PetType> petTypeEquivalentSet = convertPetType(petType);
@@ -41,13 +53,13 @@ public class ServiceDaoMem implements ServiceDao {
             }
         }
         return foundServices;
-    }
+    }*/
 
-    private boolean checkSearchCondition(ServiceOffered serviceOffered, Set<PetType> petTypeEquivalentSet, String country, String city, String district, ServiceType serviceType, ServiceSubtype serviceSubtype) {
+    /*private boolean checkSearchCondition(ServiceOffered serviceOffered, Set<PetType> petTypeEquivalentSet, String country, String city, String district, ServiceType serviceType, ServiceSubtype serviceSubtype) {
         return serviceOffered.getServiceType().equals(serviceType) && serviceOffered.getServiceSubtype().equals(serviceSubtype)
                 && petTypeEquivalentSet.contains(serviceOffered.getPetType()) && serviceOffered.getContact().getAddress().getCountry().equals(country)
                 && serviceOffered.getContact().getAddress().getCity().equals(city) && serviceOffered.getContact().getAddress().getDistrict().equals(district);
-    }
+    }*/
 
     private Set<PetType> convertPetType(PetType petType) {
         Set<PetType> petTypeEquivalentSet = new HashSet<>();

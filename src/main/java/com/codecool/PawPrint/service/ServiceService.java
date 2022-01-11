@@ -20,8 +20,16 @@ public class ServiceService {
         this.serviceDao = serviceDao;
     }
 
+    public void registerService(ServiceOffered service){
+        serviceDao.add(service);
+    }
+
     public Set<ServiceOffered> findServices(PetType petType, String country, String city, String district,
                                            ServiceType serviceType, ServiceSubtype serviceSubtype) {
         return serviceDao.findServices(petType, country, city, district, serviceType, serviceSubtype);
+    }
+
+    public ServiceOffered getService(String name) {
+        return serviceDao.findByName(name);
     }
 }

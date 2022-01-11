@@ -1,6 +1,7 @@
 package com.codecool.PawPrint.controller;
 
 import com.codecool.PawPrint.model.entity.PetType;
+import com.codecool.PawPrint.model.entity.User;
 import com.codecool.PawPrint.model.service.ServiceOffered;
 import com.codecool.PawPrint.model.service.ServiceSubtype;
 import com.codecool.PawPrint.model.service.ServiceType;
@@ -10,11 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-@Controller
-@RequestMapping("/")
+
+@CrossOrigin(origins = "http://localhost:3000")
+@RestController
+@RequestMapping("/api")
 public class ServiceController {
 
     private ServiceService serviceService;
@@ -25,6 +29,12 @@ public class ServiceController {
         this.serviceService = serviceService;
         this.userService = userService;
     }
+
+    @GetMapping(path="/service/{name}", produces = "application/json")
+    public ServiceOffered getService(@PathVariable String name) {
+        return serviceService.getService(name);
+    }
+
 
     @GetMapping(value = "/search/{petType}/{country}/{city}/{district}/{serviceType}/{serviceSubtype}/{userId}")
     public Set<ServiceOffered> getServices(@PathVariable PetType petType, @PathVariable String country,

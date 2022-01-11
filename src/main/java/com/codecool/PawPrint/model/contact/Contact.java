@@ -8,13 +8,12 @@ public class Contact {
 
     private int id;
     private User user;
-    private Address address;
+    //private Address address;
     private String phone;
     private String businessPhone;
     private String businessEmail;
 
-    public Contact(User user, Address address) {
+    public Contact(User user) {
         this.user = user;
-        this.address = address;
     }
 }

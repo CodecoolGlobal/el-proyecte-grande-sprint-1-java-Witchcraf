@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 import java.util.Set;
 
-@Controller
-@RequestMapping("/")
+@RestController
+@RequestMapping("/api")
 public class ServiceController {
 
     private ServiceService serviceService;
@@ -26,18 +26,20 @@ public class ServiceController {
         this.userService = userService;
     }
 
-    @GetMapping(value = "/search/{petType}/{country}/{city}/{district}/{serviceType}/{serviceSubtype}/{userId}")
-    public Set<ServiceOffered> getServices(@PathVariable PetType petType, @PathVariable String country,
-                                           @PathVariable String city, @PathVariable String district,
-                                           @PathVariable ServiceType serviceType, @PathVariable ServiceSubtype serviceSubtype,
-                                           @PathVariable Optional<Integer> userId) {
+    @GetMapping(value = "/search")
+    @ResponseBody
+    public Set<ServiceOffered> getServices(@RequestParam PetType petType, @RequestParam String country,
+                                           @RequestParam String city, @RequestParam String district,
+                                           @RequestParam ServiceType serviceType, @RequestParam ServiceSubtype serviceSubtype,
+                                           @RequestParam Optional<Integer> userId) {
 
         return serviceService.findServices(petType, country, city, district, serviceType, serviceSubtype);
 
     }
 
-    @PostMapping(value = "/search/save/{userId}")
-    public String saveSearch(@PathVariable String userId, @RequestBody Set<ServiceOffered> services) {
+    @PostMapping(value = "/search/save")
+    @ResponseBody
+    public String saveSearch(@RequestParam String userId, @RequestBody Set<ServiceOffered> services) {
         userService.saveSearch(Integer.parseInt(userId), services);
         return "redirect:";
     }

@@ -25,10 +25,13 @@ public class ServiceController {
         this.userService = userService;
     }
 
-    @GetMapping(path="/service", produces = "application/json")
-    public ServiceOffered getService(@RequestParam String name) {
-        return serviceService.getService(name);
+    @GetMapping(value="/ser", produces = "application/json")
+    @ResponseBody
+    public ServiceOffered getService(@RequestParam String country) {
+        ServiceOffered off = serviceService.getService(country);
+        return off;
     }
+
 
     @GetMapping(value = "/search")
     @ResponseBody

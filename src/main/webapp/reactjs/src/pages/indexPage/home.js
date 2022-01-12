@@ -5,11 +5,12 @@ import SearchSection from "../../component/searchSection";
 import Content from "../../component/content";
 
 function Home(){
+    const [results, setResults] = useState([]);
 
     return (
         <Layout title="">
-            <SearchSection {...indexImgWithSearchField} />
-            <Content />
+            <SearchSection {...indexImgWithSearchField} setResults={setResults} />
+            <Content results={results}/>
         </Layout>
     );
 }

@@ -1,41 +1,33 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
-function SearchForm () {
+function SearchForm ({setResults}) {
     const [country, setCountry] = useState("");
-    const [result, setResult] = useState(null);
 
 
-    //addSearch
-    const addSearch = async (country) => {
-        const res = await fetch('http://localhost:8080/api/service', {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json',
-            },
-            body: JSON.stringify(country),
-        })
-
-        const data = await res.json()
-        console.log(res)
-        console.log(data)
-
-        setResult([...result, data])
+    const fetchResults = async (country) => {
+        const res = await fetch(`http://localhost:8080/api/ser?country=${country}`)
+        return await res.json()
     }
+
 
 
     const handleChange = (event) => {
         setCountry(event.target.value)
-
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        addSearch(country);
+        const getSearchResults = async (country) => {
+            const resultFromApi = await fetchResults(country);
+            setResults(resultFromApi)
+        }
+        getSearchResults(country)
     }
 
 
     return (
         <form onSubmit={handleSubmit}>
+
             <label>
                 Country:
                 <input type="text" name="country"

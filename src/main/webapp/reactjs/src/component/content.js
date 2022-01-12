@@ -1,9 +1,9 @@
 import React from 'react';
 
 
-function Content(){
+function Content({results}){
     return (
-        <p>Content</p>
+        <p>{results.name}</p>
 
     );
 }

@@ -33,13 +33,15 @@ public class ServiceController {
     }
 
 
-    @GetMapping(value = "/search")
-    @ResponseBody
+    @PostMapping(value = "/search")
     public Set<ServiceOffered> getServices(@RequestParam PetType petType, @RequestParam String country,
                                            @RequestParam String city, @RequestParam String district,
                                            @RequestParam ServiceType serviceType, @RequestParam(required = false) ServiceSubtype serviceSubtype,
-                                           @RequestParam(required = false) int userId) {
+                                           @RequestParam(required = false) Integer userId) {
 
+        if (serviceSubtype == null) {
+            return serviceService.findServices(petType, country, city, district, serviceType);
+        }
         return serviceService.findServices(petType, country, city, district, serviceType, serviceSubtype);
 
     }

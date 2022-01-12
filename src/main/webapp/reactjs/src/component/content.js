@@ -1,12 +1,14 @@
 import React from 'react';
+import SearchResult from "./searchResult";
+import Services from "./Services";
 
 
 function Content({results}){
     let content;
     if (results.length === 0) {
-        content = <p>Empty</p>;
+        content = <Services />
     } else {
-        content = <p>{results.name}</p>;
+        content = <SearchResult results={results} />
     }
 
     return (

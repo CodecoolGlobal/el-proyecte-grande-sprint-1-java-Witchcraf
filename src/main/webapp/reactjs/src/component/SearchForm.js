@@ -3,26 +3,37 @@ import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-countr
 
 
 function SearchForm ({setResults}) {
-    const [country, setCountry] = useState("");
-    const [city, setCity] = useState("");
-    const [district, setDistrict] = useState("");
-    const [region, setRegion] = useState("");
+    const [search, setSearch] = useState({
+        country: "",
+        region: "",
+        district: ""
+    })
 
 
-    const fetchResults = async (country, city, district) => {
-        const res = await fetch(`http://localhost:8080/api/sertest?country=${country}&city=${city}&district=${district}`)
-        return await res.json()
+    const fetchResults = async (search) => {
+        console.log(search)
+        const res = await fetch(`http://localhost:8080/api/sertest`,{
+            method: 'POST',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(search)
+        })
+        const a =  await res.json()
+        console.log(a)
+        return a;
     }
 
 
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const getSearchResults = async (country, city, district) => {
-            const resultFromApi = await fetchResults(country, city, district);
+        const getSearchResults = async (search) => {
+            const resultFromApi = await fetchResults(search);
             setResults(resultFromApi)
         }
-        getSearchResults(country)
+        getSearchResults(search)
     }
 
 
@@ -30,17 +41,17 @@ function SearchForm ({setResults}) {
         <form onSubmit={handleSubmit}>
             <div>
                 <CountryDropdown
-                    value={country}
-                    onChange={(val) => setCountry(val)} />
+                    value={search.country}
+                    onChange={(val) => setSearch({...search, country: val}) }/>
                 <RegionDropdown
-                    country={country}
-                    value={region}
-                    onChange={(val) => setRegion(val)} />
+                    country={search.country}
+                    value={search.region}
+                    onChange={(val) => setSearch({...search, region: val})} />
                 <label>
 
                     District:
                     <input type="text" name="district"
-                           value={district} onChange={(e) => {setDistrict(e.target.value)}}
+                           value={search.district} onChange={(e) => {setSearch({...search, district: e.target.value})}}
                     />
                 </label>
             </div>

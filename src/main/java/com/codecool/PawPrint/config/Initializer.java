@@ -62,19 +62,19 @@ class Initializer implements CommandLineRunner {
 
 
         //init address
-        Address peteAdress = new Address(petecon.getId(), "Hun", "Bud", "6");
-        Address adminAdd = new Address(admincon.getId(), "Codecool", "Codecool", "5");
-        Address eveAddress = new Address(evecon.getId(), "eng", "london", "4");
+        Address peteAdress = new Address(petecon.getId(), "Hungary", "Budapest", "6");
+        Address adminAdd = new Address(admincon.getId(), "Hungary", "Budapest", "6");
+        Address eveAddress = new Address(evecon.getId(), "Hungary", "Budapest", "5");
 
         //set address to contact
         petecon.setAddress(peteAdress);
-//        admincon.setAddress(adminAdd);
-//        evecon.setAddress(eveAddress);
+        admincon.setAddress(adminAdd);
+        evecon.setAddress(eveAddress);
 
         // init ServiceOffered
         ServiceOffered cosP = new ServiceOffered("cosmeticsPete", PetType.CAT, ServiceType.WELLNESS, ServiceSubtype.COSMETICS, petecon);
         ServiceOffered restP = new ServiceOffered("RestaurantPete", PetType.CAT, ServiceType.RESTAURANT, null, petecon);
-        ServiceOffered hospP = new ServiceOffered("HospPete", PetType.DOG, ServiceType.HOSPITAL, ServiceSubtype.HOSPITAL, petecon);
+        ServiceOffered hospP = new ServiceOffered("HospPete", PetType.DOG, ServiceType.HOSPITAL, ServiceSubtype.HOSPITAL, admincon);
         ServiceOffered sheltE = new ServiceOffered("ShelterEve", PetType.CATANDDOG, ServiceType.SHELTER, null, evecon);
         ServiceOffered restE = new ServiceOffered("RestaurantEve", PetType.CATANDDOG, ServiceType.RESTAURANT, null, evecon);
 

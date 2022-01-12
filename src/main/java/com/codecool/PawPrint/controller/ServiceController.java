@@ -1,6 +1,7 @@
 package com.codecool.PawPrint.controller;
 
 import com.codecool.PawPrint.model.entity.PetType;
+import com.codecool.PawPrint.model.entity.Search;
 import com.codecool.PawPrint.model.service.ServiceOffered;
 import com.codecool.PawPrint.model.service.ServiceSubtype;
 import com.codecool.PawPrint.model.service.ServiceType;
@@ -9,6 +10,7 @@ import com.codecool.PawPrint.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.Set;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -32,10 +34,15 @@ public class ServiceController {
         return off;
     }
 
-    @GetMapping(value="/sertest", produces = "application/json")
+    @PostMapping(value="/sertest", produces = "application/json")
     @ResponseBody
-    public Set<ServiceOffered> getServicesBy3field(@RequestParam String country, @RequestParam String city, @RequestParam String district ) {
-        Set<ServiceOffered> off = serviceService.findServices(country, city, district);
+    public Set<ServiceOffered> getServicesBy3field(@RequestBody Map<String, String> payload ) {
+        String country = payload.get("country");
+        String region = payload.get("region");
+        String district = payload.get("district");
+
+        Set<ServiceOffered> off = serviceService.findServices(country, region, district);
+        System.out.println(off.size());
         return off;
     }
 

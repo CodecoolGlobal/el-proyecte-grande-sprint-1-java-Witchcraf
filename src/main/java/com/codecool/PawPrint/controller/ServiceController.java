@@ -36,13 +36,19 @@ public class ServiceController {
 
     @PostMapping(value="/sertest", produces = "application/json")
     @ResponseBody
-    public Set<ServiceOffered> getServicesBy3field(@RequestBody Map<String, String> payload ) {
+    public Set<ServiceOffered> getServicesBy3field(@RequestBody Map<String, String> payload) {
         String country = payload.get("country");
         String region = payload.get("region");
         String district = payload.get("district");
+        String serviceType = payload.get("serviceType");
+        String serviceSubType = payload.get("serviceSubType");
+        String petType = payload.get("petType");
+        System.out.println(payload);
+        System.out.println(serviceType);
+        System.out.println(serviceSubType);
+        System.out.println(petType);
 
         Set<ServiceOffered> off = serviceService.findServices(country, region, district);
-        System.out.println(off.size());
         return off;
     }
 

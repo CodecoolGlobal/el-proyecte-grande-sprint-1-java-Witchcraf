@@ -6,12 +6,14 @@ function SearchForm ({setResults}) {
     const [search, setSearch] = useState({
         country: "",
         region: "",
-        district: ""
+        district: "",
+        serviceType: "",
+        serviceSubType: "",
+        petType: ""
     })
 
 
     const fetchResults = async (search) => {
-        console.log(search)
         const res = await fetch(`http://localhost:8080/api/sertest`,{
             method: 'POST',
                 headers: {
@@ -48,10 +50,27 @@ function SearchForm ({setResults}) {
                     value={search.region}
                     onChange={(val) => setSearch({...search, region: val})} />
                 <label>
-
                     District:
                     <input type="text" name="district"
                            value={search.district} onChange={(e) => {setSearch({...search, district: e.target.value})}}
+                    />
+                </label>
+                <label>
+                    serviceType:
+                    <input type="text" name="district"
+                           value={search.serviceType} onChange={(e) => {setSearch({...search, serviceType: e.target.value})}}
+                    />
+                </label>
+                <label>
+                    serviceSubType:
+                    <input type="text" name="district"
+                           value={search.serviceSubType} onChange={(e) => {setSearch({...search, serviceSubType: e.target.value})}}
+                    />
+                </label>
+                <label>
+                    petType:
+                    <input type="text" name="district"
+                           value={search.petType} onChange={(e) => {setSearch({...search, petType: e.target.value})}}
                     />
                 </label>
             </div>

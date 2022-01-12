@@ -37,6 +37,7 @@ function SearchForm ({setResults}) {
         const getSearchResults = async (search) => {
             const resultFromApi = await fetchResults(search);
             setResults(resultFromApi)
+            //resultFromApi.push("/search")
         }
         await getSearchResults(search)
     }

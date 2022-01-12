@@ -30,8 +30,8 @@ public class ServiceController {
         this.userService = userService;
     }
 
-    @GetMapping(path="/service/{name}", produces = "application/json")
-    public ServiceOffered getService(@PathVariable String name) {
+    @GetMapping(path="/service", produces = "application/json")
+    public ServiceOffered getService(@RequestParam String name) {
         return serviceService.getService(name);
     }
 

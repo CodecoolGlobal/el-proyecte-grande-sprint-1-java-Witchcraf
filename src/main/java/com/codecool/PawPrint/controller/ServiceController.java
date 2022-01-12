@@ -39,10 +39,10 @@ public class ServiceController {
                                            @RequestParam ServiceType serviceType, @RequestParam(required = false) ServiceSubtype serviceSubtype,
                                            @RequestParam(required = false) Integer userId) {
 
-        if (serviceSubtype == null) {
-            return serviceService.findServices(petType, country, city, district, serviceType);
+        if (serviceSubtype != null) {
+            return serviceService.findServices(petType, country, city, district, serviceType, serviceSubtype);
         }
-        return serviceService.findServices(petType, country, city, district, serviceType, serviceSubtype);
+        return serviceService.findServices(petType, country, city, district, serviceType);
 
     }
 

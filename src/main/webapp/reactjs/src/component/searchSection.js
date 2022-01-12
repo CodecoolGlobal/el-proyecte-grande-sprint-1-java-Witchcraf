@@ -17,6 +17,8 @@ function SearchSection({alt,topLine,heading,setResults}){
                             {topLine}
                         </h2>
                         <h1 className="display-3">{heading}</h1>
+                        <br/>
+                        <br/>
                         <SearchForm setResults={setResults}/>
                     </Package.Box2Content>
                 </Package.Box2>

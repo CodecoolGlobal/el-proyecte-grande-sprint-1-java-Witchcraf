@@ -72,15 +72,19 @@ class Initializer implements CommandLineRunner {
 //        evecon.setAddress(eveAddress);
 
         // init ServiceOffered
-        ServiceOffered restA = new ServiceOffered("cosmeticsA", PetType.CAT, ServiceType.WELLNESS, ServiceSubtype.COSMETICS, petecon);
-        ServiceOffered hospA = new ServiceOffered("hospa", PetType.DOG, ServiceType.HOSPITAL, ServiceSubtype.HOSPITAL, petecon);
-        ServiceOffered sheltA = new ServiceOffered("shelta", PetType.CATANDDOG, ServiceType.SHELTER, ServiceSubtype.WASHANDVAU, evecon);
+        ServiceOffered cosP = new ServiceOffered("cosmeticsPete", PetType.CAT, ServiceType.WELLNESS, ServiceSubtype.COSMETICS, petecon);
+        ServiceOffered restP = new ServiceOffered("RestaurantPete", PetType.CAT, ServiceType.RESTAURANT, null, petecon);
+        ServiceOffered hospP = new ServiceOffered("HospPete", PetType.DOG, ServiceType.HOSPITAL, ServiceSubtype.HOSPITAL, petecon);
+        ServiceOffered sheltE = new ServiceOffered("ShelterEve", PetType.CATANDDOG, ServiceType.SHELTER, null, evecon);
+        ServiceOffered restE = new ServiceOffered("RestaurantEve", PetType.CATANDDOG, ServiceType.RESTAURANT, null, evecon);
 
-        dao.add(restA);
-        dao.add(hospA);
-        dao.add(sheltA);
+        dao.add(cosP);
+        dao.add(restP);
+        dao.add(hospP);
+        dao.add(sheltE);
+        dao.add(restE);
 
-        ServiceOffered firstServ = dao.findByName("cosmeticsA");
+        ServiceOffered firstServ = dao.findByName("cosmeticsPete");
         System.out.println(firstServ);
 
         /*String country,

@@ -24,7 +24,6 @@ public class RegistrationController {
 
     @PostMapping("/{username}")
     public User checkPreviusUserName(@PathVariable String username){
-        User user = userService.findUserByName(username);
-        return user;
+        return userService.findUserByName(username);
     }
 }

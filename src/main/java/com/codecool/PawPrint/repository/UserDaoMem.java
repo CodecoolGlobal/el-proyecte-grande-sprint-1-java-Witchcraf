@@ -2,12 +2,10 @@ package com.codecool.PawPrint.repository;
 
 import com.codecool.PawPrint.model.entity.Search;
 import com.codecool.PawPrint.model.entity.User;
-import com.codecool.PawPrint.model.service.ServiceOffered;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+
 
 @Component
 public class UserDaoMem implements UserDao{

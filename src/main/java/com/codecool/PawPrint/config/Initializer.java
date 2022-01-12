@@ -1,7 +1,7 @@
 package com.codecool.PawPrint.config;
 
 import com.codecool.PawPrint.model.contact.Address;
-//import com.codecool.PawPrint.model.contact.Contact;
+import com.codecool.PawPrint.model.contact.Contact;
 import com.codecool.PawPrint.model.entity.PetType;
 import com.codecool.PawPrint.model.entity.User;
 import com.codecool.PawPrint.model.entity.UserType;
@@ -10,11 +10,9 @@ import com.codecool.PawPrint.model.service.ServiceSubtype;
 import com.codecool.PawPrint.model.service.ServiceType;
 import com.codecool.PawPrint.repository.ServiceDao;
 import com.codecool.PawPrint.repository.UserDao;
-import com.codecool.PawPrint.service.ServiceService;
-import io.swagger.models.Contact;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
@@ -32,7 +30,7 @@ class Initializer implements CommandLineRunner {
 
     @Override
     public void run(String... strings) {
-        User pete = new User("Pete", LocalDateTime.now(), "pete@gmail.com", "1234", UserType.NORMAL);
+        User pete = new User("Zoe", LocalDateTime.now(), "cafezoo@gmail.com", "1234", UserType.NORMAL);
         pete.setId(1);
         User admin = new User("admin", LocalDateTime.now(), "admin", "admin", UserType.ADMIN);
         admin.setId(0);
@@ -50,9 +48,6 @@ class Initializer implements CommandLineRunner {
         repository.add(rob);
 
 
-        User first = repository.findById(1);
-        System.out.println(first.getUserName());
-
         //init contact
         Contact petecon = new Contact(pete);
         Contact admincon = new Contact(admin);
@@ -65,31 +60,34 @@ class Initializer implements CommandLineRunner {
         Address peteAdress = new Address(petecon.getId(), "Hungary", "Budapest", "6");
         Address adminAdd = new Address(admincon.getId(), "Hungary", "Budapest", "6");
         Address eveAddress = new Address(evecon.getId(), "Hungary", "Budapest", "5");
+        Address johnAddress = new Address(evecon.getId(), "Hungary", "Kecskemét", "5");
+        Address robAddress = new Address(evecon.getId(), "Hungary", "Kecskemét", "5");
 
         //set address to contact
         petecon.setAddress(peteAdress);
         admincon.setAddress(adminAdd);
         evecon.setAddress(eveAddress);
+        johncon.setAddress(johnAddress);
+        robCon.setAddress(robAddress);
 
         // init ServiceOffered
-        ServiceOffered cosP = new ServiceOffered("cosmeticsPete", PetType.CAT, ServiceType.WELLNESS, ServiceSubtype.COSMETICS, petecon);
-        ServiceOffered restP = new ServiceOffered("RestaurantPete", PetType.CAT, ServiceType.RESTAURANT, null, petecon);
-        ServiceOffered hospP = new ServiceOffered("HospPete", PetType.DOG, ServiceType.HOSPITAL, ServiceSubtype.HOSPITAL, admincon);
-        ServiceOffered sheltE = new ServiceOffered("ShelterEve", PetType.CATANDDOG, ServiceType.SHELTER, null, evecon);
-        ServiceOffered restE = new ServiceOffered("RestaurantEve", PetType.CATANDDOG, ServiceType.RESTAURANT, null, evecon);
+        ServiceOffered cosP = new ServiceOffered("WashAndWau", PetType.CAT, ServiceType.WELLNESS, ServiceSubtype.WASHANDVAU, petecon);
+        ServiceOffered animalHotel = new ServiceOffered("Pangea", PetType.CATANDDOG, ServiceType.WELLNESS, ServiceSubtype.COSMETICS, johncon);
+        ServiceOffered restP = new ServiceOffered("Café Zoo", PetType.CAT, ServiceType.RESTAURANT, null, petecon);
+        ServiceOffered hospP = new ServiceOffered("Profivet", PetType.DOG, ServiceType.HOSPITAL, ServiceSubtype.HOSPITAL, admincon);
+        ServiceOffered sheltE = new ServiceOffered("Vizsla Bárka", PetType.CATANDDOG, ServiceType.SHELTER, null, evecon);
+        ServiceOffered sheltFutr = new ServiceOffered("Futrinka", PetType.CATANDDOG, ServiceType.SHELTER, null, robCon);
+        ServiceOffered restE = new ServiceOffered("Fellini Bisztró", PetType.CATANDDOG, ServiceType.RESTAURANT, null, evecon);
+        ServiceOffered garden = new ServiceOffered("Kertem", PetType.DOG, ServiceType.RESTAURANT, null, johncon);
 
         dao.add(cosP);
         dao.add(restP);
         dao.add(hospP);
         dao.add(sheltE);
         dao.add(restE);
+        dao.add(garden);
+        dao.add(animalHotel);
+        dao.add(sheltFutr);
 
-        ServiceOffered firstServ = dao.findByName("cosmeticsPete");
-        System.out.println(firstServ);
-
-        /*String country,
-        String city,
-        String district,
-        int userI*/
     }
 }

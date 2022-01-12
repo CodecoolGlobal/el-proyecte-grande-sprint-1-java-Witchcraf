@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchResult from "./searchResult";
-import Services from "./Services";
+import Services from "./services";
 
 
 function Content({results}){

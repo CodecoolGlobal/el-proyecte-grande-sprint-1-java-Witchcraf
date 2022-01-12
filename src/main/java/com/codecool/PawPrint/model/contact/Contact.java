@@ -15,6 +15,5 @@ public class Contact {
 
     public Contact(User user) {
         this.user = user;
-//        this.address = address;
     }
 }

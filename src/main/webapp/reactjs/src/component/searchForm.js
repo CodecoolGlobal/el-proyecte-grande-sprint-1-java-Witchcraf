@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
+import React, {useState} from 'react';
+import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 
 
 function SearchForm ({setResults}) {
@@ -35,7 +35,7 @@ function SearchForm ({setResults}) {
             const resultFromApi = await fetchResults(search);
             setResults(resultFromApi)
         }
-        getSearchResults(search)
+        await getSearchResults(search)
     }
 
 

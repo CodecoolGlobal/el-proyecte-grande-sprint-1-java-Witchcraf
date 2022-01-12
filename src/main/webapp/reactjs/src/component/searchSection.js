@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
-import SearchForm from './SearchForm';
+import SearchForm from './searchForm';
 
 
 function SearchSection({alt,topLine,heading,setResults}){

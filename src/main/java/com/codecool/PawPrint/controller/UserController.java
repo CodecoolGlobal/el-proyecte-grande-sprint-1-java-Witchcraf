@@ -24,9 +24,8 @@ public class UserController {
     @GetMapping(path="/user/all", produces = "application/json")
     public String getAllUser() {
         Gson gson = new Gson();
-        List result = userService.getAllUser();
-        String result1 = gson.toJson(result);
-        return result1;
+        List<User> result = userService.getAllUser();
+        return gson.toJson(result);
     }
 
     @GetMapping(path="/{id}", produces = "application/json")

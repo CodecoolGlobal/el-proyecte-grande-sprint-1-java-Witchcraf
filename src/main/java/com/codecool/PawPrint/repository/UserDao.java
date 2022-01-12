@@ -2,10 +2,8 @@ package com.codecool.PawPrint.repository;
 
 import com.codecool.PawPrint.model.entity.Search;
 import com.codecool.PawPrint.model.entity.User;
-import com.codecool.PawPrint.model.service.ServiceOffered;
-
 import java.util.List;
-import java.util.Set;
+
 
 public interface UserDao {
 

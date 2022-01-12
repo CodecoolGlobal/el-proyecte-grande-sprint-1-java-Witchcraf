@@ -20,10 +20,6 @@ public class ServiceDaoMem implements ServiceDao {
         services.add(service);
     }
 
-    @Override
-    public ServiceOffered findById(int id) {
-        return null;
-    }
 
     @Override
     public ServiceOffered findByName(String name) {
@@ -56,33 +52,6 @@ public class ServiceDaoMem implements ServiceDao {
         return foundServices;
     }
 
-    @Override
-    public Set<ServiceOffered> findServices(PetType petType, String country) {
-        Set<ServiceOffered> foundServices = new HashSet<>();
-        Set<PetType> petTypeEquivalentSet = convertPetType(petType);
-
-        for (ServiceOffered serviceOffered : services) {
-            if (checkSearchCondition(serviceOffered, petTypeEquivalentSet, country)) {
-                foundServices.add(serviceOffered);
-            }
-        }
-        return foundServices;
-    }
-
-    @Override
-    public Set<ServiceOffered> findServices(String country, String city, String district) {
-        Set<ServiceOffered> foundServices = new HashSet<>();
-
-        for (ServiceOffered serviceOffered : services) {
-            if (serviceOffered.getContact().getAddress().getCountry().equals(country) &&
-                    serviceOffered.getContact().getAddress().getCity().equals(city) &&
-                    serviceOffered.getContact().getAddress().getDistrict().equals(district)
-            ) {
-                foundServices.add(serviceOffered);
-            }
-        }
-        return foundServices;
-    }
 
     private boolean checkSearchCondition(ServiceOffered serviceOffered, Set<PetType> petTypeEquivalentSet, String country, String city, String district, ServiceType serviceType, ServiceSubtype serviceSubtype) {
         return serviceOffered.getServiceType().equals(serviceType)

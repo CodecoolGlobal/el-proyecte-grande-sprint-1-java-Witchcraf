@@ -6,6 +6,7 @@ import com.codecool.PawPrint.model.service.ServiceSubtype;
 import com.codecool.PawPrint.model.service.ServiceType;
 import com.codecool.PawPrint.service.ServiceService;
 import com.codecool.PawPrint.service.UserService;
+import com.codecool.PawPrint.util.JsonResponseConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,22 +34,19 @@ public class ServiceController {
         return off;
     }
 
-    @PostMapping(value="/sertest", produces = "application/json")
+    @PostMapping(value="/searchTest", produces = "application/json")
     @ResponseBody
     public Set<ServiceOffered> getServicesBy3field(@RequestBody Map<String, String> payload) {
+        PetType petType = JsonResponseConverter.getPetTypeFromJsonString(payload.get("petType"));
+        ServiceType serviceType = JsonResponseConverter.getServiceTyoeFromJsonString(payload.get("serviceType"));
         String country = payload.get("country");
         String region = payload.get("region");
         String district = payload.get("district");
-        String serviceType = payload.get("serviceType");
-        String serviceSubType = payload.get("serviceSubType");
-        String petType = payload.get("petType");
-        System.out.println(payload);
-        System.out.println(serviceType);
-        System.out.println(serviceSubType);
-        System.out.println(petType);
 
-        Set<ServiceOffered> off = serviceService.findServices(country, region, district);
-        return off;
+        System.out.println(payload);
+        Set<ServiceOffered> result = serviceService.findServices(petType, country, region, district, serviceType);
+        System.out.println(result);
+        return result;
     }
 
 
@@ -65,13 +63,6 @@ public class ServiceController {
 
     }
 
-    @GetMapping(value = "/searchT")
-    @ResponseBody
-    public Set<ServiceOffered> getServices(@RequestParam PetType petType, @RequestParam String country) {
-
-        return serviceService.findServices(petType, country);
-
-    }
 
     @PostMapping(value = "/search/save")
     @ResponseBody

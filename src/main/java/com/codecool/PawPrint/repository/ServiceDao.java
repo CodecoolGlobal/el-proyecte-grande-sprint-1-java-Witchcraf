@@ -10,13 +10,10 @@ import java.util.Set;
 public interface ServiceDao {
 
     void add(ServiceOffered service);
-    ServiceOffered findById(int id);
     ServiceOffered findByName(String name);
     Set<ServiceOffered> findServices(PetType petType, String country, String city, String district,
                                      ServiceType service, ServiceSubtype serviceType);
     Set<ServiceOffered> findServices(PetType petType, String country, String city, String district,
                                      ServiceType service);
-    Set<ServiceOffered> findServices(PetType petType, String country);
-    Set<ServiceOffered> findServices(String country, String city, String district);
     Set<ServiceOffered> getAll();
 }

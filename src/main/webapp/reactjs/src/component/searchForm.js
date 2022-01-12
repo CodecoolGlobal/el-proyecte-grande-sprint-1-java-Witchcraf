@@ -17,7 +17,7 @@ function SearchForm ({setResults}) {
     const fetchResults = async (search) => {
         console.log(search)
 
-        const res = await fetch(`http://localhost:8080/api/sertest`,{
+        const res = await fetch(`http://localhost:8080/api/searchTest`,{
             method: 'POST',
                 headers: {
                 'Accept': 'application/json',
@@ -41,8 +41,6 @@ function SearchForm ({setResults}) {
         await getSearchResults(search)
     }
 
-
-    //<form onSubmit={handleSubmit}>
 
     return (
         <Form onSubmit={handleSubmit}>
@@ -128,50 +126,3 @@ function SearchForm ({setResults}) {
 }
 
 export default SearchForm;
-
-/*<div>
-    <CountryDropdown
-        classename="country"
-        value={search.country}
-        onChange={(val) => setSearch({...search, country: val}) }/>
-
-    <RegionDropdown
-        country={search.country}
-        value={search.region}
-        onChange={(val) => setSearch({...search, region: val})} />
-    <br/>
-
-    <label>
-
-        District:
-        <input type="text" name="district"
-               value={search.district} onChange={(e) => {setSearch({...search, district: e.target.value})}}
-        />
-    </label>
-    <label>
-        serviceType:
-        <input type="text" name="district"
-               value={search.serviceType} onChange={(e) => {setSearch({...search, serviceType: e.target.value})}}
-        />
-    </label>
-    <label>
-        serviceSubType:
-        <input type="text" name="district"
-               value={search.serviceSubType} onChange={(e) => {setSearch({...search, serviceSubType: e.target.value})}}
-        />
-    </label>
-    <label>
-        petType:
-        <input type="text" name="district"
-               value={search.petType} onChange={(e) => {setSearch({...search, petType: e.target.value})}}
-        />
-    </label>
-    <Checkbox className="check" shape="round" color="success" icon={<i className="mdi mdi-check" />} animation="smooth">Dog</Checkbox>
-    <Checkbox className="check" shape="round" color="success" icon={<i className="mdi mdi-check" />} animation="smooth">Cat</Checkbox>
-
-
-</div>
-
-<br/>
-<input type="submit" value="Submit"/>
-</form>*/

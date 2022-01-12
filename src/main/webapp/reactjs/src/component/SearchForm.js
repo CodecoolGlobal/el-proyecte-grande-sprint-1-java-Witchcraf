@@ -1,197 +1,84 @@
-import React from 'react';
-import CheckBox from "../component/CheckBox";
-import Input from "../component/Input";
-import Select from "../component/Select";
-import Button from "../component/Button";
+import React, {useEffect, useState} from 'react';
+import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
 
-class SearchForm extends React.Component {
-    constructor(props) {
-        super(props);
 
-        this.state = {
-            newUser: {
-                name: "",
-                age: "",
-                gender: "",
-                skills: [],
-                about: ""
+function SearchForm ({setResults}) {
+    const [search, setSearch] = useState({
+        country: "",
+        region: "",
+        district: "",
+        serviceType: "",
+        serviceSubType: "",
+        petType: ""
+    })
+
+
+    const fetchResults = async (search) => {
+        const res = await fetch(`http://localhost:8080/api/sertest`,{
+            method: 'POST',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             },
-
-            genderOptions: ["Restaurant", "Wellness", "Hospital", "Shelter"],
-            skillOptions: ["Dog", "Cat"]
-        };
-        this.handleTextArea = this.handleTextArea.bind(this);
-        this.handleAge = this.handleAge.bind(this);
-        this.handleFullName = this.handleFullName.bind(this);
-        this.handleFormSubmit = this.handleFormSubmit.bind(this);
-        this.handleClearForm = this.handleClearForm.bind(this);
-        this.handleCheckBox = this.handleCheckBox.bind(this);
-        this.handleInput = this.handleInput.bind(this);
+            body: JSON.stringify(search)
+        })
+        const a =  await res.json()
+        console.log(a)
+        return a;
     }
 
-    /* This lifecycle hook gets executed when the component mounts */
 
-    handleFullName(e) {
-        let value = e.target.value;
-        this.setState(
-            prevState => ({
-                newUser: {
-                    ...prevState.newUser,
-                    name: value
-                }
-            }),
-            () => console.log(this.state.newUser)
-        );
-    }
 
-    handleAge(e) {
-        let value = e.target.value;
-        this.setState(
-            prevState => ({
-                newUser: {
-                    ...prevState.newUser,
-                    age: value
-                }
-            }),
-            () => console.log(this.state.newUser)
-        );
-    }
-
-    handleInput(e) {
-        let value = e.target.value;
-        let name = e.target.name;
-        this.setState(
-            prevState => ({
-                newUser: {
-                    ...prevState.newUser,
-                    [name]: value
-                }
-            }),
-            () => console.log(this.state.newUser)
-        );
-    }
-
-    handleTextArea(e) {
-        console.log("Inside handleTextArea");
-        let value = e.target.value;
-        this.setState(
-            prevState => ({
-                newUser: {
-                    ...prevState.newUser,
-                    about: value
-                }
-            }),
-            () => console.log(this.state.newUser)
-        );
-    }
-
-    handleCheckBox(e) {
-        const newSelection = e.target.value;
-        let newSelectionArray;
-
-        if (this.state.newUser.skills.indexOf(newSelection) > -1) {
-            newSelectionArray = this.state.newUser.skills.filter(
-                s => s !== newSelection
-            );
-        } else {
-            newSelectionArray = [...this.state.newUser.skills, newSelection];
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const getSearchResults = async (search) => {
+            const resultFromApi = await fetchResults(search);
+            setResults(resultFromApi)
         }
-
-        this.setState(prevState => ({
-            newUser: { ...prevState.newUser, skills: newSelectionArray }
-        }));
+        getSearchResults(search)
     }
 
-    handleFormSubmit(e) {
-        e.preventDefault();
-        let userData = this.state.newUser;
 
-        fetch("http://example.com", {
-            method: "POST",
-            body: JSON.stringify(userData),
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            }
-        }).then(response => {
-            response.json().then(data => {
-                console.log("Successful" + data);
-            });
-        });
-    }
+    return (
+        <form onSubmit={handleSubmit}>
+            <div>
+                <CountryDropdown
+                    value={search.country}
+                    onChange={(val) => setSearch({...search, country: val}) }/>
+                <RegionDropdown
+                    country={search.country}
+                    value={search.region}
+                    onChange={(val) => setSearch({...search, region: val})} />
+                <label>
+                    District:
+                    <input type="text" name="district"
+                           value={search.district} onChange={(e) => {setSearch({...search, district: e.target.value})}}
+                    />
+                </label>
+                <label>
+                    serviceType:
+                    <input type="text" name="district"
+                           value={search.serviceType} onChange={(e) => {setSearch({...search, serviceType: e.target.value})}}
+                    />
+                </label>
+                <label>
+                    serviceSubType:
+                    <input type="text" name="district"
+                           value={search.serviceSubType} onChange={(e) => {setSearch({...search, serviceSubType: e.target.value})}}
+                    />
+                </label>
+                <label>
+                    petType:
+                    <input type="text" name="district"
+                           value={search.petType} onChange={(e) => {setSearch({...search, petType: e.target.value})}}
+                    />
+                </label>
+            </div>
 
-    handleClearForm(e) {
-        e.preventDefault();
-        this.setState({
-            newUser: {
-                name: "",
-                age: "",
-                gender: "",
-                skills: [],
-                about: ""
-            }
-        });
-    }
-
-    render() {
-        return (
-            <form className="container-fluid" onSubmit={this.handleFormSubmit}>
-                <Input
-                    inputType={"text"}
-                    title={"Full Name"}
-                    name={"name"}
-                    value={this.state.newUser.name}
-                    placeholder={"Enter your name"}
-                    handleChange={this.handleInput}
-                />{" "}
-                {/* Name of the user */}
-                <Input
-                    inputType={"number"}
-                    name={"age"}
-                    title={"Age"}
-                    value={this.state.newUser.age}
-                    placeholder={"Enter your age"}
-                    handleChange={this.handleAge}
-                />{" "}
-                {/* Age */}
-                <Select
-                    title={"Gender"}
-                    name={"gender"}
-                    options={this.state.genderOptions}
-                    value={this.state.newUser.gender}
-                    placeholder={"Select Gender"}
-                    handleChange={this.handleInput}
-                />{" "}
-                {/* Age Selection */}
-                <CheckBox
-                    title={"Skills"}
-                    name={"skills"}
-                    options={this.state.skillOptions}
-                    selectedOptions={this.state.newUser.skills}
-                    handleChange={this.handleCheckBox}
-                />{" "}
-                {/* About you */}
-                <Button
-                    action={this.handleFormSubmit}
-                    type={"primary"}
-                    title={"Submit"}
-                    style={buttonStyle}
-                />{" "}
-                {/*Submit */}
-                <Button
-                    action={this.handleClearForm}
-                    type={"secondary"}
-                    title={"Clear"}
-                    style={buttonStyle}
-                />{" "}
-                {/* Clear the form */}
-            </form>
-        );
-    }
+            <br/>
+            <input type="submit" value="Submit"/>
+        </form>
+    )
 }
 
-const buttonStyle = {
-    margin: "10px 10px 10px 10px"
-};
-
-export default SearchForm
+export default SearchForm;

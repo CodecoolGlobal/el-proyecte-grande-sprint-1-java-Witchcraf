@@ -29,8 +29,17 @@ public class ServiceService {
         return serviceDao.findServices(petType, country, city, district, serviceType, serviceSubtype);
     }
 
+    public Set<ServiceOffered> findServices(PetType petType, String country, String city, String district,
+                                            ServiceType serviceType) {
+        return serviceDao.findServices(petType, country, city, district, serviceType);
+    }
+
     public Set<ServiceOffered> findServices(PetType petType, String country) {
         return serviceDao.findServices(petType, country);
+    }
+
+    public Set<ServiceOffered> findServices(String country, String city, String district) {
+        return serviceDao.findServices(country, city, district);
     }
 
     public ServiceOffered getService(String name) {

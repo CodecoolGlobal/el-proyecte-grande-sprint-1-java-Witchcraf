@@ -1,7 +1,7 @@
 package com.codecool.PawPrint.controller;
 
 import com.codecool.PawPrint.model.entity.PetType;
-import com.codecool.PawPrint.model.entity.User;
+import com.codecool.PawPrint.model.entity.Search;
 import com.codecool.PawPrint.model.service.ServiceOffered;
 import com.codecool.PawPrint.model.service.ServiceSubtype;
 import com.codecool.PawPrint.model.service.ServiceType;
@@ -10,8 +10,7 @@ import com.codecool.PawPrint.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 import java.util.Set;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -28,19 +27,42 @@ public class ServiceController {
         this.userService = userService;
     }
 
-    @GetMapping(path="/service/{name}", produces = "application/json")
-    public ServiceOffered getService(@PathVariable String name) {
-        return serviceService.getService(name);
+    @GetMapping(value="/ser", produces = "application/json")
+    @ResponseBody
+    public ServiceOffered getService(@RequestParam String country) {
+        ServiceOffered off = serviceService.getService(country);
+        return off;
     }
 
-    @GetMapping(value = "/search")
+    @PostMapping(value="/sertest", produces = "application/json")
     @ResponseBody
+    public Set<ServiceOffered> getServicesBy3field(@RequestBody Map<String, String> payload) {
+        String country = payload.get("country");
+        String region = payload.get("region");
+        String district = payload.get("district");
+        String serviceType = payload.get("serviceType");
+        String serviceSubType = payload.get("serviceSubType");
+        String petType = payload.get("petType");
+        System.out.println(payload);
+        System.out.println(serviceType);
+        System.out.println(serviceSubType);
+        System.out.println(petType);
+
+        Set<ServiceOffered> off = serviceService.findServices(country, region, district);
+        return off;
+    }
+
+
+    @PostMapping(value = "/search")
     public Set<ServiceOffered> getServices(@RequestParam PetType petType, @RequestParam String country,
                                            @RequestParam String city, @RequestParam String district,
                                            @RequestParam ServiceType serviceType, @RequestParam(required = false) ServiceSubtype serviceSubtype,
-                                           @RequestParam(required = false) int userId) {
+                                           @RequestParam(required = false) Integer userId) {
 
-        return serviceService.findServices(petType, country, city, district, serviceType, serviceSubtype);
+        if (serviceSubtype != null) {
+            return serviceService.findServices(petType, country, city, district, serviceType, serviceSubtype);
+        }
+        return serviceService.findServices(petType, country, city, district, serviceType);
 
     }
 

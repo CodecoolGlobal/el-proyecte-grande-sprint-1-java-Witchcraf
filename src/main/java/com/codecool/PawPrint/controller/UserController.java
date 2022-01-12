@@ -2,6 +2,7 @@ package com.codecool.PawPrint.controller;
 
 import com.codecool.PawPrint.model.entity.User;
 import com.codecool.PawPrint.service.UserService;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -21,8 +22,11 @@ public class UserController {
     }
 
     @GetMapping(path="/user/all", produces = "application/json")
-    public List<User> getAllUser() {
-        return userService.getAllUser();
+    public String getAllUser() {
+        Gson gson = new Gson();
+        List result = userService.getAllUser();
+        String result1 = gson.toJson(result);
+        return result1;
     }
 
     @GetMapping(path="/{id}", produces = "application/json")

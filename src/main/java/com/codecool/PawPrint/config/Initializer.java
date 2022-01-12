@@ -1,7 +1,7 @@
 package com.codecool.PawPrint.config;
 
 import com.codecool.PawPrint.model.contact.Address;
-import com.codecool.PawPrint.model.contact.Contact;
+//import com.codecool.PawPrint.model.contact.Contact;
 import com.codecool.PawPrint.model.entity.PetType;
 import com.codecool.PawPrint.model.entity.User;
 import com.codecool.PawPrint.model.entity.UserType;
@@ -11,6 +11,7 @@ import com.codecool.PawPrint.model.service.ServiceType;
 import com.codecool.PawPrint.repository.ServiceDao;
 import com.codecool.PawPrint.repository.UserDao;
 import com.codecool.PawPrint.service.ServiceService;
+import io.swagger.models.Contact;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -51,7 +52,6 @@ class Initializer implements CommandLineRunner {
 
         User first = repository.findById(1);
         System.out.println(first.getUserName());
-
 
         //init contact
         Contact petecon = new Contact(pete);

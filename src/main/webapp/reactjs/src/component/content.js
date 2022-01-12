@@ -1,10 +1,18 @@
 import React from 'react';
+import SearchResult from "./searchResult";
+import Services from "./Services";
 
 
 function Content({results}){
-    return (
-        <p>{results.name}</p>
+    let content;
+    if (results.length === 0) {
+        content = <Services />
+    } else {
+        content = <SearchResult results={results} />
+    }
 
+    return (
+        <div>{content}</div>
     );
 }
 export default Content;

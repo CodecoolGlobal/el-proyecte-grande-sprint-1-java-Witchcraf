@@ -32,6 +32,13 @@ public class ServiceController {
         return off;
     }
 
+    @GetMapping(value="/sertest", produces = "application/json")
+    @ResponseBody
+    public Set<ServiceOffered> getServicesBy3field(@RequestParam String country, @RequestParam String city, @RequestParam String district ) {
+        Set<ServiceOffered> off = serviceService.findServices(country, city, district);
+        return off;
+    }
+
 
     @PostMapping(value = "/search")
     public Set<ServiceOffered> getServices(@RequestParam PetType petType, @RequestParam String country,

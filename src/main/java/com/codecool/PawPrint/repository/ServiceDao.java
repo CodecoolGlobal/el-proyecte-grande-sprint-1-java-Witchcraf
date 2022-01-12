@@ -17,5 +17,6 @@ public interface ServiceDao {
     Set<ServiceOffered> findServices(PetType petType, String country, String city, String district,
                                      ServiceType service);
     Set<ServiceOffered> findServices(PetType petType, String country);
+    Set<ServiceOffered> findServices(String country, String city, String district);
     Set<ServiceOffered> getAll();
 }

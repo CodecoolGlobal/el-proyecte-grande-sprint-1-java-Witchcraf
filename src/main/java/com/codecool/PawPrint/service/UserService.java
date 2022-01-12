@@ -2,7 +2,6 @@ package com.codecool.PawPrint.service;
 
 import com.codecool.PawPrint.model.entity.Search;
 import com.codecool.PawPrint.model.entity.User;
-import com.codecool.PawPrint.model.entity.UserType;
 import com.codecool.PawPrint.model.service.ServiceOffered;
 import com.codecool.PawPrint.repository.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -20,10 +20,12 @@ import java.util.Set;
 public class UserService implements UserDetailsService {
 
     private final UserDao userDao;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserDao userDao) {
+    public UserService(UserDao userDao, PasswordEncoder passwordEncoder) {
         this.userDao = userDao;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<User> getAllUser() {
@@ -31,6 +33,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void registerUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDao.add(user);
     }
 

@@ -22,7 +22,7 @@ function HeaderSection() {
                         </Nav>
                         <Nav>
                             <Nav.Link href="#deets">Sing up</Nav.Link>
-                            <Nav.Link eventKey={2} href="#memes">
+                            <Nav.Link eventKey={2} href="/login">
                                 Sing in
                             </Nav.Link>
                         </Nav>

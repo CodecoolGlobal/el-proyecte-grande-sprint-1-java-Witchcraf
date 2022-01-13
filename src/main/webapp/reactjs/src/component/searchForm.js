@@ -10,9 +10,9 @@ function SearchForm ({setResults}) {
         country: "",
         city: "",
         district: "",
-        serviceType: "",
-        serviceSubtype: "",
-        petType: ""
+        serviceType: null,
+        serviceSubtype: null,
+        petType: null
     })
 
     // const convertSearchToPayload = (search) => {
@@ -57,9 +57,9 @@ function SearchForm ({setResults}) {
             country: "",
             city: "",
             district: "",
-            serviceType: "",
-            serviceSubtype: "",
-            petType: ""
+            serviceType: null,
+            serviceSubtype: null,
+            petType: null
         })
     }
 

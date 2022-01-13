@@ -138,7 +138,7 @@ function SearchForm ({setResults}) {
                     <Col md={3}>
                     <Form.Check type="checkbox" label="Dog" checked={isCheckedDog}
                                 value="DOG"
-                                onChange={(e) => {setSearch({...search, petType: e.target.dataset.value}); setIsCheckedDog(!isCheckedDog)}}/>
+                                onChange={(e) => {setSearch({...search, petType: e.target.value}); setIsCheckedDog(!isCheckedDog)}}/>
                     </Col>
                     <Col md={2}>
                     <Form.Check type="checkbox" label="Cat" checked={isCheckedCat}

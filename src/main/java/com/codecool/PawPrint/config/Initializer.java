@@ -74,6 +74,7 @@ class Initializer implements CommandLineRunner {
         ServiceOffered cosP = new ServiceOffered("WashAndWau", PetType.CAT, ServiceType.WELLNESS, ServiceSubtype.WASHANDVAU, petecon);
         ServiceOffered animalHotel = new ServiceOffered("Pangea", PetType.CATANDDOG, ServiceType.WELLNESS, ServiceSubtype.COSMETICS, johncon);
         ServiceOffered restP = new ServiceOffered("Café Zoo", PetType.CAT, ServiceType.RESTAURANT, null, petecon);
+        ServiceOffered restP2 = new ServiceOffered("Zoo", PetType.CAT, ServiceType.RESTAURANT, null, petecon);
         ServiceOffered hospP = new ServiceOffered("Profivet", PetType.DOG, ServiceType.HOSPITAL, ServiceSubtype.HOSPITAL, admincon);
         ServiceOffered sheltE = new ServiceOffered("Vizsla Bárka", PetType.CATANDDOG, ServiceType.SHELTER, null, evecon);
         ServiceOffered sheltFutr = new ServiceOffered("Futrinka", PetType.CATANDDOG, ServiceType.SHELTER, null, robCon);
@@ -85,6 +86,7 @@ class Initializer implements CommandLineRunner {
         dao.add(hospP);
         dao.add(sheltE);
         dao.add(restE);
+        dao.add(restP2);
         dao.add(garden);
         dao.add(animalHotel);
         dao.add(sheltFutr);

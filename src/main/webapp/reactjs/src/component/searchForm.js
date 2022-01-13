@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ServiceSubtype from "./ServiceSubtype";
 
 
+
 function SearchForm ({setResults}) {
     const [search, setSearch] = useState({
         country: "",
@@ -41,7 +42,9 @@ function SearchForm ({setResults}) {
             body: JSON.stringify(payload)
         })
         const data =  await res.json()
-        console.log(data)
+        if(data === 0){
+            alert("We cant find services, please try again!")
+        }
         return data;
     }
 
@@ -52,7 +55,6 @@ function SearchForm ({setResults}) {
         const getSearchResults = async (search) => {
             const resultFromApi = await fetchResults(search);
             setResults(resultFromApi)
-            //resultFromApi.push("/search")
         }
         await getSearchResults(search)
     }

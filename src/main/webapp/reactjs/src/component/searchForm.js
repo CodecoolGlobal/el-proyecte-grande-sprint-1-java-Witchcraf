@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import {Col, Form, Row, Button} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ServiceSubtype from "./ServiceSubtype";
 
 
 function SearchForm ({setResults}) {
@@ -10,20 +11,34 @@ function SearchForm ({setResults}) {
         region: "",
         district: "",
         serviceType: "",
+        serviceSubtype: "",
         petType: ""
     })
+
+    const convertSearchToPayload = (search) => {
+        return {
+            country: search.country,
+            region: search.region,
+            district: search.district,
+            serviceType: search.serviceType.toUpperCase(),
+            serviceSubtype: search.serviceSubtype.toUpperCase(),
+            petType: search.petType.toUpperCase()
+        }
+    }
 
 
     const fetchResults = async (search) => {
         console.log(search)
+        const payload = convertSearchToPayload(search);
+        console.log(payload);
 
-        const res = await fetch(`http://localhost:8080/api/searchTest`,{
+        const res = await fetch(`http://localhost:8080/api/search`,{
             method: 'POST',
                 headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(search)
+            body: JSON.stringify(payload)
         })
         const data =  await res.json()
         console.log(data)
@@ -59,7 +74,7 @@ function SearchForm ({setResults}) {
                 </Form.Group>
                 <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
                     <Form.Label column md={2}>
-                        Region
+                        City
                     </Form.Label>
                     <Col md={10}>
                         <RegionDropdown
@@ -91,6 +106,7 @@ function SearchForm ({setResults}) {
                        value={search.serviceType}
                        onChange={(e) => {setSearch({...search, serviceType: e.target.value})}}
                    >
+                       <option value="Select">Select Service</option>
                        <option value="Restaurant">Restaurant</option>
                        <option value="Wellness">Wellness</option>
                        <option value="Hospital">Hospital</option>
@@ -99,6 +115,11 @@ function SearchForm ({setResults}) {
                    </Col>
                </Form.Group>
 
+            {
+                search.serviceType === "Wellness" || search.serviceType === "Hospital" ?
+                    <ServiceSubtype search={search} setSearch={setSearch} /> :
+                    null
+            }
 
                <Form.Group as={Row} className="row justify-content-center" controlId="formHorizontalEmail">
                     <Col md={3}>
@@ -113,7 +134,7 @@ function SearchForm ({setResults}) {
                     </Col>
                    <Col md={2}>
                        <Form.Check type="checkbox" label="Cat&Dog"
-                                   value="Cat&Dog"
+                                   value="Cat & Dog"
                                    onChange={(e) => {setSearch({...search, petType: e.target.value})}}/>
                    </Col>
             </Form.Group>

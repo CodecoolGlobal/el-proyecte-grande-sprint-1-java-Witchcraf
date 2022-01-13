@@ -109,14 +109,14 @@ function SearchForm ({setResults}) {
                        <option value="Select">Select Service</option>
                        <option value="Restaurant">Restaurant</option>
                        <option value="Wellness">Wellness</option>
-                       <option value="Hospital">Hospital</option>
+                       <option value="Healthcare">Healthcare</option>
                        <option value="Shelter">Shelter</option>
                    </Form.Control>
                    </Col>
                </Form.Group>
 
             {
-                search.serviceType === "Wellness" || search.serviceType === "Hospital" ?
+                search.serviceType === "Wellness" || search.serviceType === "Healthcare" ?
                     <ServiceSubtype search={search} setSearch={setSearch} /> :
                     null
             }

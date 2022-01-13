@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
-import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
-import {Col, Form, Row, Button} from "react-bootstrap";
+import {CountryDropdown, RegionDropdown} from 'react-country-region-selector';
+import {Button, Col, Form, Row} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ServiceSubtype from "./ServiceSubtype";
 
 function SearchForm ({setResults}) {
-
     const [isCheckedDog, setIsCheckedDog] = useState(false);
     const [isCheckedCat, setIsCheckedCat] = useState(false);
     const [isCheckedCatAndDog, setIsCheckedCatAndDog] = useState(false);
@@ -19,22 +18,8 @@ function SearchForm ({setResults}) {
         petType: null
     })
 
-    // const convertSearchToPayload = (search) => {
-    //     return {
-    //         country: search.country,
-    //         city: search.city,
-    //         district: search.district,
-    //         serviceType: search.serviceType,
-    //         serviceSubtype: search.serviceSubtype,
-    //         petType: search.petType
-    //     }
-    // }
-
 
     const fetchResults = async (search) => {
-        console.log(search)
-        // const payload = convertSearchToPayload(search);
-        // console.log(payload);
 
         const res = await fetch(`http://localhost:8080/api/search`,{
             method: 'POST',
@@ -44,9 +29,7 @@ function SearchForm ({setResults}) {
             },
             body: JSON.stringify(search)
         })
-        const data =  await res.json()
-        console.log(data)
-        return data;
+        return await res.json();
     }
 
     const getSearchResults = async (search) => {

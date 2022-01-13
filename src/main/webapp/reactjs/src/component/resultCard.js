@@ -13,7 +13,7 @@ import SendIcon from '@mui/icons-material/Send';
 function resultCard({result}){
     let currentAvatar = createAvatarBasedOnServiceType(result.serviceType);
 
-    console.log(result)
+
     return (
         <div className="container-fluid">
             <div className="row justify-content-center">
@@ -63,7 +63,7 @@ function resultCard({result}){
                 <LocalHospitalIcon />
             </Avatar>
         }
-        if(type === "SHELTER"){
+        if(type === "HEALTHCARE"){
             avatar = <Avatar sx={{ color: purple[500],  width: 70, height: 70, margin:10 }}>
                 <PetsIcon />
             </Avatar>

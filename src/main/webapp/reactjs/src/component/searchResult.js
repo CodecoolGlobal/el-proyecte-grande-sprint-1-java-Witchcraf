@@ -3,7 +3,6 @@ import ResultCard from "../component/resultCard";
 
 
 function SearchResult({results}){
-    console.log(results)
     return (
             <div className='results'>
                 {results.map((result, index) => (

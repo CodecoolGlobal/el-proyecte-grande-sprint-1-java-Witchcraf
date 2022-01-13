@@ -12,7 +12,7 @@ function ServiceSubtype ({search, setSearch}) {
                 <Form.Control
                     style={{ height: "40px", width:"100%" }}
                     as="select"
-                    value={search.serviceSubtype}
+                    value={search.serviceSubtype === null ? "" : search.serviceSubtype}
                     onChange={(e) => {setSearch({...search, serviceSubtype: e.target.value})}}
                 >
                     <option value="Select">Select Service Subtype</option>

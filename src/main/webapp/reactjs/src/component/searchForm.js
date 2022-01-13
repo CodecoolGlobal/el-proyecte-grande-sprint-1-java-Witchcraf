@@ -5,6 +5,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ServiceSubtype from "./ServiceSubtype";
 
 function SearchForm ({setResults}) {
+
+    const [isCheckedDog, setIsCheckedDog] = useState(false);
+    const [isCheckedCat, setIsCheckedCat] = useState(false);
+    const [isCheckedCatAndDog, setIsCheckedCatAndDog] = useState(false);
+
     const [search, setSearch] = useState({
         country: "",
         city: "",
@@ -52,6 +57,9 @@ function SearchForm ({setResults}) {
     const handleSubmit = async (event) => {
         event.preventDefault();
         await getSearchResults(search);
+        setIsCheckedDog(false);
+        setIsCheckedCat(false);
+        setIsCheckedCatAndDog(false);
         setSearch({
             country: "",
             city: "",
@@ -108,7 +116,7 @@ function SearchForm ({setResults}) {
                    <Form.Control
                        style={{ height: "40px", width:"100%" }}
                        as="select"
-                       value={search.serviceType}
+                       value={search.serviceType === null ? "" : search.serviceType}
                        onChange={(e) => {setSearch({...search, serviceType: e.target.value})}}
                    >
                        <option value="Select">Select Service</option>
@@ -128,19 +136,19 @@ function SearchForm ({setResults}) {
 
                <Form.Group as={Row} className="row justify-content-center" controlId="formHorizontalEmail">
                     <Col md={3}>
-                    <Form.Check type="checkbox" label="Dog"
+                    <Form.Check type="checkbox" label="Dog" checked={isCheckedDog}
                                 value="DOG"
-                                onChange={(e) => {setSearch({...search, petType: e.target.value})}}/>
+                                onChange={(e) => {setSearch({...search, petType: e.target.dataset.value}); setIsCheckedDog(!isCheckedDog)}}/>
                     </Col>
                     <Col md={2}>
-                    <Form.Check type="checkbox" label="Cat"
+                    <Form.Check type="checkbox" label="Cat" checked={isCheckedCat}
                                 value="CAT"
-                                onChange={(e) => {setSearch({...search, petType: e.target.value})}} />
+                                onChange={(e) => {setSearch({...search, petType: e.target.value}); setIsCheckedCat(!isCheckedCat);}} />
                     </Col>
                    <Col md={2}>
-                       <Form.Check type="checkbox" label="Cat&Dog"
+                       <Form.Check type="checkbox" label="Cat&Dog" checked={isCheckedCatAndDog}
                                    value="CATANDDOG"
-                                   onChange={(e) => {setSearch({...search, petType: e.target.value})}}/>
+                                   onChange={(e) => {setSearch({...search, petType: e.target.value}); setIsCheckedCatAndDog(!isCheckedCatAndDog);}}/>
                    </Col>
             </Form.Group>
                <br/>

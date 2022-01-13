@@ -1,13 +1,14 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../App.css';
-import {Avatar, Button} from "@mui/material";
+import {Avatar, Box, Button, Rating, Typography} from "@mui/material";
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import SpaIcon from '@mui/icons-material/Spa';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import PetsIcon from '@mui/icons-material/Pets';
 import {green, purple, red, yellow} from "@mui/material/colors";
 import SendIcon from '@mui/icons-material/Send';
+
 
 function resultCard({result}){
     let currentAvatar = createAvatarBasedOnServiceType(result.serviceType);
@@ -24,6 +25,10 @@ function resultCard({result}){
                             </div>
                             <div className="card-body">
                                 <h4 className="card-title" style={{marginBottom: "30px", marginTop:"10px", fontFamily: 'Playfair Display',fontSize:"45px"}}>{result.name}</h4>
+                                <p style={{ fontFamily: 'Playfair Display',fontSize:"25px"}}>Rating:
+                                    <Typography component="legend" ></Typography>
+                                    <Rating style={{marginLeft:"10px"}} name="half-rating-read" defaultValue={result.rating} precision={0.5} readOnly />
+                                </p>
                                 <p className="card-text" style={{ paddingBottom:"15px", fontFamily: 'Playfair Display',fontSize:"20px"}}>
                                     {result.description}
                                 </p>

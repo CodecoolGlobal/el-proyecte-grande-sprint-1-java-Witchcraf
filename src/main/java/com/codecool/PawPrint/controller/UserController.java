@@ -21,14 +21,14 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping(path="/user/all", produces = "application/json")
+    @GetMapping(path="/admin/alluser", produces = "application/json")
     public String getAllUser() {
         Gson gson = new Gson();
         List<User> result = userService.getAllUser();
         return gson.toJson(result);
     }
 
-    @GetMapping(path="/{id}", produces = "application/json")
+    @GetMapping(path="user/{id}", produces = "application/json")
     public User getUserById(@PathVariable int id) {
         return userService.findUserById(id);
     }

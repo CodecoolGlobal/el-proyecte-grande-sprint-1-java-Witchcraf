@@ -28,13 +28,6 @@ public class ServiceController {
         this.userService = userService;
     }
 
-    @GetMapping(value="/ser", produces = "application/json")
-    @ResponseBody
-    public ServiceOffered getService(@RequestParam String country) {
-        ServiceOffered off = serviceService.getService(country);
-        return off;
-    }
-
     @PostMapping(value="/searchTest", produces = "application/json")
     @ResponseBody
     public Set<ServiceOffered> getServicesBy3field(@RequestBody Map<String, String> payload) {
@@ -60,6 +53,12 @@ public class ServiceController {
         String district = searchService.getDistrict();
         ServiceType serviceType = searchService.getServiceType();
         ServiceSubtype serviceSubtype = searchService.getServiceSubtype();
+        System.out.println(petType);
+        System.out.println(country);
+        System.out.println(city);
+        System.out.println(district);
+        System.out.println(serviceType);
+        System.out.println(serviceSubtype);
 
         if (serviceSubtype != null) {
             return serviceService.findServices(petType, country, city, district, serviceType, serviceSubtype);

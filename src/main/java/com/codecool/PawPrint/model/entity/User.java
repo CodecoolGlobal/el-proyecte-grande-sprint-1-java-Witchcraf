@@ -12,7 +12,7 @@ public class User {
 
     private int id;
     private String fullName;
-    private String userName;
+    private String username;
     private LocalDateTime registrationTime;
     private String description;
     private Gender gender;
@@ -27,7 +27,7 @@ public class User {
     private Set<Search> savedSearches;
 
     public User(String userName, LocalDateTime registrationTime, String email, String password, UserType type) {
-        this.userName = userName;
+        this.username = userName;
         this.registrationTime = registrationTime;
         this.email = email;
         this.password = password;

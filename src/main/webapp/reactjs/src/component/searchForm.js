@@ -4,7 +4,6 @@ import {Col, Form, Row, Button} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ServiceSubtype from "./ServiceSubtype";
 
-
 function SearchForm ({setResults}) {
     const [search, setSearch] = useState({
         country: "",

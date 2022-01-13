@@ -1,10 +1,16 @@
 import React from "react";
+import ResultCard from "../component/resultCard";
 
 
 function SearchResult({results}){
     console.log(results)
     return (
-        <p>{results.name}</p>
+            <div className='results'>
+                {results.map((result, index) => (
+                    <ResultCard key={index} result={result} />
+                ))}
+            </div>
     );
+
 }
 export default SearchResult;

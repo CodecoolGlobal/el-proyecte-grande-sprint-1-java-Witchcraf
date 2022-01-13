@@ -2,14 +2,14 @@ export const indexImgWithSearchField = {
     imgStart: "",
     img: "images/background.jpg",
     alt: "petHelp",
-    topLine: "Taking pet is easy now with PawPrint :).",
+    topLine: "Taking your pet with you is easy now with PawPrint. :)",
     heading: "Search trusted services!",
     subheading: "Search",
     description:
-        "Need a quick and easy way to book wellness, health or accomodation services for your pet? " ,
-        //"PawPrint application contains restaurants, hospitals, wellness services. " +
+        "Need a quick and easy way to find wellness, healthcare or accommodation services for your pet? " ,
+        //"PawPrint application collects restaurants, hospitals, wellness services. " +
         //"You can quickly access more detailed information including service details." +
-        //" Taking pets is never easy, but PawPrint can help by providing the information you need to reach your goal enjoy better health.",
+        //" Taking your pets with you is never easy, but PawPrint can help you by providing the information you need and enjoy your time wherever you go.",
     buttonLabel: "RESERVE NOW"
 };
 

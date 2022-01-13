@@ -57,14 +57,14 @@ class Initializer implements CommandLineRunner {
 
 
         //init address
-        Address peteAdress = new Address(petecon.getId(), "Hungary", "Budapest", "6");
+        Address peteAddress = new Address(petecon.getId(), "Hungary", "Budapest", "6");
         Address adminAdd = new Address(admincon.getId(), "Hungary", "Budapest", "6");
         Address eveAddress = new Address(evecon.getId(), "Hungary", "Budapest", "5");
         Address johnAddress = new Address(evecon.getId(), "Hungary", "Kecskemét", "5");
         Address robAddress = new Address(evecon.getId(), "Hungary", "Kecskemét", "5");
 
         //set address to contact
-        petecon.setAddress(peteAdress);
+        petecon.setAddress(peteAddress);
         admincon.setAddress(adminAdd);
         evecon.setAddress(eveAddress);
         johncon.setAddress(johnAddress);

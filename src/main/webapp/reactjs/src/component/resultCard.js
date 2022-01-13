@@ -22,8 +22,8 @@ function resultCard({result}){
                                 {currentAvatar}
                             </div>
                             <div className="card-body">
-                                <h4 className="card-title">{result.name}</h4>
-                                <p className="card-text">
+                                <h4 className="card-title" style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}>>{result.name}</h4>
+                                <p className="card-text" style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}>>
                                     Some quick example text to build on the card title and make up
                                     the bulk of the card's content.
                                 </p>

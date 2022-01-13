@@ -22,9 +22,10 @@ function Services({imgStart,alt, img,topLine,heading,subheading, description}){
                     style={{ order: imgStart === "start" ? "1" : "2" }}
                 >
                     <Package.Box2Content>
-                        <h2 style={{ fontStyle: "italic" }}>{topLine}</h2>
-                        <h1 className="content-title display-4">{heading}</h1>
-                        <p> {description} </p>
+                        <h2 style={{ fontStyle: "italic", fontFamily: 'Playfair Display' }}>{topLine}</h2>
+                        <h1 className="content-title display-4"  style={{ fontFamily: 'Playfair Display', fontSize: "80px"}}>{heading}</h1>
+                        <br/><br/><br/>
+                        <p style={{ fontFamily: 'Playfair Display',fontSize:"25px" }}>  {description} </p>
 
                         <h3>{subheading}</h3>
                     </Package.Box2Content>

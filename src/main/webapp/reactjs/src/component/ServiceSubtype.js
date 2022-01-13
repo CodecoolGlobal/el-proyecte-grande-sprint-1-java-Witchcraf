@@ -5,14 +5,14 @@ function ServiceSubtype ({search, setSearch}) {
 
     return(
         <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
-            <Form.Label column md={2}>
+            <Form.Label column md={2} style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}>
                 Service Subtype
             </Form.Label>
             <Col md={10}>
                 <Form.Control
-                    style={{ height: "40px", width:"100%" }}
                     as="select"
                     value={search.serviceSubtype === null ? "" : search.serviceSubtype}
+                    style={{ height: "40px", width:"100%", fontFamily: 'Playfair Display',fontSize:"20px"}}
                     onChange={(e) => {setSearch({...search, serviceSubtype: e.target.value})}}
                 >
                     <option value="Select">Select Service Subtype</option>

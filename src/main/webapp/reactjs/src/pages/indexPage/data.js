@@ -2,7 +2,7 @@ export const indexImgWithSearchField = {
     imgStart: "",
     img: "images/background.jpg",
     alt: "petHelp",
-    topLine: "Taking your pet with you is easy now with PawPrint. :)",
+    topLine: "Taking your pet with you is easy now with PawPrint",
     heading: "Search trusted services!",
     subheading: "Search",
     description:

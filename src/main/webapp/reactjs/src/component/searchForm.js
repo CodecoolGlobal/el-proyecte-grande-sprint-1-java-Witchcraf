@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
-import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
-import {Col, Form, Row, Button} from "react-bootstrap";
+import {CountryDropdown, RegionDropdown} from 'react-country-region-selector';
+import {Button, Col, Form, Row} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ServiceSubtype from "./ServiceSubtype";
 
 function SearchForm ({setResults}) {
-
     const [isCheckedDog, setIsCheckedDog] = useState(false);
     const [isCheckedCat, setIsCheckedCat] = useState(false);
     const [isCheckedCatAndDog, setIsCheckedCatAndDog] = useState(false);
@@ -19,22 +18,8 @@ function SearchForm ({setResults}) {
         petType: null
     })
 
-    // const convertSearchToPayload = (search) => {
-    //     return {
-    //         country: search.country,
-    //         city: search.city,
-    //         district: search.district,
-    //         serviceType: search.serviceType,
-    //         serviceSubtype: search.serviceSubtype,
-    //         petType: search.petType
-    //     }
-    // }
-
 
     const fetchResults = async (search) => {
-        console.log(search)
-        // const payload = convertSearchToPayload(search);
-        // console.log(payload);
 
         const res = await fetch(`http://localhost:8080/api/search`,{
             method: 'POST',
@@ -44,9 +29,7 @@ function SearchForm ({setResults}) {
             },
             body: JSON.stringify(search)
         })
-        const data =  await res.json()
-        console.log(data)
-        return data;
+        return await res.json();
     }
 
     const getSearchResults = async (search) => {
@@ -74,24 +57,24 @@ function SearchForm ({setResults}) {
     return (
         <Form onSubmit={handleSubmit}>
                 <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
-                    <Form.Label column lg={2}>
+                    <Form.Label column lg={2} style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}>
                         Country
                     </Form.Label>
                     <Col md={10}>
                         <CountryDropdown
-                            style={{ height: "40px", width:"100%" }}
+                            style={{ height: "40px", width:"100%",fontFamily: 'Playfair Display',fontSize:"20px" }}
                             classename="country"
                             value={search.country}
                             onChange={(val) => setSearch({...search, country: val}) }/>
                     </Col>
                 </Form.Group>
                 <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
-                    <Form.Label column md={2}>
+                    <Form.Label column md={2} style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}>
                         City
                     </Form.Label>
                     <Col md={10}>
                         <RegionDropdown
-                            style={{ height: "40px" ,width:"100%"}}
+                            style={{ height: "40px" ,width:"100%", fontFamily: 'Playfair Display',fontSize:"20px"}}
                             country={search.country}
                             value={search.city}
                             onChange={(val) => setSearch({...search, city: val})} />
@@ -99,7 +82,7 @@ function SearchForm ({setResults}) {
                 </Form.Group>
 
                 <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
-                    <Form.Label column md={2}>
+                    <Form.Label column md={2} style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}>
                         Zip
                     </Form.Label>
                     <Col md={10}>
@@ -109,17 +92,17 @@ function SearchForm ({setResults}) {
                     </Col>
                 </Form.Group>
                <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
-                   <Form.Label column md={2}>
+                   <Form.Label column md={2} style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}>
                        Services
                    </Form.Label>
                    <Col md={10}>
                    <Form.Control
-                       style={{ height: "40px", width:"100%" }}
+                       style={{ height: "40px", width:"100%",fontFamily: 'Playfair Display',fontSize:"20px" }}
                        as="select"
                        value={search.serviceType === null ? "" : search.serviceType}
                        onChange={(e) => {setSearch({...search, serviceType: e.target.value})}}
                    >
-                       <option value="Select">Select Service</option>
+                       <option value="Select" > Select Service</option>
                        <option value="RESTAURANT">Restaurant</option>
                        <option value="WELLNESS">Wellness</option>
                        <option value="HEALTHCARE">Healthcare</option>
@@ -138,22 +121,25 @@ function SearchForm ({setResults}) {
                     <Col md={3}>
                     <Form.Check type="checkbox" label="Dog" checked={isCheckedDog}
                                 value="DOG"
+                                style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}
                                 onChange={(e) => {setSearch({...search, petType: e.target.value}); setIsCheckedDog(!isCheckedDog)}}/>
                     </Col>
                     <Col md={2}>
                     <Form.Check type="checkbox" label="Cat" checked={isCheckedCat}
                                 value="CAT"
+                                style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}
                                 onChange={(e) => {setSearch({...search, petType: e.target.value}); setIsCheckedCat(!isCheckedCat);}} />
                     </Col>
                    <Col md={2}>
                        <Form.Check type="checkbox" label="Cat&Dog" checked={isCheckedCatAndDog}
                                    value="CATANDDOG"
+                                   style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}
                                    onChange={(e) => {setSearch({...search, petType: e.target.value}); setIsCheckedCatAndDog(!isCheckedCatAndDog);}}/>
                    </Col>
             </Form.Group>
                <br/>
             <Button variant="success" type="submit"
-                    style={{ width:"100%" }}>
+                   style={{ fontFamily: 'Playfair Display',fontSize:"20px", width:"100%" }}>
                 Submit
             </Button>
             </Form>

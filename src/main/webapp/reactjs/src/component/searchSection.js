@@ -13,10 +13,10 @@ function SearchSection({alt,topLine,heading,setResults}){
                 </Package.Box1>
                 <Package.Box2 className="col-md-6" alt={alt}>
                     <Package.Box2Content>
-                        <h2 className="mt-5" style={{ fontStyle: "italic" }}>
+                        <h2 className="mt-5" style={{ fontStyle: "italic", fontFamily: 'Playfair Display', fontSize: "35px"}}>
                             {topLine}
                         </h2>
-                        <h1 className="display-3">{heading}</h1>
+                        <h1 className="display-3" style={{ fontFamily: 'Playfair Display'}}>{heading}</h1>
                         <br/>
                         <br/>
                         <SearchForm setResults={setResults}/>
@@ -59,52 +59,4 @@ const Package = {
     }
   `
 };
-
-/*const Form = {
-    Input: styled.input`
-    display: block;
-    width: 100%;
-    border: none;
-    border-radius: 0.25rem;
-    padding: 1rem 2rem;
-  `,
-
-    Button: styled.input`
-    border: none;
-    background: hsl(0, 0%, 93%);
-    border-radius: 0.25rem;
-    padding: 1rem 2rem;
-    background: #35dba9;
-    color: #ffffff;
-    box-shadow: 0 0.75rem 0.5rem -0.5rem #a8e6cd;
-  `
-};*/
-/*         <form className="mt-5">
-                            <h3 className="mb-4">Reservations</h3>
-                            <div className="form-group">
-                                <Form.Input type="text" placeholder="Full Name" />
-                            </div>
-
-                            <div className="form-row">
-                                <div className="form-group col-md-4">
-                                    <Form.Input
-                                        type="text"
-                                        class="form-control"
-                                        placeholder="# of Guests"
-                                    />
-                                </div>
-                                <div className="form-group col-md-4">
-                                    <Form.Input
-                                        type="date"
-                                        class="form-control"
-                                        placeholder="Date"
-                                    />
-                                </div>
-
-                                <div className="form-group col-md-4">
-                                    <Form.Input type="time" class="form-control" />
-                                </div>
-                            </div>
-                            <Form.Button type="submit" placeholder="Submit" />
-                        </form>*/
 export default SearchSection;

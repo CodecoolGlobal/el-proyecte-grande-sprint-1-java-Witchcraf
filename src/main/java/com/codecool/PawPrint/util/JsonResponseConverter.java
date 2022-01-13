@@ -29,7 +29,7 @@ public class JsonResponseConverter {
             return ServiceType.SHELTER;
         }
         if(serviceType.equalsIgnoreCase("hospital")){
-            return ServiceType.HOSPITAL;
+            return ServiceType.HEALTHCARE;
         }
         return null;
     }

@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -54,13 +55,14 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userDao.findByName(username);
-        Collection<SimpleGrantedAuthority> userTypes = null;
+        System.out.println(username);
+        Collection<SimpleGrantedAuthority> userTypes = new ArrayList<>();
         if(user == null){
             throw new UsernameNotFoundException("Not found this User!");
         }
-        assert false;
-        userTypes.add(new SimpleGrantedAuthority(user.getType().toString()));
-        return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(), userTypes);
+        assert userTypes != null;
+        userTypes.add(new SimpleGrantedAuthority("ROLE_" + user.getType().toString()));
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), userTypes);
     }
 
     /*public List<UserPersonalDetailsDTO> getAllUserPersonalDetails() {

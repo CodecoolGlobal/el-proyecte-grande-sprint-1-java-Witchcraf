@@ -5,6 +5,7 @@ import com.codecool.PawPrint.model.entity.User;
 import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 @Component
@@ -44,7 +45,7 @@ public class UserDaoMem implements UserDao{
     public User findByName(String name) {
         User currentUser = null;
         for (User user : data) {
-            if(user.getUserName() == name){
+            if(Objects.equals(user.getUsername(), name)){
                 currentUser = user;
             }
         }

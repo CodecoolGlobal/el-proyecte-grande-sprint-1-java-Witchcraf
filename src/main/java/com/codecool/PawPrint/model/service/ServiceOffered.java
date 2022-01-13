@@ -18,6 +18,8 @@ public class ServiceOffered {
     private String service;
     private int serviceLog;
     private String description;
+    private String serviceHomePage;
+    private String reservationUrl;
 
     public ServiceOffered(String name, PetType petType, ServiceType serviceType, ServiceSubtype serviceSubtype, Contact contact) {
         this.name = name;

@@ -18,7 +18,7 @@ public class JsonResponseConverter {
         return PetType.NONE;
     }
 
-    public static ServiceType getServiceTyoeFromJsonString(String serviceType) {
+    public static ServiceType getServiceTypeFromJsonString(String serviceType) {
         if(serviceType.equalsIgnoreCase("restaurant")){
             return ServiceType.RESTAURANT;
         }

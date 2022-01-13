@@ -12,6 +12,8 @@ import com.codecool.PawPrint.repository.ServiceDao;
 import com.codecool.PawPrint.repository.UserDao;
 
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -22,23 +24,27 @@ class Initializer implements CommandLineRunner {
 
     private final UserDao repository;
     private final ServiceDao dao;
+    private final PasswordEncoder bCryptPasswordEncoder;
 
-    public Initializer(UserDao repository, ServiceDao dao) {
+    public Initializer(UserDao repository, ServiceDao dao, PasswordEncoder bCryptPasswordEncoder) {
         this.repository = repository;
         this.dao = dao;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
     public void run(String... strings) {
-        User pete = new User("Zoe", LocalDateTime.now(), "cafezoo@gmail.com", "1234", UserType.NORMAL);
+
+
+        User pete = new User("Zoe", LocalDateTime.now(), "cafezoo@gmail.com", bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
         pete.setId(1);
-        User admin = new User("admin", LocalDateTime.now(), "admin", "admin", UserType.ADMIN);
+        User admin = new User("admin", LocalDateTime.now(), "admin", bCryptPasswordEncoder.encode("admin"), UserType.ADMIN);
         admin.setId(0);
-        User eve = new User("Eve", LocalDateTime.now(), "eve@gmail.com", "1234", UserType.NORMAL);
+        User eve = new User("Eve", LocalDateTime.now(), "eve@gmail.com", bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
         eve.setId(2);
-        User John = new User("John", LocalDateTime.now(), "john@gmail.com", "1234", UserType.NORMAL);
+        User John = new User("John", LocalDateTime.now(), "john@gmail.com", bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
         John.setId(3);
-        User rob = new User("Rob", LocalDateTime.now(), "rob@gmail.com", "1234", UserType.NORMAL);
+        User rob = new User("Rob", LocalDateTime.now(), "rob@gmail.com", bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
         rob.setId(4);
 
         repository.add(pete);
@@ -88,6 +94,6 @@ class Initializer implements CommandLineRunner {
         dao.add(garden);
         dao.add(animalHotel);
         dao.add(sheltFutr);
-
+        System.out.println(repository.getAll());
     }
 }

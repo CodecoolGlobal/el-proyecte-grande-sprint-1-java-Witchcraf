@@ -1,7 +1,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../App.css';
-import {Avatar, Box, Button, Rating, Typography} from "@mui/material";
+import {Avatar, Button, Rating, Typography} from "@mui/material";
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import SpaIcon from '@mui/icons-material/Spa';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
@@ -45,6 +45,7 @@ function resultCard({result}){
         </div>
 
     );
+
 
     function createAvatarBasedOnServiceType(type){
         let avatar;

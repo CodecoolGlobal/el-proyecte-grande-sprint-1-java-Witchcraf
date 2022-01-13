@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {Col, Form, Row} from "react-bootstrap";
 
 function ServiceSubtype ({search, setSearch}) {

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {CountryDropdown, RegionDropdown} from 'react-country-region-selector';
 import {Button, Col, Form, Row} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ServiceSubtype from "./ServiceSubtype";
+import ServiceSubtype from "./serviceSubtype";
 
 function SearchForm ({setResults}) {
     const [isCheckedDog, setIsCheckedDog] = useState(false);

@@ -127,6 +127,5 @@ class Initializer implements CommandLineRunner {
         dao.add(washAndVau3);
         dao.add(washAndVau4);
         dao.add(washAndVauKecskemet);
-        System.out.println(repository.getAll());
     }
 }

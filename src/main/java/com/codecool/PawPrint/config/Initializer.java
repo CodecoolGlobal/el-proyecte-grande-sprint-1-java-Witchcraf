@@ -79,11 +79,11 @@ class Initializer implements CommandLineRunner {
         Address eveAddress = new Address(evecon.getId(), "Hungary", "Budapest", "5");
         Address johnAddress = new Address(evecon.getId(), "Hungary", "Kecskemét", "5");
         Address robAddress = new Address(evecon.getId(), "Hungary", "Kecskemét", "5");
-        Address washAndVauAddress = new Address(washAndVauCon.getId(), "Hungary", "Budapest", "11", "Tétényi út", "31");
-        Address washAndVau2Address = new Address(washAndVau2Con.getId(), "Hungary", "Budapest", "3", "Margitliget utca", "1");
-        Address washAndVau3Address = new Address(washAndVau3Con.getId(), "Hungary", "Budapest", "3", "Bécsi út", "67");
-        Address washAndVau4Address = new Address(washAndVau4Con.getId(), "Hungary", "Budapest", "4", "Kemény Gusztáv utca", "4");
-        Address washAndVauKecskemetAddress = new Address(washAndVauKecskemetCon.getId(), "Hungary", "Kecskemét", "0", "Reviczky Gyula utca", "1");
+        Address washAndVauAddress = new Address(washAndVauCon.getId(), "Hungary", "11", "Budapest", "Tétényi út", "31");
+        Address washAndVau2Address = new Address(washAndVau2Con.getId(), "Hungary", "3", "Budapest", "Margitliget utca", "1");
+        Address washAndVau3Address = new Address(washAndVau3Con.getId(), "Hungary", "3", "Budapest", "Bécsi út", "67");
+        Address washAndVau4Address = new Address(washAndVau4Con.getId(), "Hungary", "4", "Budapest", "Kemény Gusztáv utca", "4");
+        Address washAndVauKecskemetAddress = new Address(washAndVauKecskemetCon.getId(), "Hungary", "0", "Kecskemét", "Reviczky Gyula utca", "1");
 
         //set address to contact
         petecon.setAddress(peteAddress);

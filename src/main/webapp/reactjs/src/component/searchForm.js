@@ -9,7 +9,7 @@ import ServiceSubtype from "./ServiceSubtype";
 function SearchForm ({setResults}) {
     const [search, setSearch] = useState({
         country: "",
-        region: "",
+        city: "",
         district: "",
         serviceType: "",
         serviceSubtype: "",
@@ -19,7 +19,7 @@ function SearchForm ({setResults}) {
     const convertSearchToPayload = (search) => {
         return {
             country: search.country,
-            region: search.region,
+            city: search.city,
             district: search.district,
             serviceType: search.serviceType.toUpperCase(),
             serviceSubtype: search.serviceSubtype.toUpperCase(),
@@ -42,9 +42,7 @@ function SearchForm ({setResults}) {
             body: JSON.stringify(payload)
         })
         const data =  await res.json()
-        if(data === 0){
-            alert("We cant find services, please try again!")
-        }
+        console.log(data)
         return data;
     }
 
@@ -82,8 +80,8 @@ function SearchForm ({setResults}) {
                         <RegionDropdown
                             style={{ height: "40px" ,width:"100%"}}
                             country={search.country}
-                            value={search.region}
-                            onChange={(val) => setSearch({...search, region: val})} />
+                            value={search.city}
+                            onChange={(val) => setSearch({...search, city: val})} />
                     </Col>
                 </Form.Group>
 

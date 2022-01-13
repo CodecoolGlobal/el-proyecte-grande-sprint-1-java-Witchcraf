@@ -19,7 +19,7 @@ function ServiceSubtype ({search, setSearch}) {
                     {
                         search.serviceType === "Wellness" ?
                             [
-                                <option value="Wash&Vau" key="washandvau">Wash & Vau</option>,
+                                <option value="washandvau" key="washandvau">Wash & Vau</option>,
                                 <option value="Cosmetics" key="cosmetics">Cosmetics</option>
                             ] : search.serviceType === "Healthcare" ?
                                 [

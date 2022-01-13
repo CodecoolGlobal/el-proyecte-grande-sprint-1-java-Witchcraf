@@ -20,6 +20,7 @@ public class ServiceOffered {
     private String description;
     private String serviceHomePage;
     private String reservationUrl;
+    private String image;
 
     public ServiceOffered(String name, PetType petType, ServiceType serviceType, ServiceSubtype serviceSubtype, Contact contact) {
         this.name = name;
@@ -27,5 +28,17 @@ public class ServiceOffered {
         this.serviceType = serviceType;
         this.serviceSubtype = serviceSubtype;
         this.contact = contact;
+    }
+
+    public ServiceOffered(String name, PetType petType, double rating, Contact contact, String openingHours, ServiceType serviceType, ServiceSubtype serviceSubtype, String description, String serviceHomePage) {
+        this.name = name;
+        this.petType = petType;
+        this.rating = rating;
+        this.contact = contact;
+        this.openingHours = openingHours;
+        this.serviceType = serviceType;
+        this.serviceSubtype = serviceSubtype;
+        this.description = description;
+        this.serviceHomePage = serviceHomePage;
     }
 }

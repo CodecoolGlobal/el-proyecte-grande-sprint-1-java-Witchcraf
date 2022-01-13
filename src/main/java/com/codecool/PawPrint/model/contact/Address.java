@@ -22,4 +22,14 @@ public class Address {
         this.city = city;
         this.district = district;
     }
+
+    public Address(int contactId, String country, String district, String city, String street, String number) {
+        this.contactId = contactId;
+        this.country = country;
+        this.district = district;
+        this.city = city;
+        this.street = street;
+        this.number = number;
+    }
+
 }

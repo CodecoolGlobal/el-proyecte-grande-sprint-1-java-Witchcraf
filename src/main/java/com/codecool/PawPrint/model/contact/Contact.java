@@ -16,4 +16,9 @@ public class Contact {
     public Contact(User user) {
         this.user = user;
     }
+
+    public Contact(User user, String phone) {
+        this.user = user;
+        this.phone = phone;
+    }
 }

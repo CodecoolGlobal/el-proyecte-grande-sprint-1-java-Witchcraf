@@ -17,14 +17,14 @@ function ServiceSubtype ({search, setSearch}) {
                 >
                     <option value="Select">Select Service Subtype</option>
                     {
-                        search.serviceType === "Wellness" ?
+                        search.serviceType === "WELLNESS" ?
                             [
-                                <option value="Wash&Vau" key="washandvau">Wash & Vau</option>,
-                                <option value="Cosmetics" key="cosmetics">Cosmetics</option>
-                            ] : search.serviceType === "Healthcare" ?
+                                <option value="WASHANDVAU" key="washandvau">Wash & Vau</option>,
+                                <option value="COSMETICS" key="cosmetics">Cosmetics</option>
+                            ] : search.serviceType === "HEALTHCARE" ?
                                 [
-                                    <option value="Vet" key="vet">Vet</option>,
-                                    <option value="Hospital" key="hospital">Hospital</option>
+                                    <option value="VET" key="vet">Vet</option>,
+                                    <option value="HOSPITAL" key="hospital">Hospital</option>
                                 ] : null
                     }
                 </Form.Control>

@@ -8,29 +8,29 @@ import ServiceSubtype from "./ServiceSubtype";
 function SearchForm ({setResults}) {
     const [search, setSearch] = useState({
         country: "",
-        region: "",
+        city: "",
         district: "",
         serviceType: "",
         serviceSubtype: "",
         petType: ""
     })
 
-    const convertSearchToPayload = (search) => {
-        return {
-            country: search.country,
-            region: search.region,
-            district: search.district,
-            serviceType: search.serviceType.toUpperCase(),
-            serviceSubtype: search.serviceSubtype.toUpperCase(),
-            petType: search.petType.toUpperCase()
-        }
-    }
+    // const convertSearchToPayload = (search) => {
+    //     return {
+    //         country: search.country,
+    //         city: search.city,
+    //         district: search.district,
+    //         serviceType: search.serviceType,
+    //         serviceSubtype: search.serviceSubtype,
+    //         petType: search.petType
+    //     }
+    // }
 
 
     const fetchResults = async (search) => {
         console.log(search)
-        const payload = convertSearchToPayload(search);
-        console.log(payload);
+        // const payload = convertSearchToPayload(search);
+        // console.log(payload);
 
         const res = await fetch(`http://localhost:8080/api/search`,{
             method: 'POST',
@@ -38,23 +38,29 @@ function SearchForm ({setResults}) {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(payload)
+            body: JSON.stringify(search)
         })
         const data =  await res.json()
         console.log(data)
         return data;
     }
 
-
+    const getSearchResults = async (search) => {
+        const resultFromApi = await fetchResults(search);
+        setResults(resultFromApi)
+    }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const getSearchResults = async (search) => {
-            const resultFromApi = await fetchResults(search);
-            setResults(resultFromApi)
-            //resultFromApi.push("/search")
-        }
-        await getSearchResults(search)
+        await getSearchResults(search);
+        setSearch({
+            country: "",
+            city: "",
+            district: "",
+            serviceType: "",
+            serviceSubtype: "",
+            petType: ""
+        })
     }
 
 
@@ -80,8 +86,8 @@ function SearchForm ({setResults}) {
                         <RegionDropdown
                             style={{ height: "40px" ,width:"100%"}}
                             country={search.country}
-                            value={search.region}
-                            onChange={(val) => setSearch({...search, region: val})} />
+                            value={search.city}
+                            onChange={(val) => setSearch({...search, city: val})} />
                     </Col>
                 </Form.Group>
 
@@ -107,16 +113,16 @@ function SearchForm ({setResults}) {
                        onChange={(e) => {setSearch({...search, serviceType: e.target.value})}}
                    >
                        <option value="Select">Select Service</option>
-                       <option value="Restaurant">Restaurant</option>
-                       <option value="Wellness">Wellness</option>
-                       <option value="Healthcare">Healthcare</option>
-                       <option value="Shelter">Shelter</option>
+                       <option value="RESTAURANT">Restaurant</option>
+                       <option value="WELLNESS">Wellness</option>
+                       <option value="HEALTHCARE">Healthcare</option>
+                       <option value="SHELTER">Shelter</option>
                    </Form.Control>
                    </Col>
                </Form.Group>
 
             {
-                search.serviceType === "Wellness" || search.serviceType === "Healthcare" ?
+                search.serviceType === "WELLNESS" || search.serviceType === "HEALTHCARE" ?
                     <ServiceSubtype search={search} setSearch={setSearch} /> :
                     null
             }
@@ -124,17 +130,17 @@ function SearchForm ({setResults}) {
                <Form.Group as={Row} className="row justify-content-center" controlId="formHorizontalEmail">
                     <Col md={3}>
                     <Form.Check type="checkbox" label="Dog"
-                                value="Dog"
+                                value="DOG"
                                 onChange={(e) => {setSearch({...search, petType: e.target.value})}}/>
                     </Col>
                     <Col md={2}>
                     <Form.Check type="checkbox" label="Cat"
-                                value="Cat"
+                                value="CAT"
                                 onChange={(e) => {setSearch({...search, petType: e.target.value})}} />
                     </Col>
                    <Col md={2}>
                        <Form.Check type="checkbox" label="Cat&Dog"
-                                   value="Cat & Dog"
+                                   value="CATANDDOG"
                                    onChange={(e) => {setSearch({...search, petType: e.target.value})}}/>
                    </Col>
             </Form.Group>

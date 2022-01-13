@@ -1,5 +1,6 @@
 package com.codecool.PawPrint.controller;
 
+import com.codecool.PawPrint.model.controllerEntity.SearchService;
 import com.codecool.PawPrint.model.entity.PetType;
 import com.codecool.PawPrint.model.service.ServiceOffered;
 import com.codecool.PawPrint.model.service.ServiceSubtype;
@@ -38,7 +39,7 @@ public class ServiceController {
     @ResponseBody
     public Set<ServiceOffered> getServicesBy3field(@RequestBody Map<String, String> payload) {
         PetType petType = JsonResponseConverter.getPetTypeFromJsonString(payload.get("petType"));
-        ServiceType serviceType = JsonResponseConverter.getServiceTyoeFromJsonString(payload.get("serviceType"));
+        ServiceType serviceType = JsonResponseConverter.getServiceTypeFromJsonString(payload.get("serviceType"));
         String country = payload.get("country");
         String region = payload.get("region");
         String district = payload.get("district");
@@ -51,10 +52,14 @@ public class ServiceController {
 
 
     @PostMapping(value = "/search")
-    public Set<ServiceOffered> getServices(@RequestParam PetType petType, @RequestParam String country,
-                                           @RequestParam String city, @RequestParam String district,
-                                           @RequestParam ServiceType serviceType, @RequestParam(required = false) ServiceSubtype serviceSubtype,
-                                           @RequestParam(required = false) Integer userId) {
+    public Set<ServiceOffered> getServices(@RequestBody SearchService searchService) {
+
+        PetType petType = searchService.getPetType();
+        String country = searchService.getCountry();
+        String city = searchService.getCity();
+        String district = searchService.getDistrict();
+        ServiceType serviceType = searchService.getServiceType();
+        ServiceSubtype serviceSubtype = searchService.getServiceSubtype();
 
         if (serviceSubtype != null) {
             return serviceService.findServices(petType, country, city, district, serviceType, serviceSubtype);

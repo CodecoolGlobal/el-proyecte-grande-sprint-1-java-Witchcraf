@@ -11,6 +11,7 @@ import com.codecool.PawPrint.model.service.ServiceType;
 import com.codecool.PawPrint.repository.ServiceDao;
 import com.codecool.PawPrint.repository.UserDao;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -25,7 +26,7 @@ class Initializer implements CommandLineRunner {
     private final ServiceDao dao;
     private final PasswordEncoder bCryptPasswordEncoder;
 
-    public Initializer(UserDao repository, ServiceDao dao, PasswordEncoder bCryptPasswordEncoder) {
+    public Initializer(@Qualifier("userRepository") UserDao repository, ServiceDao dao, PasswordEncoder bCryptPasswordEncoder) {
         this.repository = repository;
         this.dao = dao;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;

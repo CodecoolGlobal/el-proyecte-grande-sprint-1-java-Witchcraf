@@ -60,7 +60,7 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException("Not found this User!");
         }
         assert userTypes != null;
-        userTypes.add(new SimpleGrantedAuthority("ROLE_" + user.getType().toString()));
+        userTypes.add(new SimpleGrantedAuthority("ROLE_" + user.getUserType().toString()));
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), userTypes);
     }
 

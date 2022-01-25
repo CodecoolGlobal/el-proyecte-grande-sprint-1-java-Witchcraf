@@ -2,13 +2,33 @@ package com.codecool.PawPrint.model.entity;
 
 import com.codecool.PawPrint.model.service.ServiceOffered;
 import com.codecool.PawPrint.model.contact.Contact;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "user")
 public class User {
+
+    @Id
+    @SequenceGenerator(
+            name = "user_sequence",
+            sequenceName = "user_sequence",
+            allocationSize = 1
+    )
+
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "user_sequence"
+    )
 
     private int id;
     private String fullName;
@@ -19,18 +39,22 @@ public class User {
     private double age;
     private String email;
     private String password;
+    @OneToOne(mappedBy = "user")
     private Contact contact;
-    private UserType type;
-    private Set<Pet> pets;
-    private Set<User> friends;
-    private Set<ServiceOffered> services;
-    private Set<Search> savedSearches;
+    private UserType userType;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") // joinColumn
+    private Set<Pet> pets = new HashSet<>();
+//    private Set<User> friends;        // how to annotate self-aggregation?
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<ServiceOffered> services = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<Search> savedSearches = new HashSet<>();
 
-    public User(String userName, LocalDateTime registrationTime, String email, String password, UserType type) {
+    public User(String userName, LocalDateTime registrationTime, String email, String password, UserType userType) {
         this.username = userName;
         this.registrationTime = registrationTime;
         this.email = email;
         this.password = password;
-        this.type = type;
+        this.userType = userType;
     }
 }

@@ -15,31 +15,13 @@ function SearchForm ({setResults}) {
         district: "",
         serviceType: null,
         serviceSubtype: null,
-        petTypeDog: false,
-        petTypeCat: false,
-        petTypeCatAndDog: false,
+        isDogOnly: false,
+        isCatOnly: false,
+        isBothOnly: false,
+        isAllDog: false,
+        isAllCat: false,
+        isAllPetType: false
     })
-
-    // const convertSearchToPayload = (search) => {
-    //     let serviceSubtype = "NONE";
-    //     if (search.serviceSubtypeDog && !search.serviceSubtypeCat && !search.serviceSubtypeCatAndDog) {
-    //         serviceSubtype = "DOG";
-    //     } else if (!search.serviceSubtypeDog && search.serviceSubtypeCat && !search.serviceSubtypeCatAndDog) {
-    //         serviceSubtype = "CAT";
-    //     } else if (search.serviceSubtypeDog && search.serviceSubtypeCat && !search.serviceSubtypeCatAndDog) {
-    //         serviceSubtype = "CATORDOG";
-    //     } else if (!search.serviceSubtypeDog && !search.serviceSubtypeCat && search.serviceSubtypeCatAndDog) {
-    //         serviceSubtype = "CATANDDOG";
-    //     }   // if checks everything, it counts as None and returns results regardless of PetType
-    //     return {
-    //         country: search.country,
-    //         city: search.city,
-    //         district: search.district,
-    //         serviceType: search.serviceType,
-    //         serviceSubtype: serviceSubtype,
-    //         petType: search.petType
-    //     }
-    // }
 
     const fetchResults = async (search) => {
         console.log(search);

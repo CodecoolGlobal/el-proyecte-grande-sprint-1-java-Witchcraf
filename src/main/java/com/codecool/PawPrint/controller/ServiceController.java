@@ -27,17 +27,21 @@ public class ServiceController {
 
     @PostMapping(value = "/search")
     public Set<ServiceOffered> getServices(@RequestBody SearchService searchService) {
-        PetType petType = searchService.getPetType();
         String country = searchService.getCountry();
         String city = searchService.getCity();
         String district = searchService.getDistrict();
         ServiceType serviceType = searchService.getServiceType();
         ServiceSubtype serviceSubtype = searchService.getServiceSubtype();
+        boolean isDogOnly = searchService.isDogOnly();
+        boolean isCatOnly = searchService.isCatOnly();
+        boolean isBothOnly = searchService.isBothOnly();
+        boolean isAllDog = searchService.isAllDog();
+        boolean isAllCat = searchService.isAllCat();
 
         if (serviceSubtype != null) {
-            return serviceService.findServices(petType, country, city, district, serviceType, serviceSubtype);
+            return serviceService.findServices(country, city, district, serviceType, serviceSubtype, isDogOnly, isCatOnly, isBothOnly, isAllDog, isAllCat);
         }
-        return serviceService.findServices(petType, country, city, district, serviceType);
+        return serviceService.findServices(country, city, district, serviceType, isDogOnly, isCatOnly, isBothOnly, isAllDog, isAllCat);
     }
 
     @PostMapping(value = "/search/save")

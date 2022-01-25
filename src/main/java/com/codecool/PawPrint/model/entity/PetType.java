@@ -5,5 +5,4 @@ public enum PetType {
     CAT,
     DOG,
     CATANDDOG,
-    CATORDOG
 }

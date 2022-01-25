@@ -15,12 +15,34 @@ function SearchForm ({setResults}) {
         district: "",
         serviceType: null,
         serviceSubtype: null,
-        petType: null
+        petTypeDog: false,
+        petTypeCat: false,
+        petTypeCatAndDog: false,
     })
 
+    // const convertSearchToPayload = (search) => {
+    //     let serviceSubtype = "NONE";
+    //     if (search.serviceSubtypeDog && !search.serviceSubtypeCat && !search.serviceSubtypeCatAndDog) {
+    //         serviceSubtype = "DOG";
+    //     } else if (!search.serviceSubtypeDog && search.serviceSubtypeCat && !search.serviceSubtypeCatAndDog) {
+    //         serviceSubtype = "CAT";
+    //     } else if (search.serviceSubtypeDog && search.serviceSubtypeCat && !search.serviceSubtypeCatAndDog) {
+    //         serviceSubtype = "CATORDOG";
+    //     } else if (!search.serviceSubtypeDog && !search.serviceSubtypeCat && search.serviceSubtypeCatAndDog) {
+    //         serviceSubtype = "CATANDDOG";
+    //     }   // if checks everything, it counts as None and returns results regardless of PetType
+    //     return {
+    //         country: search.country,
+    //         city: search.city,
+    //         district: search.district,
+    //         serviceType: search.serviceType,
+    //         serviceSubtype: serviceSubtype,
+    //         petType: search.petType
+    //     }
+    // }
 
     const fetchResults = async (search) => {
-
+        console.log(search);
         const res = await fetch(`http://localhost:8080/api/search`,{
             method: 'POST',
                 headers: {
@@ -48,7 +70,9 @@ function SearchForm ({setResults}) {
             city: "",
             district: "",
             serviceType: null,
-            serviceSubtype: null,
+            serviceSubtypeDog: false,
+            serviceSubtypeCat: false,
+            serviceSubtypeCatAndDog: false,
             petType: null
         })
     }
@@ -122,19 +146,19 @@ function SearchForm ({setResults}) {
                     <Form.Check type="checkbox" label="Dog" checked={isCheckedDog}
                                 value="DOG"
                                 style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}
-                                onChange={(e) => {setSearch({...search, petType: e.target.value}); setIsCheckedDog(!isCheckedDog)}}/>
+                                onChange={() => {setIsCheckedDog(!isCheckedDog); setSearch({...search, petTypeDog: !isCheckedDog})}}/>
                     </Col>
                     <Col md={2}>
                     <Form.Check type="checkbox" label="Cat" checked={isCheckedCat}
                                 value="CAT"
                                 style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}
-                                onChange={(e) => {setSearch({...search, petType: e.target.value}); setIsCheckedCat(!isCheckedCat);}} />
+                                onChange={() => {setIsCheckedCat(!isCheckedCat); setSearch({...search, petTypeCat: !isCheckedCat})}} />
                     </Col>
                    <Col md={2}>
                        <Form.Check type="checkbox" label="Cat&Dog" checked={isCheckedCatAndDog}
                                    value="CATANDDOG"
                                    style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}
-                                   onChange={(e) => {setSearch({...search, petType: e.target.value}); setIsCheckedCatAndDog(!isCheckedCatAndDog);}}/>
+                                   onChange={() => {setIsCheckedCatAndDog(!isCheckedCatAndDog); setSearch({...search, petTypeCatAndDog: !isCheckedCatAndDog})}}/>
                    </Col>
             </Form.Group>
                <br/>

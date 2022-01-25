@@ -94,6 +94,9 @@ public class ServiceDaoMem implements ServiceDao {
                     petTypeEquivalentSet.add(PetType.CATANDDOG);
                     break;
                 case CATANDDOG:
+                    petTypeEquivalentSet.add(PetType.CATANDDOG);
+                    break;
+                case CATORDOG:
                 case NONE:
                     petTypeEquivalentSet.add(PetType.CAT);
                     petTypeEquivalentSet.add(PetType.DOG);

@@ -111,8 +111,9 @@ function Login() {
                                     <FontAwesomeIcon icon={faEnvelope}/>
                                     <Package.InputText type="text" className={`${wemail ? "text-warning" : ""}`}
                                            value={inputText.email} onChange={inputEvent} name="email"
-                                           />
+                                                       autocomplete="current-email"/>
                                 </Package.InputTexts>
+
 
                                 <Package.InputTexts  className="input-text">
                                     <Package.InputLabel>Password</Package.InputLabel>
@@ -122,9 +123,8 @@ function Login() {
                                            value={inputText.password} onChange={inputEvent} name="password" autocomplete="current-password"
                                     />
                                     <FontAwesomeIcon onClick={Eye} icon={eye ? faEyeSlash : faEye}/>
-
-
                                 </Package.InputTexts >
+
 
                                 <Package.RemPass>
                                         <Package.ForgotPassWord href="#">Forgot your password?</Package.ForgotPassWord>

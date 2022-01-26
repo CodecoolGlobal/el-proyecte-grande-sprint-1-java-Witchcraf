@@ -8,11 +8,8 @@ import {useNavigate} from "react-router-dom";
 
 function Registration() {
     const navigate = useNavigate();
-    const [user, setUser] = useState([]);
-    const [eye, seteye] = useState(true);
     const [inpass, setinpass] = useState("password");
     const [warning, setwarning] = useState(false);
-    const [tick, settick] = useState(false);
 
     const [inputText, setInputText] = useState({
         fullname:"",

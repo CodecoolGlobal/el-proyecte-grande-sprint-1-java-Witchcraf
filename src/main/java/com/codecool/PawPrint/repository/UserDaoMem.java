@@ -2,7 +2,7 @@ package com.codecool.PawPrint.repository;
 
 import com.codecool.PawPrint.model.entity.Search;
 import com.codecool.PawPrint.model.entity.User;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -10,12 +10,10 @@ import java.util.List;
 import java.util.Objects;
 
 
-@Repository("userDaoMem")
+@Repository
+@Qualifier("userDaoMem")
 public class UserDaoMem implements UserDao{
     private final List<User> data = new ArrayList<>();
-
-    private UserDaoMem() {
-    }
 
     @Override
     public void add(User user) {

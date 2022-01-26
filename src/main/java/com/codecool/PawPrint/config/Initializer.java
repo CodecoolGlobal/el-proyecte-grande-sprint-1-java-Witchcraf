@@ -12,6 +12,7 @@ import com.codecool.PawPrint.repository.ServiceDao;
 
 import com.codecool.PawPrint.repository.UserDao;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,6 +28,7 @@ class Initializer implements CommandLineRunner {
     private final ServiceDao serviceDao;
     private final PasswordEncoder bCryptPasswordEncoder;
 
+    @Autowired
     public Initializer(@Qualifier("userDaoJPA") UserDao userDao, @Qualifier("serviceDaoJPA") ServiceDao serviceDao, PasswordEncoder bCryptPasswordEncoder) {
         this.userDao = userDao;
         this.serviceDao = serviceDao;

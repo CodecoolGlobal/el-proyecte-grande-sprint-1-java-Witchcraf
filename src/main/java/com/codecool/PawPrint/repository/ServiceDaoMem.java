@@ -4,14 +4,16 @@ import com.codecool.PawPrint.model.entity.PetType;
 import com.codecool.PawPrint.model.service.ServiceOffered;
 import com.codecool.PawPrint.model.service.ServiceSubtype;
 import com.codecool.PawPrint.model.service.ServiceType;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
-@Repository("serviceDaoMem")
+@Repository
+@Qualifier("serviceDaoMem")
 public class ServiceDaoMem implements ServiceDao {
 
-    private Set<ServiceOffered> services = new HashSet<>();
+    private final Set<ServiceOffered> services = new HashSet<>();
 
 
     @Override

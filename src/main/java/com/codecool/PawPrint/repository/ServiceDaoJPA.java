@@ -5,16 +5,20 @@ import com.codecool.PawPrint.model.service.ServiceOffered;
 import com.codecool.PawPrint.model.service.ServiceSubtype;
 import com.codecool.PawPrint.model.service.ServiceType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Repository("serviceDaoJPA")
+@Repository
+@Qualifier("serviceDaoJPA")
+@Primary
 public class ServiceDaoJPA implements ServiceDao {
 
-    private ServiceRepository serviceRepository;
+    private final ServiceRepository serviceRepository;
 
     @Autowired
     public ServiceDaoJPA(ServiceRepository serviceRepository) {

@@ -3,13 +3,17 @@ package com.codecool.PawPrint.repository;
 import com.codecool.PawPrint.model.entity.Search;
 import com.codecool.PawPrint.model.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-@Repository("userDaoJPA")
+@Repository
+@Qualifier("userDaoJPA")
+@Primary
 public class UserDaoJpa implements UserDao {
 
     private final UserRepository userRepository;

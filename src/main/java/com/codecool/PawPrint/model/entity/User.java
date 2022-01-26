@@ -59,4 +59,10 @@ public class User {
         this.password = password;
         this.userType = userType;
     }
+
+    public User(String name,  String email, String password) {
+        this.fullName = name;
+        this.email = email;
+        this.password = password;
+    }
 }

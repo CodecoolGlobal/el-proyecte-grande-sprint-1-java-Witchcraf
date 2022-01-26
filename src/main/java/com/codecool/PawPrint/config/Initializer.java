@@ -37,7 +37,7 @@ class Initializer implements CommandLineRunner {
 
         User pete = new User("Zoe", LocalDateTime.now(), "cafezoo@gmail.com", bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
         pete.setId(1);
-        User admin = new User("admin", LocalDateTime.now(), "admin", bCryptPasswordEncoder.encode("admin"), UserType.ADMIN);
+        User admin = new User("admin", LocalDateTime.now(), "admin@gmail.com", bCryptPasswordEncoder.encode("admin"), UserType.ADMIN);
         admin.setId(0);
         User eve = new User("Eve", LocalDateTime.now(), "eve@gmail.com", bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
         eve.setId(2);
@@ -167,5 +167,6 @@ class Initializer implements CommandLineRunner {
         dao.add(Tereza);
         dao.add(Naspolya);
         System.out.println(repository.getAll());
+        System.out.println(admin);
     }
 }

@@ -42,6 +42,18 @@ public class UserDaoMem implements UserDao{
     }
 
     @Override
+    public User checkUser(String email, String password) {
+        System.out.println(data);
+        User currentUser = null;
+        for (User user : data) {
+            if(user.getEmail().equals(email) && (user.getPassword().equals(password))){
+                currentUser = user;
+            }
+        }
+        return currentUser;
+    }
+
+    @Override
     public User findByName(String name) {
         User currentUser = null;
         for (User user : data) {
@@ -55,5 +67,16 @@ public class UserDaoMem implements UserDao{
     @Override
     public List<User> getAll() {
         return data;
+    }
+
+    @Override
+    public User findByMail(String email) {
+        User currentUser = null;
+        for (User user : data) {
+            if(Objects.equals(user.getEmail(), email)){
+                currentUser = user;
+            }
+        }
+        return currentUser;
     }
 }

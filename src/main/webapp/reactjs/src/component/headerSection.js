@@ -22,7 +22,7 @@ function HeaderSection() {
                         </Nav>
                         <Nav>
 
-                            <Nav.Link href="#deets" style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}>Sing up</Nav.Link>
+                            <Nav.Link href="/registration" style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}>Sing up</Nav.Link>
                             <Nav.Link eventKey={2} href="/login" style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}>
                                 Sing in
                             </Nav.Link>

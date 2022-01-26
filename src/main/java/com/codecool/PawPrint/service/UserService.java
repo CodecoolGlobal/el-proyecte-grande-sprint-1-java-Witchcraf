@@ -33,9 +33,10 @@ public class UserService implements UserDetailsService {
         return userDao.getAll();
     }
 
-    public void registerUser(User user) {
+    public User registerUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDao.add(user);
+        return user;
     }
 
     public User findUserById(int id) {
@@ -64,4 +65,11 @@ public class UserService implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), userTypes);
     }
 
+    public User checkUserInDatabase(String email, String password) {
+        return userDao.checkUser(email, password);
+    }
+
+    public User findUserByEmail(String email) {
+        return userDao.findByMail(email);
+    }
 }

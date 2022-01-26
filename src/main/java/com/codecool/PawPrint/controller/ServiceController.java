@@ -1,7 +1,6 @@
 package com.codecool.PawPrint.controller;
 
 import com.codecool.PawPrint.model.controllerEntity.SearchService;
-import com.codecool.PawPrint.model.entity.PetType;
 import com.codecool.PawPrint.model.service.ServiceOffered;
 import com.codecool.PawPrint.model.service.ServiceSubtype;
 import com.codecool.PawPrint.model.service.ServiceType;

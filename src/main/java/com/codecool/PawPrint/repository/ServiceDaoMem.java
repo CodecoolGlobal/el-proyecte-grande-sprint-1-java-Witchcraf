@@ -27,12 +27,11 @@ public class ServiceDaoMem implements ServiceDao {
     }
 
     @Override
-    public Set<ServiceOffered> findServices(PetType petType, String country, String city, String district, ServiceType serviceType, ServiceSubtype serviceSubtype) {
+    public Set<ServiceOffered> findServices(Set<PetType> petTypeSet, String country, String city, String district, ServiceType serviceType, ServiceSubtype serviceSubtype) {
         Set<ServiceOffered> foundServices = new HashSet<>();
-        Set<PetType> petTypeEquivalentSet = convertPetType(petType);
 
         for (ServiceOffered serviceOffered : services) {
-            if (checkSearchCondition(serviceOffered, petTypeEquivalentSet, country, city,district, serviceType, serviceSubtype)) {
+            if (checkSearchCondition(serviceOffered, petTypeSet, country, city,district, serviceType, serviceSubtype)) {
                 foundServices.add(serviceOffered);
             }
         }
@@ -40,12 +39,11 @@ public class ServiceDaoMem implements ServiceDao {
     }
 
     @Override
-    public Set<ServiceOffered> findServices(PetType petType, String country, String city, String district, ServiceType serviceType) {
+    public Set<ServiceOffered> findServices(Set<PetType> petTypeSet, String country, String city, String district, ServiceType serviceType) {
         Set<ServiceOffered> foundServices = new HashSet<>();
-        Set<PetType> petTypeEquivalentSet = convertPetType(petType);
 
         for (ServiceOffered serviceOffered : services) {
-            if (checkSearchCondition(serviceOffered, petTypeEquivalentSet, country, city,district, serviceType)) {
+            if (checkSearchCondition(serviceOffered, petTypeSet, country, city,district, serviceType)) {
                 foundServices.add(serviceOffered);
             }
         }
@@ -73,35 +71,6 @@ public class ServiceDaoMem implements ServiceDao {
     private boolean checkSearchCondition(ServiceOffered serviceOffered, Set<PetType> petTypeEquivalentSet, String country) {
         return petTypeEquivalentSet.contains(serviceOffered.getPetType())
                 && serviceOffered.getContact().getAddress().getCountry().equals(country);
-    }
-
-
-
-    private Set<PetType> convertPetType(PetType petType) {
-        Set<PetType> petTypeEquivalentSet = new HashSet<>();
-        if (petType == null) {
-            petTypeEquivalentSet.add(PetType.CAT);
-            petTypeEquivalentSet.add(PetType.DOG);
-            petTypeEquivalentSet.add(PetType.CATANDDOG);
-        } else {
-            switch (petType) {
-                case CAT:
-                    petTypeEquivalentSet.add(PetType.CAT);
-                    petTypeEquivalentSet.add(PetType.CATANDDOG);
-                    break;
-                case DOG:
-                    petTypeEquivalentSet.add(PetType.DOG);
-                    petTypeEquivalentSet.add(PetType.CATANDDOG);
-                    break;
-                case CATANDDOG:
-                case NONE:
-                    petTypeEquivalentSet.add(PetType.CAT);
-                    petTypeEquivalentSet.add(PetType.DOG);
-                    petTypeEquivalentSet.add(PetType.CATANDDOG);
-                    break;
-            }
-        }
-        return petTypeEquivalentSet;
     }
 
     @Override

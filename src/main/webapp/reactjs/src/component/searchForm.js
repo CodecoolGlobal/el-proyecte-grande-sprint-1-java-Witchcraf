@@ -5,9 +5,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ServiceSubtype from "./serviceSubtype";
 
 function SearchForm ({setResults}) {
-    const [isCheckedDog, setIsCheckedDog] = useState(false);
-    const [isCheckedCat, setIsCheckedCat] = useState(false);
-    const [isCheckedCatAndDog, setIsCheckedCatAndDog] = useState(false);
+    const [isCheckedDogOnly, setIsCheckedDogOnly] = useState(false);
+    const [isCheckedCatOnly, setIsCheckedCatOnly] = useState(false);
+    const [isCheckedBothOnly, setIsCheckedBothOnly] = useState(false);
+    const [isCheckedAllDog, setIsCheckedAllDog] = useState(false);
+    const [isCheckedAllCat, setIsCheckedAllCat] = useState(false);
+    const [isCheckedAllPetType, setIsCheckedAllPetType] = useState(false);
 
     const [search, setSearch] = useState({
         country: "",
@@ -15,12 +18,16 @@ function SearchForm ({setResults}) {
         district: "",
         serviceType: null,
         serviceSubtype: null,
-        petType: null
+        isDogOnly: false,
+        isCatOnly: false,
+        isBothOnly: false,
+        isAllDog: false,
+        isAllCat: false,
+        isAllPetType: false
     })
 
-
     const fetchResults = async (search) => {
-
+        console.log(search);
         const res = await fetch(`http://localhost:8080/api/search`,{
             method: 'POST',
                 headers: {
@@ -40,16 +47,24 @@ function SearchForm ({setResults}) {
     const handleSubmit = async (event) => {
         event.preventDefault();
         await getSearchResults(search);
-        setIsCheckedDog(false);
-        setIsCheckedCat(false);
-        setIsCheckedCatAndDog(false);
+        setIsCheckedDogOnly(false);
+        setIsCheckedCatOnly(false);
+        setIsCheckedBothOnly(false);
+        setIsCheckedAllDog(false);
+        setIsCheckedAllCat(false);
+        setIsCheckedAllPetType(false);
         setSearch({
             country: "",
             city: "",
             district: "",
             serviceType: null,
             serviceSubtype: null,
-            petType: null
+            isDogOnly: false,
+            isCatOnly: false,
+            isBothOnly: false,
+            isAllDog: false,
+            isAllCat: false,
+            isAllPetType: false
         })
     }
 
@@ -118,26 +133,122 @@ function SearchForm ({setResults}) {
             }
 
                <Form.Group as={Row} className="row justify-content-center" controlId="formHorizontalEmail">
-                    <Col md={3}>
-                    <Form.Check type="checkbox" label="Dog" checked={isCheckedDog}
-                                value="DOG"
-                                style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}
-                                onChange={(e) => {setSearch({...search, petType: e.target.value}); setIsCheckedDog(!isCheckedDog)}}/>
-                    </Col>
-                    <Col md={2}>
-                    <Form.Check type="checkbox" label="Cat" checked={isCheckedCat}
-                                value="CAT"
-                                style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}
-                                onChange={(e) => {setSearch({...search, petType: e.target.value}); setIsCheckedCat(!isCheckedCat);}} />
-                    </Col>
-                   <Col md={2}>
-                       <Form.Check type="checkbox" label="Cat&Dog" checked={isCheckedCatAndDog}
-                                   value="CATANDDOG"
-                                   style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}
-                                   onChange={(e) => {setSearch({...search, petType: e.target.value}); setIsCheckedCatAndDog(!isCheckedCatAndDog);}}/>
-                   </Col>
+                   {
+                       search.isAllDog || (
+                           !search.isDogOnly &&
+                           !search.isCatOnly &&
+                           !search.isBothOnly &&
+                           !search.isAllDog &&
+                           !search.isAllCat &&
+                           !search.isAllPetType) ?
+                           <>
+                               <Col md={3}>
+                                   <Form.Check type="checkbox" label="Dog" checked={isCheckedAllDog}
+                                               value="DOG"
+                                               style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}
+                                               onChange={() => {setIsCheckedAllDog(!isCheckedAllDog); setSearch({...search, isAllDog: !isCheckedAllDog})}}/>
+                               </Col>
+                           </> :
+                           null
+                   }
+                   {
+                       search.isAllCat || (
+                           !search.isDogOnly &&
+                           !search.isCatOnly &&
+                           !search.isBothOnly &&
+                           !search.isAllDog &&
+                           !search.isAllCat &&
+                           !search.isAllPetType) ?
+                           <>
+                               <Col md={2}>
+                                   <Form.Check type="checkbox" label="Cat" checked={isCheckedAllCat}
+                                               value="CAT"
+                                               style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}
+                                               onChange={() => {setIsCheckedAllCat(!isCheckedAllCat); setSearch({...search, isAllCat: !isCheckedAllCat})}}/>
+                               </Col>
+                           </> :
+                           null
+                   }
+                   {
+                       search.isAllPetType || (
+                           !search.isDogOnly &&
+                           !search.isCatOnly &&
+                           !search.isBothOnly &&
+                           !search.isAllDog &&
+                           !search.isAllCat &&
+                           !search.isAllPetType) ?
+                           <>
+                               <Col md={2}>
+                                   <Form.Check type="checkbox" label="Cat&Dog" checked={isCheckedAllPetType}
+                                               value="CATANDDOG"
+                                               style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}
+                                               onChange={() => {setIsCheckedAllPetType(!isCheckedAllPetType); setSearch({...search, isAllPetType: !isCheckedAllPetType})}} />
+                               </Col>
+                           </> :
+                           null
+                   }
             </Form.Group>
                <br/>
+
+            <Form.Group as={Row} className="row justify-content-center" controlId="formHorizontalEmail">
+                {
+                    search.isDogOnly || (
+                        !search.isDogOnly &&
+                        !search.isCatOnly &&
+                        !search.isBothOnly &&
+                        !search.isAllDog &&
+                        !search.isAllCat &&
+                        !search.isAllPetType) ?
+                        <>
+                            <Col md={3}>
+                                <Form.Check type="checkbox" label="Dog only" checked={isCheckedDogOnly}
+                                            value="DOGONLY"
+                                            style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}
+                                            onChange={() => {setIsCheckedDogOnly(!isCheckedDogOnly); setSearch({...search, isDogOnly: !isCheckedDogOnly})}}/>
+                            </Col>
+                        </> :
+                        null
+                }
+                {
+                    search.isCatOnly || (
+                        !search.isDogOnly &&
+                        !search.isCatOnly &&
+                        !search.isBothOnly &&
+                        !search.isAllDog &&
+                        !search.isAllCat &&
+                        !search.isAllPetType) ?
+                        <>
+                            <Col md={2}>
+                                <Form.Check type="checkbox" label="Cat only" checked={isCheckedCatOnly}
+                                            value="CATONLY"
+                                            style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}
+                                            onChange={() => {setIsCheckedCatOnly(!isCheckedCatOnly); setSearch({...search, isCatOnly: !isCheckedCatOnly})}}/>
+                            </Col>
+                        </> :
+                        null
+                }
+                {
+                    search.isBothOnly || (
+                        !search.isDogOnly &&
+                        !search.isCatOnly &&
+                        !search.isBothOnly &&
+                        !search.isAllDog &&
+                        !search.isAllCat &&
+                        !search.isAllPetType) ?
+                        <>
+                            <Col md={2}>
+                                <Form.Check type="checkbox" label="Cat&Dog only" checked={isCheckedBothOnly}
+                                            value="CATANDDOGONLY"
+                                            style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}
+                                            onChange={() => {setIsCheckedBothOnly(!isCheckedBothOnly); setSearch({...search, isBothOnly: !isCheckedBothOnly})}}/>
+                            </Col>
+                        </> :
+                        null
+                }
+
+
+            </Form.Group>
+            <br/>
             <Button variant="success" type="submit"
                    style={{ fontFamily: 'Playfair Display',fontSize:"20px", width:"100%" }}>
                 Submit

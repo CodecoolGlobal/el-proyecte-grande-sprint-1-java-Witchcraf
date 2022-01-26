@@ -4,5 +4,5 @@ public enum PetType {
     NONE,
     CAT,
     DOG,
-    CATANDDOG
+    CATANDDOG,
 }

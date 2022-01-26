@@ -2,6 +2,8 @@ package com.codecool.PawPrint.repository;
 
 import com.codecool.PawPrint.model.entity.Search;
 import com.codecool.PawPrint.model.entity.User;
+import org.springframework.data.repository.CrudRepository;
+
 import java.util.List;
 
 

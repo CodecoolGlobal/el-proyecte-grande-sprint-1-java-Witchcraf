@@ -50,10 +50,11 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Search> savedSearches = new HashSet<>();
 
-    public User(String userName, LocalDateTime registrationTime, String email, String password, UserType userType) {
+    public User(String userName, LocalDateTime registrationTime, String email,int age, String password, UserType userType) {
         this.username = userName;
         this.registrationTime = registrationTime;
         this.email = email;
+        this.age = age;
         this.password = password;
         this.userType = userType;
     }

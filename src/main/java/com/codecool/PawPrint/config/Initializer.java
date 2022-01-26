@@ -9,9 +9,9 @@ import com.codecool.PawPrint.model.service.ServiceOffered;
 import com.codecool.PawPrint.model.service.ServiceSubtype;
 import com.codecool.PawPrint.model.service.ServiceType;
 import com.codecool.PawPrint.repository.ServiceDao;
-import com.codecool.PawPrint.repository.UserDao;
 
-import org.springframework.beans.factory.annotation.Qualifier;
+import com.codecool.PawPrint.repository.UserDao;
+import com.codecool.PawPrint.repository.UserDaoJpa;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -26,7 +26,7 @@ class Initializer implements CommandLineRunner {
     private final ServiceDao dao;
     private final PasswordEncoder bCryptPasswordEncoder;
 
-    public Initializer(@Qualifier("userRepository") UserDao repository, ServiceDao dao, PasswordEncoder bCryptPasswordEncoder) {
+    public Initializer(UserDao repository, ServiceDao dao, PasswordEncoder bCryptPasswordEncoder) {
         this.repository = repository;
         this.dao = dao;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
@@ -35,30 +35,29 @@ class Initializer implements CommandLineRunner {
     @Override
     public void run(String... strings) {
 
-
-        User pete = new User("Zoe", LocalDateTime.now(), "cafezoo@gmail.com", bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
+        User pete = new User("Zoe", LocalDateTime.now(), "cafezoo@gmail.com",2 , bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
         pete.setId(1);
-        User admin = new User("admin", LocalDateTime.now(), "admin", bCryptPasswordEncoder.encode("admin"), UserType.ADMIN);
+        User admin = new User("admin", LocalDateTime.now(), "admin",3,  bCryptPasswordEncoder.encode("admin"), UserType.ADMIN);
         admin.setId(0);
-        User eve = new User("Eve", LocalDateTime.now(), "eve@gmail.com", bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
+        User eve = new User("Eve", LocalDateTime.now(), "eve@gmail.com",4 , bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
         eve.setId(2);
-        User John = new User("John", LocalDateTime.now(), "john@gmail.com", bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
+        User John = new User("John", LocalDateTime.now(), "john@gmail.com",4, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
         John.setId(3);
-        User rob = new User("Rob", LocalDateTime.now(), "rob@gmail.com", bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
+        User rob = new User("Rob", LocalDateTime.now(), "rob@gmail.com",4, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
         rob.setId(4);
-        User washAndVauUser = new User("WashAndVau", LocalDateTime.now(), "info@kutyamoso.hu", bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
+        User washAndVauUser = new User("WashAndVau", LocalDateTime.now(), "info@kutyamoso.hu",2, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
         washAndVauUser.setId(5);
-        User washAndVauUserKecskemet = new User("WashAndVauKecskemét", LocalDateTime.now(), "kecskemet@kutyamoso.hu", bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
+        User washAndVauUserKecskemet = new User("WashAndVauKecskemét", LocalDateTime.now(), "kecskemet@kutyamoso.hu",1, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
         washAndVauUser.setId(6);
-        User BBsUser = new User("BBsBar&Grill", LocalDateTime.now(), "hello@bbzbar.hu", bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
+        User BBsUser = new User("BBsBar&Grill", LocalDateTime.now(), "hello@bbzbar.hu", 2,bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
         BBsUser.setId(7);
-        User HokedliUser = new User("Hokedli", LocalDateTime.now(), "hokedlidelivery@gmail.com", bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
+        User HokedliUser = new User("Hokedli", LocalDateTime.now(), "hokedlidelivery@gmail.com",2, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
         HokedliUser.setId(8);
-        User WanHaoUser = new User("WanHao", LocalDateTime.now(), "info@monoricenter.hu", bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
+        User WanHaoUser = new User("WanHao", LocalDateTime.now(), "info@monoricenter.hu",2, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
         WanHaoUser.setId(9);
-        User TerezaUser = new User("Tereza", LocalDateTime.now(), "RESERVATION@TEREZA.HU", bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
+        User TerezaUser = new User("Tereza", LocalDateTime.now(), "RESERVATION@TEREZA.HU",2, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
         WanHaoUser.setId(10);
-        User NaspolyaUser = new User("Naspolya", LocalDateTime.now(), "info@naspolya.hu", bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
+        User NaspolyaUser = new User("Naspolya", LocalDateTime.now(), "info@naspolya.hu",2, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
         WanHaoUser.setId(10);
 
         repository.add(pete);

@@ -9,8 +9,6 @@ import {useNavigate} from "react-router-dom";
 function Registration() {
     const navigate = useNavigate();
     const [user, setUser] = useState([]);
-    //const navigate = useNavigate();
-
     const [eye, seteye] = useState(true);
     const [inpass, setinpass] = useState("password");
     const [warning, setwarning] = useState(false);
@@ -87,20 +85,9 @@ function Registration() {
                                 <form onSubmit={submitForm}>
                                     <Package.InputTexts>
                                         <Package.InputLabel>FullName</Package.InputLabel>
-                                        <FontAwesomeIcon icon={faUserCircle}
-                                                         fontSize="50px"
-                                        />
+                                        <FontAwesomeIcon icon={faUserCircle}/>
                                         <Package.InputText type="text" className={`${wemail ? "text-warning" : ""}`}
-                                               value={inputText.fullname} onChange={inputEvent} name="fullname"
-                                               height="45px"
-                                               width="100%"
-                                               border="none"
-                                               borderradius="7px"
-                                               backgrouncolor="#f5f5f5"
-                                               outline="0"
-                                               padding=" 0 10px"
-                                               fontSize="13px"
-                                              />
+                                               value={inputText.fullname} onChange={inputEvent} name="fullname"/>
 
                                     </Package.InputTexts>
 
@@ -109,16 +96,7 @@ function Registration() {
                                         <FontAwesomeIcon icon={faEnvelope}/>
 
                                         <Package.InputText type="text" className={`${wemail ? "text-warning" : ""}`}
-                                               value={inputText.email} onChange={inputEvent} name="email"
-                                               height="45px"
-                                               width="100%"
-                                               border="none"
-                                               borderradius="7px"
-                                               backgrouncolor="#f5f5f5"
-                                               outline="0"
-                                               padding=" 0 10px"
-                                               fontSize="13px"
-                                               paddingleft="30px"/>
+                                               value={inputText.email} onChange={inputEvent} name="email"/>
 
 
                                     </Package.InputTexts>
@@ -129,16 +107,7 @@ function Registration() {
 
                                         <Package.InputText type={inpass}
                                                className={` ${warning ? "warning" : ""} ${wpassword ? "text-warning" : ""}`}
-                                               value={inputText.password} onChange={inputEvent} name="password"
-                                               height="45px"
-                                               width="100%"
-                                               border="none"
-                                               paddingLeft="10px"
-                                               borderradius='7px!important'
-                                               backgrouncolor="#f5f5f5"
-                                               outline="0"
-                                               fontSize="13px"
-                                               paddingleft="30px"
+                                               value={inputText.password} onChange={inputEvent} name="password" autocomplete="current-password"
                                         />
 
                                     </Package.InputTexts >
@@ -184,7 +153,7 @@ const Package = {
     `,
 
     ContainerCard: styled.div`
-        height: 530px;
+        height: 610px;
         width: 800px;
         background-color: #fff;
         position: relative;

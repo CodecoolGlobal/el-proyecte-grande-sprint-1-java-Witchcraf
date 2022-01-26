@@ -3,15 +3,15 @@ import styled from "styled-components";
 import Layout from "../layout";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faCheck, faEnvelope, faEye, faEyeSlash, faLock} from '@fortawesome/free-solid-svg-icons'
+import {useNavigate} from "react-router-dom";
+
 
 function Login() {
     const [user, setUser] = useState([]);
-    //const navigate = useNavigate();
-
+    const navigate = useNavigate();
     const [eye, seteye] = useState(true);
     const [inpass, setinpass] = useState("password");
     const [warning, setwarning] = useState(false);
-    const [tick, settick] = useState(false);
 
     const [inputText, setInputText] = useState({
         email: "",
@@ -30,14 +30,6 @@ function Login() {
             setinpass("password");
             seteye(true);
             setwarning(false);
-        }
-    }
-
-    const Tick = () => {
-        if (tick) {
-            settick(false);
-        } else {
-            settick(true);
         }
     }
 
@@ -84,6 +76,7 @@ function Login() {
             console.log(user.email)
             if (user.email !== "") {
                 alert("ok")
+                navigate("/")
             } else {
                 alert("Something wrong!")
             }
@@ -94,78 +87,55 @@ function Login() {
     return (
         <Layout >
             <Package.Wrapper>
-            <Package.Container className="container">
-                <Package.ContainerCard className="card">
-                    <Package.ContainerForm className="form">
-                        <Package.CardLeft className="left-side">
+            <Package.Container>
+                <Package.ContainerCard>
+                    <Package.ContainerForm>
+                        <Package.CardLeft>
                             <Package.CardImg src="images/log3.jpg"/>
                         </Package.CardLeft>
-                        <Package.CardRight className="right-side">
-                            <div className="heading">
+                        <Package.CardRight>
                                 <Package.Head>Log in to PawPrint!</Package.Head>
                                 <Package.HeadP>Welcome Back! login with your data that you entered during registration.</Package.HeadP>
-                            </div>
-                            <Package.Social className="social">
+                            <Package.Social>
                                 <Package.SocialSpan>Log in with Google</Package.SocialSpan>
                                 <Package.SocialSpan>Log in with Facebook</Package.SocialSpan>
                             </Package.Social>
-                            <hr className={Package.RightSideHr}/>
-                            <Package.Or className="or">
-                                <p className={Package.ORP}>or</p>
+                            <Package.RightSideHr/>
+                            <Package.Or>
+                                <Package.ORP>or</Package.ORP>
                             </Package.Or>
 
                             <form onSubmit={submitForm}>
                                 <Package.InputTexts className="input-text">
-                                    <FontAwesomeIcon icon={faEnvelope}/>
-                                    <input type="text" className={`${wemail ? "text-warning" : ""}`}
-                                           value={inputText.email} onChange={inputEvent} name="email"
-                                           height="45px"
-                                           width="100%"
-                                            border="none"
-                                            borderradius="7px"
-                                            backgrouncolor="#f5f5f5"
-                                            outline="0"
-                                            padding=" 0 10px"
-                                            fontSize="13px"
-                                            paddingleft="30px"/>
                                     <Package.InputLabel>Email</Package.InputLabel>
-
+                                    <FontAwesomeIcon icon={faEnvelope}/>
+                                    <Package.InputText type="text" className={`${wemail ? "text-warning" : ""}`}
+                                           value={inputText.email} onChange={inputEvent} name="email"
+                                           />
                                 </Package.InputTexts>
+
                                 <Package.InputTexts  className="input-text">
                                     <Package.InputLabel>Password</Package.InputLabel>
                                     <FontAwesomeIcon icon={faLock}/>
-                                    <input type={inpass}
+                                    <Package.InputText type={inpass}
                                            className={` ${warning ? "warning" : ""} ${wpassword ? "text-warning" : ""}`}
-                                           value={inputText.password} onChange={inputEvent} name="password"
-                                           height="45px"
-                                           width="100%"
-                                           border="none"
-                                           borderradius='7px!important'
-                                           backgrouncolor="#f5f5f5"
-                                           outline="0"
-                                           padding=" 0 10px"
-                                           fontSize="13px"
-                                           paddingleft="30px"
+                                           value={inputText.password} onChange={inputEvent} name="password" autocomplete="current-password"
                                     />
                                     <FontAwesomeIcon onClick={Eye} icon={eye ? faEyeSlash : faEye}/>
+
+
                                 </Package.InputTexts >
 
-                                <Package.RemPass className="rem_pass">
-                                    <Package.Remember className="remember">
-                                        <Package.RememberSpan onClick={Tick} className={` ${tick ? "green" : ""}`}>
-                                            <FontAwesomeIcon icon={faCheck}/>
-                                        </Package.RememberSpan>
-                                        <Package.RememberP>Remember Me</Package.RememberP>
-                                    </Package.Remember>
-                                        <Package.ForgorPassWord href="#">Forgot your password?</Package.ForgorPassWord>
+                                <Package.RemPass>
+                                        <Package.ForgotPassWord href="#">Forgot your password?</Package.ForgotPassWord>
                                 </Package.RemPass>
 
-                                <Package.Button className="button">
+                                <Package.Button>
                                     <Package.SubmitButton type="submit">Login</Package.SubmitButton>
                                 </Package.Button>
                             </form>
 
-                            <Package.Register className="register">
+                            <Package.Register>
                                 <Package.RegisterP>Didn't have an account?
                                     <Package.RegisterA href="/registration"> Register</Package.RegisterA>
                                 </Package.RegisterP>
@@ -200,7 +170,7 @@ const Package = {
     `,
 
     ContainerCard: styled.div`
-        height: 530px;
+        height: 610px;
         width: 800px;
         background-color: #fff;
         position: relative;
@@ -282,8 +252,20 @@ const Package = {
 
     InputTexts: styled.div`
         position: relative;
-        margin-top: 20px;
+        margin-top: 5px;
         width: 100%;
+
+    `,
+    InputText: styled.input`
+        height: 45px;
+        width: 100%;
+        border: none;
+        border-radius: 7px;
+        background-color: #f5f5f5;
+        outline: 0;
+        padding: 0 5px;
+        font-size: 13px;
+        padding-left: 30px
 
     `,
 
@@ -301,30 +283,9 @@ const Package = {
         align-items: center;
         margin-top: 20px;
     `,
-    Remember: styled.div`
-        display: flex;
-        align-items: center
-    `,
 
-    RememberSpan: styled.span`
-        height: 25px;
-        width: 25px;
-        border-radius: 8px;
-        border: 1px solid #ccc;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #fff;
-        cursor: pointer;
-        transition: all 0.5s
-    `,
 
-    RememberP: styled.p`
-         font-size: 12px;
-        margin-left: 5px;
-        font-weight: 700
-    `,
-    ForgorPassWord: styled.a`
+    ForgotPassWord: styled.a`
        font-size: 12px;
     color: blue;
     text-decoration: none;

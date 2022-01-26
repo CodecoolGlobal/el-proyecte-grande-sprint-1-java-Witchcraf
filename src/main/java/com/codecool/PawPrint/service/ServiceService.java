@@ -6,10 +6,10 @@ import com.codecool.PawPrint.model.service.ServiceOffered;
 import com.codecool.PawPrint.model.service.ServiceType;
 import com.codecool.PawPrint.repository.ServiceDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Service
@@ -18,7 +18,7 @@ public class ServiceService {
     private final ServiceDao serviceDao;
 
     @Autowired
-    public ServiceService(ServiceDao serviceDao) {
+    public ServiceService(@Qualifier("serviceDaoJPA") ServiceDao serviceDao) {
         this.serviceDao = serviceDao;
     }
 
@@ -50,7 +50,7 @@ public class ServiceService {
         return petTypeEquivalentSet;
     }
 
-    public List<ServiceOffered> findServices(String country, String city, String district,
+    public Set<ServiceOffered> findServices(String country, String city, String district,
                                              ServiceType serviceType, ServiceSubtype serviceSubtype,
                                              boolean isDogOnly, boolean isCatOnly, boolean isBothOnly,
                                              boolean isAllDog, boolean isAllCat) {
@@ -58,7 +58,7 @@ public class ServiceService {
         return serviceDao.findServices(petTypeEquivalentSet, country, city, district, serviceType, serviceSubtype);
     }
 
-    public List<ServiceOffered> findServices(String country, String city, String district,
+    public Set<ServiceOffered> findServices(String country, String city, String district,
                                             ServiceType serviceType, boolean isDogOnly, boolean isCatOnly,
                                             boolean isBothOnly, boolean isAllDog, boolean isAllCat) {
         Set<PetType> petTypeEquivalentSet = convertPetType(isDogOnly, isCatOnly, isBothOnly, isAllDog, isAllCat);

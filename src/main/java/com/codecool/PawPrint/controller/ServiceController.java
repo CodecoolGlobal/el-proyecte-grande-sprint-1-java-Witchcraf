@@ -28,7 +28,7 @@ public class ServiceController {
     }
 
     @PostMapping(value = "/search")
-    public List<ServiceOffered> getServices(@RequestBody SearchService searchService) {
+    public Set<ServiceOffered> findServices(@RequestBody SearchService searchService) {
         String country = searchService.getCountry();
         String city = searchService.getCity();
         String district = searchService.getDistrict();

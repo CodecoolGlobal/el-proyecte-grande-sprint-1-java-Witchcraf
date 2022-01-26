@@ -4,11 +4,11 @@ import com.codecool.PawPrint.model.entity.PetType;
 import com.codecool.PawPrint.model.service.ServiceOffered;
 import com.codecool.PawPrint.model.service.ServiceSubtype;
 import com.codecool.PawPrint.model.service.ServiceType;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
-@Component
+@Repository("serviceDaoMem")
 public class ServiceDaoMem implements ServiceDao {
 
     private Set<ServiceOffered> services = new HashSet<>();
@@ -26,8 +26,8 @@ public class ServiceDaoMem implements ServiceDao {
     }
 
     @Override
-    public List<ServiceOffered> findServices(Set<PetType> petTypeSet, String country, String city, String district, ServiceType serviceType, ServiceSubtype serviceSubtype) {
-        List<ServiceOffered> foundServices = new LinkedList<>();
+    public Set<ServiceOffered> findServices(Set<PetType> petTypeSet, String country, String city, String district, ServiceType serviceType, ServiceSubtype serviceSubtype) {
+        Set<ServiceOffered> foundServices = new HashSet<>();
 
         for (ServiceOffered serviceOffered : services) {
             if (checkSearchCondition(serviceOffered, petTypeSet, country, city,district, serviceType, serviceSubtype)) {
@@ -38,8 +38,8 @@ public class ServiceDaoMem implements ServiceDao {
     }
 
     @Override
-    public List<ServiceOffered> findServices(Set<PetType> petTypeSet, String country, String city, String district, ServiceType serviceType) {
-        List<ServiceOffered> foundServices = new LinkedList<>();
+    public Set<ServiceOffered> findServices(Set<PetType> petTypeSet, String country, String city, String district, ServiceType serviceType) {
+        Set<ServiceOffered> foundServices = new HashSet<>();
 
         for (ServiceOffered serviceOffered : services) {
             if (checkSearchCondition(serviceOffered, petTypeSet, country, city,district, serviceType)) {

@@ -5,6 +5,7 @@ import com.codecool.PawPrint.model.entity.User;
 import com.codecool.PawPrint.model.service.ServiceOffered;
 import com.codecool.PawPrint.repository.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -63,5 +64,4 @@ public class UserService implements UserDetailsService {
         userTypes.add(new SimpleGrantedAuthority("ROLE_" + user.getUserType().toString()));
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), userTypes);
     }
-
 }

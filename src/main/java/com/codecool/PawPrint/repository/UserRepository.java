@@ -1,17 +1,14 @@
 package com.codecool.PawPrint.repository;
 
-import com.codecool.PawPrint.model.entity.Search;
 import com.codecool.PawPrint.model.entity.User;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
-public interface UserDao {
-
-    void add(User user);
-    void add(User user, Search search);
+@Repository
+public interface UserRepository extends CrudRepository<User, Long> {
     User findById(int id);
-    User findByName(String name);
-    List<User> getAll();
+    List<User> findAll();
+    User findUserByUsername(String name);
 }

@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import Layout from "../layout";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faCheck, faEnvelope, faEye, faEyeSlash, faLock, faUserCircle} from '@fortawesome/free-solid-svg-icons'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faEnvelope, faLock, faUserCircle} from '@fortawesome/free-solid-svg-icons'
+import {useNavigate} from "react-router-dom";
+
 
 function Registration() {
+    const navigate = useNavigate();
     const [user, setUser] = useState([]);
     //const navigate = useNavigate();
 
@@ -48,9 +51,7 @@ function Registration() {
     }
 
     const registerUser = async (inputText) => {
-        const resultFromAPI = await fetchResults(inputText);
-        console.log(resultFromAPI)
-        return resultFromAPI;
+        return await fetchResults(inputText);
     }
 
     const submitForm = async (e) => {
@@ -63,7 +64,7 @@ function Registration() {
             setwpassword(true);
         else {
             await registerUser(inputText);
-
+            navigate("/login")
         }
     }
 

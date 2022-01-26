@@ -21,14 +21,14 @@ public class UserDaoMem implements UserDao{
 
     }
 
-    @Override
-    public void add(User user, Search search) {
-        for (User datum : data) {
-            if (datum.equals(user)) {
-                datum.getSavedSearches().add(search);
-            }
-        }
-    }
+//    @Override
+//    public void add(User user, Search search) {
+//        for (User datum : data) {
+//            if (datum.equals(user)) {
+//                datum.getSavedSearches().add(search);
+//            }
+//        }
+//    }
 
     @Override
     public User findById(int id) {

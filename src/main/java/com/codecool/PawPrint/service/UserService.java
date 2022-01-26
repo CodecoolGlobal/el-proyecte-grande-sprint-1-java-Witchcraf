@@ -48,6 +48,13 @@ public class UserService implements UserDetailsService {
        return userDao.findByName(name);
     }
 
+    public boolean checkRegEmailAndName(String email, String fullName){
+        if(userDao.existsByEmail(email) && userDao.existsByFullName(fullName)){
+            return false;
+        }
+        return true;
+    }
+
 //    public void saveSearch(int userId, Set<ServiceOffered> services) {
 //        User user = findUserById(userId);
 //        Search search = new Search(services);

@@ -28,9 +28,11 @@ public class LoginController {
         String name = userRegEntity.getFullname();
         String email = userRegEntity.getEmail();
         String password = userRegEntity.getPassword();
-        User newUser = new User(name, email, password);
-        System.out.println(newUser);
-        return userService.registerUser(newUser);
+        if (userService.checkRegEmailAndName(email, name)){
+            User newUser = new User(name, email, password);
+            return userService.registerUser(newUser);
+        }
+        return null;
     }
 
     @PostMapping(value = "/checkLog")

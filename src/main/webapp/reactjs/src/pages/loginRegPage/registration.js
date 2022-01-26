@@ -63,8 +63,12 @@ function Registration() {
         } else if (inputText.password == "")
             setwpassword(true);
         else {
-            await registerUser(inputText);
-            navigate("/login")
+            if (await registerUser(inputText) !== null){
+                await registerUser(inputText);
+                navigate("/login")
+            }else {
+                alert("Your Email or Name exists our system so try a new one!")
+            }
         }
     }
 

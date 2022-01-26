@@ -13,7 +13,6 @@ public interface UserDao {
     void add(User user, Search search);
     User findById(int id);
     User findByName(String name);
-    User checkUser(String email, String password);
     List<User> getAll();
 
 

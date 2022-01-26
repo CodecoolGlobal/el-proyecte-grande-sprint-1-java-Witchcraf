@@ -23,30 +23,40 @@ public class LoginController {
         this.passwordEncoder = passwordEncoder;
     }
 
+
+    @PostMapping(value = "/checkPreviousReg")
+    public boolean checkUserInDataBase(@RequestBody UserRegEntity userRegEntity) {
+        User user = userService.findUserByEmail(userRegEntity.getEmail());
+        return user != null;
+    }
+
+
+
     @PostMapping(value = "/registerUser")
     public User registerNewUser(@RequestBody UserRegEntity userRegEntity) {
         String name = userRegEntity.getFullname();
         String email = userRegEntity.getEmail();
         String password = userRegEntity.getPassword();
         User newUser = new User(name, email, password);
-        System.out.println(newUser);
         return userService.registerUser(newUser);
     }
 
     @PostMapping(value = "/checkLog")
-    public User checkUser(@RequestBody UserLogEntity userLogEntity) {
+    public boolean checkUser(@RequestBody UserLogEntity userLogEntity) {
         String email = userLogEntity.getEmail();
         String password = userLogEntity.getPassword();
         User current = userService.findUserByEmail(email);
+        System.out.println(current);
+
         boolean isPasswordMatch;
         if (current == null) {
-            return null;
+            return false;
         } else {
             isPasswordMatch = passwordEncoder.matches(password, current.getPassword());
             if (isPasswordMatch) {
-                return current;
+                return true;
             } else {
-                return null;
+                return false;
             }
         }
     }

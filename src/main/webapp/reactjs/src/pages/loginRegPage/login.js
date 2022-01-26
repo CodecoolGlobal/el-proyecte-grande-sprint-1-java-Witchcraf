@@ -2,34 +2,68 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Layout from "../layout";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faCheck, faEnvelope, faEye, faEyeSlash, faLock} from '@fortawesome/free-solid-svg-icons'
+import {faEnvelope, faEye, faEyeSlash, faLock} from '@fortawesome/free-solid-svg-icons'
 import {useNavigate} from "react-router-dom";
+import {faFacebook, faGoogle} from "@fortawesome/free-brands-svg-icons";
 
+const emailValidator = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const passwordValidator = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
 
 function Login() {
-    const [user, setUser] = useState([]);
     const navigate = useNavigate();
     const [eye, seteye] = useState(true);
     const [inpass, setinpass] = useState("password");
-    const [warning, setwarning] = useState(false);
-
     const [inputText, setInputText] = useState({
         email: "",
         password: ""
     });
 
-    const [wemail, setwemail] = useState(false);
-    const [wpassword, setwpassword] = useState(false);
+    const [wemail, setWEmail] = useState("");
+    const [wPassword, setWPassword] = useState("");
+
+    const handleBlur = (event) => {
+        const { name } = event.target;
+        validateField(name);
+    }
+
+    const validateField = (name) => {
+        let isValid = false;
+        if (name === "email") isValid = validateEmailAddress();
+        else if (name === "password") isValid = validatePassword();
+        return isValid;
+    }
+
+    const validateEmailAddress = () => {
+        let emailAddressError = "";
+        const value = inputText.email;
+        if (value.trim === "") emailAddressError = "Email Address is required";
+        else if (!emailValidator.test(value))
+            emailAddressError = "Email is not valid";
+        setWEmail(emailAddressError)
+        return emailAddressError === "";
+
+
+    }
+
+    const validatePassword = () => {
+        let passwordError = "";
+        const value = inputText.password;
+        if (value.trim === "") passwordError = "Password is required";
+        else if (!passwordValidator.test(value))
+            passwordError =
+                "Password must contain at least 8 characters, 1 number, 1 upper and 1 lowercase!";
+        setWPassword(passwordError)
+        return passwordError === "";
+
+    }
 
     const Eye = () => {
-        if (inpass == "password") {
+        if (inpass === "password") {
             setinpass("text");
             seteye(false);
-            setwarning(true);
         } else {
             setinpass("password");
             seteye(true);
-            setwarning(false);
         }
     }
 
@@ -59,28 +93,45 @@ function Login() {
     }
 
     const checkUserInBackend = async (inputText) => {
-        const resultFromAPI = await fetchResults(inputText);
-        setUser(resultFromAPI)
+        return await fetchResults(inputText);
     }
+
+    const checkIsInputFill = async () => {
+        let formFields = [
+            "email",
+            "password",
+        ];
+        let isValid = true;
+        formFields.forEach(field => {
+            isValid = validateField(field) && isValid;
+        });
+        return isValid;
+    }
+
+
 
     const submitForm = async (e) => {
         e.preventDefault();
-        setwemail(false);
-        setwpassword(false);
-        if (inputText.email == "") {
-            setwemail(true);
-        } else if (inputText.password == "")
-            setwpassword(true);
-        else {
-            await checkUserInBackend(inputText);
-            console.log(user.email)
-            if (user.email !== "") {
-                alert("ok")
-                navigate("/")
-            } else {
-                alert("Something wrong!")
-            }
+        const isFill = await checkIsInputFill();
+        const isValidLogin = await checkUserInBackend(inputText);
+        if(isValidLogin && isFill){
+            navigate("/")
         }
+        else{
+            alert("Please try again! Email or password invalid!")
+        }
+
+
+        /*if (isValid) {
+            const isValidLogin = await checkUserInBackend(inputText);
+            console.log(isValidLogin)
+            if(isValidLogin){
+                navigate("/")
+            }
+            else {
+                alert("Email or password incorrect, please try again!")
+            }
+        }*/
     }
 
 
@@ -97,8 +148,10 @@ function Login() {
                                 <Package.Head>Log in to PawPrint!</Package.Head>
                                 <Package.HeadP>Welcome Back! login with your data that you entered during registration.</Package.HeadP>
                             <Package.Social>
-                                <Package.SocialSpan>Log in with Google</Package.SocialSpan>
-                                <Package.SocialSpan>Log in with Facebook</Package.SocialSpan>
+
+                                <Package.SocialSpan><FontAwesomeIcon icon={faGoogle} color="#0669e3" fontSize="13px"/>
+                                    Log in with Google</Package.SocialSpan>
+                                <Package.SocialSpan><FontAwesomeIcon icon={faFacebook} color="#0669e3" fontSize="13px"/>Log in with Facebook</Package.SocialSpan>
                             </Package.Social>
                             <Package.RightSideHr/>
                             <Package.Or>
@@ -106,22 +159,36 @@ function Login() {
                             </Package.Or>
 
                             <form onSubmit={submitForm}>
-                                <Package.InputTexts className="input-text">
+                                <Package.InputTexts>
                                     <Package.InputLabel>Email</Package.InputLabel>
                                     <FontAwesomeIcon icon={faEnvelope}/>
-                                    <Package.InputText type="text" className={`${wemail ? "text-warning" : ""}`}
-                                           value={inputText.email} onChange={inputEvent} name="email"
-                                                       autocomplete="current-email"/>
+                                    <Package.InputText  type="text"
+                                                        value={inputText.email}
+                                                        onChange={inputEvent} name="email"
+                                                        onBlur={handleBlur}
+                                                        autoComplete="off"
+                                                        />
+                                    <br />
+                                    {wemail && (
+                                        <Package.ErrorMsg>{wemail}</Package.ErrorMsg>
+                                    )}
                                 </Package.InputTexts>
 
 
-                                <Package.InputTexts  className="input-text">
+                                <Package.InputTexts>
                                     <Package.InputLabel>Password</Package.InputLabel>
                                     <FontAwesomeIcon icon={faLock}/>
                                     <Package.InputText type={inpass}
-                                           className={` ${warning ? "warning" : ""} ${wpassword ? "text-warning" : ""}`}
-                                           value={inputText.password} onChange={inputEvent} name="password" autocomplete="current-password"
+                                                       value={inputText.password}
+                                                       onChange={inputEvent}
+                                                       name="password"
+                                                       onBlur={handleBlur}
+                                                       autoComplete="off"
                                     />
+                                    <br />
+                                    {wPassword && (
+                                        <Package.ErrorMsg>{wPassword}</Package.ErrorMsg>
+                                    )}
                                     <FontAwesomeIcon onClick={Eye} icon={eye ? faEyeSlash : faEye}/>
                                 </Package.InputTexts >
 
@@ -147,7 +214,6 @@ function Login() {
                 </Package.ContainerCard>
             </Package.Container>
             </Package.Wrapper>
-
         </Layout>
     );
 }
@@ -157,7 +223,6 @@ const Package = {
      padding: 0;
     margin: 0;
     box-sizing: border-box;
- 
   `,
 
     Container: styled.div`
@@ -204,13 +269,15 @@ const Package = {
         padding: 20px
     `,
     Head: styled.h3`
-    letter-spacing: 1px
+    letter-spacing: 1px;
+    font-family: 'Playfair Display';
     `,
 
     HeadP: styled.p`
         margin-top: 5px;
-        font-size: 12px;
-        color: #898989
+        font-size: 16px;
+        color: #898989;
+        font-family: 'Playfair Display';
     `,
 
     Social: styled.div`
@@ -231,6 +298,7 @@ const Package = {
         font-size: 12px;
         font-weight: 600;
         cursor: pointer;
+        font-family: 'Playfair Display';
     `,
     RightSideHr: styled.hr`
     margin-top: 20px
@@ -241,6 +309,7 @@ const Package = {
     justify-content: center;
     align-items: center;
     margin-top: -8px;
+    font-family: 'Playfair Display';
     `,
 
     ORP: styled.div`
@@ -274,7 +343,8 @@ const Package = {
         left: 30px;
         font-size: 12px;
         pointer-events: none;
-        transition: all 0.5s
+        transition: all 0.5s;
+        font-family: 'Playfair Display';
     `,
 
     RemPass: styled.div`
@@ -287,16 +357,16 @@ const Package = {
 
     ForgotPassWord: styled.a`
        font-size: 12px;
-    color: blue;
-    text-decoration: none;
-    cursor: pointer
+       color: blue;
+       text-decoration: none;
+       cursor: pointer;
+       font-family: 'Playfair Display';
     `,
     Button: styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: 20px;
-      
+        margin-top: 20px;     
     `,
 
     SubmitButton: styled.button`
@@ -307,11 +377,12 @@ const Package = {
         border-radius: 8px;
         color: #fff;
         cursor: pointer;
-        font-size: 12px;
+        font-size: 20px;
         transition: all 0.5s;
           &:hover {
         background-color: #e33606
         }
+        font-family: 'Playfair Display';
     `,
     Register: styled.div`
         margin-top: 10px;
@@ -319,49 +390,23 @@ const Package = {
         justify-content: center;
     `,
     RegisterP: styled.p`
-        font-size: 10px;
-        font-weight: 700
+        font-size: 12px;
+        font-weight: 700;
+        font-family: 'Playfair Display';
     `,
     RegisterA: styled.a`
         color: blue;
         text-decoration: none;
         cursor: pointer;
+        font-family: 'Playfair Display';
     `,
 
-    WarningStyle: styled.a`
-      border: 1px solid red !important
+    ErrorMsg: styled.div`
+        color: red;
+        text-align: center;
+        font-size: 12px;
+        font-family: 'Playfair Display';
     `,
-
-
-
-
-/*
-.warning {
-    border: 1px solid red !important
-}
-
-.green {
-    background-color: green !important
-}
-
-.text-warning {
-    border: 1px solid red !important
-}
-
-@media (max-width:750px) {
-.container .card {
-        max-width: 350px;
-        height: auto
-    }
-
-.container .card .right-side {
-        width: 100%
-    }
-
-.container .card .left-side {
-        display: none
-    }
-}*/
 
 }
 

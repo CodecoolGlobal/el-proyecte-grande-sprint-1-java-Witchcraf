@@ -1,6 +1,6 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React from 'react';
+import React, {useState} from 'react';
 import {BrowserRouter,Routes,Route} from "react-router-dom";
 import Home from "./pages/indexPage/home";
 import Search from "./pages/search";
@@ -11,6 +11,9 @@ import Profile from "./pages/profile";
 
 
 function App() {
+    const [user, setUser] = useState('');
+
+
     return (
         <BrowserRouter>
             <Routes>

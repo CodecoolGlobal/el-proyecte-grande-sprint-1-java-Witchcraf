@@ -2,14 +2,17 @@ import React, {useState} from "react";
 import styled from "styled-components";
 import Layout from "../layout";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faEnvelope, faLock, faUserCircle} from '@fortawesome/free-solid-svg-icons'
+import {faEnvelope, faEye, faEyeSlash, faLock, faUserCircle} from '@fortawesome/free-solid-svg-icons'
 import {useNavigate} from "react-router-dom";
 
+const emailValidator = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const passwordValidator = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
 
 function Registration() {
     const navigate = useNavigate();
     const [inpass, setinpass] = useState("password");
-    const [warning, setwarning] = useState(false);
+    const [eye, seteye] = useState(true);
+
 
     const [inputText, setInputText] = useState({
         fullname:"",
@@ -17,9 +20,53 @@ function Registration() {
         password: ""
     });
 
-    const [wemail, setwemail] = useState(false);
-    const [wpassword, setwpassword] = useState(false);
+    const [wemail, setWEmail] = useState("");
+    const [wPassword, setWPassword] = useState("");
+    const [wName, setWName] = useState("");
 
+    const handleBlur = (event) => {
+        const { name } = event.target;
+        validateField(name);
+    }
+
+    const validateField = (name) => {
+        let isValid = false;
+        if (name === "email") isValid = validateEmailAddress();
+        else if (name === "password") isValid = validatePassword();
+        else if (name === "fullname") isValid = validateName();
+        return isValid;
+    }
+
+
+    const validateName = () => {
+        let nameError = "";
+        const value = inputText.fullname;
+        if (value.trim() === "") nameError = "First Name is required";
+        setWName(nameError)
+        return nameError === "";
+    }
+
+    const validateEmailAddress = () => {
+        let emailAddressError = "";
+        const value = inputText.email;
+        if (value.trim === "") emailAddressError = "Email Address is required";
+        else if (!emailValidator.test(value))
+            emailAddressError = "Email is not valid";
+        setWEmail(emailAddressError)
+        return emailAddressError === "";
+
+    }
+
+    const validatePassword = () => {
+        let passwordError = "";
+        const value = inputText.password;
+        if (value.trim === "") passwordError = "Password is required";
+        else if (!passwordValidator.test(value))
+            passwordError =
+                "Password must contain at least 8 characters, 1 number, 1 upper and 1 lowercase!";
+        setWPassword(passwordError)
+        return passwordError === "";
+    }
 
     const inputEvent = (event) => {
         const name = event.target.name;
@@ -45,21 +92,61 @@ function Registration() {
         return await res.json();
     }
 
+    const fetchCheckPreviousReg = async (inputText) => {
+        const res = await fetch(`http://localhost:8080/api/checkPreviousReg`,{
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(inputText)
+        })
+        return await res.json();
+    }
+
+
+
     const registerUser = async (inputText) => {
         return await fetchResults(inputText);
     }
 
+    const checkPreviousRegistration = async (inputText) => {
+        return await fetchCheckPreviousReg(inputText);
+    }
+
+
     const submitForm = async (e) => {
         e.preventDefault();
-        setwemail(false);
-        setwpassword(false);
-        if (inputText.email == "") {
-            setwemail(true);
-        } else if (inputText.password == "")
-            setwpassword(true);
-        else {
-            await registerUser(inputText);
-            navigate("/login")
+
+        let formFileds = [
+            "fullname",
+            "email",
+            "password",
+        ];
+        let isValid = true;
+        formFileds.forEach(field => {
+            isValid = validateField(field) && isValid;
+        });
+
+        if (isValid) {
+            const isAlreadyRegistered = await checkPreviousRegistration(inputText);
+            if(isAlreadyRegistered){
+                alert("You have already registered pls Login!")
+            }
+            else{
+                await registerUser(inputText);
+                navigate("/login")
+            }
+        }
+    }
+
+    const Eye = () => {
+        if (inpass === "password") {
+            setinpass("text");
+            seteye(false);
+        } else {
+            setinpass("password");
+            seteye(true);
         }
     }
 
@@ -83,17 +170,22 @@ function Registration() {
                                     <Package.InputTexts>
                                         <Package.InputLabel>FullName</Package.InputLabel>
                                         <FontAwesomeIcon icon={faUserCircle}/>
-                                        <Package.InputText type="text" className={`${wemail ? "text-warning" : ""}`}
-                                               value={inputText.fullname} onChange={inputEvent} name="fullname"/>
-
+                                        <Package.InputText type="text"  value={inputText.fullname} onChange={inputEvent} name="fullname"  onBlur={handleBlur}  autoComplete="off"/>
+                                        <br />
+                                        {wName && (
+                                            <Package.ErrorMsg>{wName}</Package.ErrorMsg>
+                                        )}
                                     </Package.InputTexts>
 
                                     <Package.InputTexts>
                                         <Package.InputLabel>Email</Package.InputLabel>
                                         <FontAwesomeIcon icon={faEnvelope}/>
 
-                                        <Package.InputText type="text" className={`${wemail ? "text-warning" : ""}`}
-                                               value={inputText.email} onChange={inputEvent} name="email"/>
+                                        <Package.InputText type="text" value={inputText.email} onChange={inputEvent} name="email"  onBlur={handleBlur}  autoComplete="off"/>
+                                        <br />
+                                        {wemail && (
+                                            <Package.ErrorMsg>{wemail}</Package.ErrorMsg>
+                                        )}
 
 
                                     </Package.InputTexts>
@@ -103,9 +195,13 @@ function Registration() {
                                         <FontAwesomeIcon icon={faLock}/>
 
                                         <Package.InputText type={inpass}
-                                               className={` ${warning ? "warning" : ""} ${wpassword ? "text-warning" : ""}`}
-                                               value={inputText.password} onChange={inputEvent} name="password" autocomplete="current-password"
-                                        />
+                                               value={inputText.password} onChange={inputEvent} name="password" autocomplete="current-password"  onBlur={handleBlur}
+                                               autoComplete="off" />
+                                        <br />
+                                        {wPassword && (
+                                            <Package.ErrorMsg>{wPassword}</Package.ErrorMsg>
+                                        )}
+                                        <FontAwesomeIcon onClick={Eye} icon={eye ? faEyeSlash : faEye}/>
 
                                     </Package.InputTexts >
 
@@ -184,13 +280,15 @@ const Package = {
         padding: 20px
     `,
     Head: styled.h3`
-    letter-spacing: 1px
+    letter-spacing: 1px;
+    font-family: 'Playfair Display';
     `,
 
     HeadP: styled.p`
         margin-top: 5px;
         font-size: 12px;
-        color: #898989
+        color: #898989;
+        font-family: 'Playfair Display';
     `,
 
     Social: styled.div`
@@ -211,6 +309,7 @@ const Package = {
         font-size: 12px;
         font-weight: 600;
         cursor: pointer;
+        font-family: 'Playfair Display';
     `,
     RightSideHr: styled.hr`
     margin-top: 20px
@@ -223,11 +322,12 @@ const Package = {
     margin-top: -8px;
     `,
 
-    ORP: styled.div`
+    ORP: styled.p`
       background-color: #fff;
     padding: 0 4px;
     font-size: 10px;
     font-weight: 700;
+    font-family: 'Playfair Display';
     `,
 
     InputTexts: styled.div`
@@ -242,7 +342,8 @@ const Package = {
         left: 30px;
         font-size: 12px;
         pointer-events: none;
-        transition: all 0.5s
+        transition: all 0.5s;
+        font-family: 'Playfair Display';
     `,
     InputText: styled.input`
           height: 45px;
@@ -308,11 +409,12 @@ const Package = {
         border-radius: 8px;
         color: #fff;
         cursor: pointer;
-        font-size: 12px;
+        font-size: 20px;
         transition: all 0.5s;
           &:hover {
         background-color: #e33606
         }
+        font-family: 'Playfair Display';
     `,
     Register: styled.div`
         margin-top: 10px;
@@ -320,49 +422,24 @@ const Package = {
         justify-content: center;
     `,
     RegisterP: styled.p`
-        font-size: 10px;
-        font-weight: 700
+        font-size: 12px;
+        font-weight: 700;
+        font-family: 'Playfair Display';
     `,
     RegisterA: styled.a`
         color: blue;
         text-decoration: none;
         cursor: pointer;
+        font-family: 'Playfair Display';
     `,
 
-    WarningStyle: styled.a`
-      border: 1px solid red !important
+    ErrorMsg: styled.div`
+        color: red;
+        text-align: center;
+        font-size: 12px;
+        font-family: 'Playfair Display';
     `,
 
-
-
-
-    /*
-    .warning {
-        border: 1px solid red !important
-    }
-
-    .green {
-        background-color: green !important
-    }
-
-    .text-warning {
-        border: 1px solid red !important
-    }
-
-    @media (max-width:750px) {
-    .container .card {
-            max-width: 350px;
-            height: auto
-        }
-
-    .container .card .right-side {
-            width: 100%
-        }
-
-    .container .card .left-side {
-            display: none
-        }
-    }*/
 
 }
 

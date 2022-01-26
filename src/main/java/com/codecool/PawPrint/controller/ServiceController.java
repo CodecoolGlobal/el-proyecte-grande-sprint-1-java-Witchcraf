@@ -46,10 +46,10 @@ public class ServiceController {
         return serviceService.findServices(country, city, district, serviceType, isDogOnly, isCatOnly, isBothOnly, isAllDog, isAllCat);
     }
 
-    @PostMapping(value = "/search/save")
-    @ResponseBody
-    public String saveSearch(@RequestParam String userId, @RequestBody Set<ServiceOffered> services) {
-        userService.saveSearch(Integer.parseInt(userId), services);
-        return "redirect:";
-    }
+//    @PostMapping(value = "/search/save")
+//    @ResponseBody
+//    public String saveSearch(@RequestParam String userId, @RequestBody Set<ServiceOffered> services) {
+//        userService.saveSearch(Integer.parseInt(userId), services);
+//        return "redirect:";
+//    }
 }

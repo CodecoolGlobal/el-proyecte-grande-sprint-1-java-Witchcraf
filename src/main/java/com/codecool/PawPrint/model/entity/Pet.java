@@ -29,7 +29,7 @@ public class Pet {
     )
 
     private int id;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private User user;
     private String fullName;
     private String userName;

@@ -30,14 +30,18 @@ public class Search {
 
     private int id;
     private String name = "MySearch";
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private User user;
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "searches")
+    @ManyToMany
+    @JoinTable(
+            name = "saved_searches",
+            joinColumns = @JoinColumn(name = "search_id"),
+            inverseJoinColumns = @JoinColumn(name = "service_id"))
     private Set<ServiceOffered> searchedServices = new HashSet<>();
 
-    public Search(Set<ServiceOffered> searchedServices) {
-        this.searchedServices = searchedServices;
-    }
+//    public Search(Set<ServiceOffered> searchedServices) {
+//        this.searchedServices = searchedServices;
+//    }
 
 
 }

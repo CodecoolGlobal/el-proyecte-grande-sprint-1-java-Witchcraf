@@ -35,11 +35,12 @@ public class ServiceOffered {
     private String name;
     private PetType petType;
     private double rating;
+//    @OneToOne(cascade = CascadeType.MERGE)
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "contact_id")
     private Contact contact;
-    @ManyToOne
-    private User user;
+//    @ManyToOne(cascade = CascadeType.ALL) // produces error if user is added in initializer
+//    private User user;
     private String openingHours;
     private ServiceType serviceType;
     private ServiceSubtype serviceSubtype;
@@ -49,7 +50,7 @@ public class ServiceOffered {
     private String serviceHomePage;
     private String reservationUrl;
     private String image;
-    @ManyToMany
+    @ManyToMany(mappedBy = "searchedServices")
     private Set<Search> searches = new HashSet<>();
 
     public ServiceOffered(String name, PetType petType, ServiceType serviceType, ServiceSubtype serviceSubtype, Contact contact) {

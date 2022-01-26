@@ -47,11 +47,11 @@ public class UserService implements UserDetailsService {
        return userDao.findByName(name);
     }
 
-    public void saveSearch(int userId, Set<ServiceOffered> services) {
-        User user = findUserById(userId);
-        Search search = new Search(services);
-        userDao.add(user, search);
-    }
+//    public void saveSearch(int userId, Set<ServiceOffered> services) {
+//        User user = findUserById(userId);
+//        Search search = new Search(services);
+//        userDao.add(user, search);
+//    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

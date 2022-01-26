@@ -39,18 +39,19 @@ public class User {
     private double age;
     private String email;
     private String password;
-    @OneToOne(mappedBy = "user")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "contact_id")
     private Contact contact;
     private UserType userType;
-    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "user") // joinColumn
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Pet> pets = new HashSet<>();
 //    private Set<User> friends;        // how to annotate self-aggregation?
-    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "user")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)  // mapped by user removed
     private Set<ServiceOffered> services = new HashSet<>();
-    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "user")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Search> savedSearches = new HashSet<>();
 
-    public User(String userName, LocalDateTime registrationTime, String email,int age, String password, UserType userType) {
+    public User(String userName, LocalDateTime registrationTime, String email, int age, String password, UserType userType) {
         this.username = userName;
         this.registrationTime = registrationTime;
         this.email = email;

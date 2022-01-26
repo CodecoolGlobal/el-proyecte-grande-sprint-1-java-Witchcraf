@@ -28,9 +28,10 @@ public class Contact {
     )
 
     private int id;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private User user;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @OneToOne
+//    private User user;
+//    @OneToOne(cascade = CascadeType.MERGE)
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
@@ -38,12 +39,16 @@ public class Contact {
     private String businessPhone;
     private String businessEmail;
 
-    public Contact(User user) {
-        this.user = user;
-    }
+//    public Contact(User user) {
+//        this.user = user;
+//    }
 
-    public Contact(User user, String phone) {
-        this.user = user;
+    public Contact(String phone) {
         this.phone = phone;
     }
+
+//    public Contact(User user, String phone) {
+//        this.user = user;
+//        this.phone = phone;
+//    }
 }

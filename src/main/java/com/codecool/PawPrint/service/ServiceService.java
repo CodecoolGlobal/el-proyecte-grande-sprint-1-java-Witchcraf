@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -49,15 +50,15 @@ public class ServiceService {
         return petTypeEquivalentSet;
     }
 
-    public Set<ServiceOffered> findServices(String country, String city, String district,
-                                            ServiceType serviceType, ServiceSubtype serviceSubtype,
-                                            boolean isDogOnly, boolean isCatOnly, boolean isBothOnly,
-                                            boolean isAllDog, boolean isAllCat) {
+    public List<ServiceOffered> findServices(String country, String city, String district,
+                                             ServiceType serviceType, ServiceSubtype serviceSubtype,
+                                             boolean isDogOnly, boolean isCatOnly, boolean isBothOnly,
+                                             boolean isAllDog, boolean isAllCat) {
         Set<PetType> petTypeEquivalentSet = convertPetType(isDogOnly, isCatOnly, isBothOnly, isAllDog, isAllCat);
         return serviceDao.findServices(petTypeEquivalentSet, country, city, district, serviceType, serviceSubtype);
     }
 
-    public Set<ServiceOffered> findServices(String country, String city, String district,
+    public List<ServiceOffered> findServices(String country, String city, String district,
                                             ServiceType serviceType, boolean isDogOnly, boolean isCatOnly,
                                             boolean isBothOnly, boolean isAllDog, boolean isAllCat) {
         Set<PetType> petTypeEquivalentSet = convertPetType(isDogOnly, isCatOnly, isBothOnly, isAllDog, isAllCat);

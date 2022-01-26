@@ -9,6 +9,8 @@ import com.codecool.PawPrint.service.ServiceService;
 import com.codecool.PawPrint.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 import java.util.Set;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -26,7 +28,7 @@ public class ServiceController {
     }
 
     @PostMapping(value = "/search")
-    public Set<ServiceOffered> getServices(@RequestBody SearchService searchService) {
+    public Set<ServiceOffered> findServices(@RequestBody SearchService searchService) {
         String country = searchService.getCountry();
         String city = searchService.getCity();
         String district = searchService.getDistrict();

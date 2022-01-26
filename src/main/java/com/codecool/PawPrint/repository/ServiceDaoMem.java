@@ -4,12 +4,11 @@ import com.codecool.PawPrint.model.entity.PetType;
 import com.codecool.PawPrint.model.service.ServiceOffered;
 import com.codecool.PawPrint.model.service.ServiceSubtype;
 import com.codecool.PawPrint.model.service.ServiceType;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
-@Component
+@Repository("serviceDaoMem")
 public class ServiceDaoMem implements ServiceDao {
 
     private Set<ServiceOffered> services = new HashSet<>();
@@ -74,7 +73,7 @@ public class ServiceDaoMem implements ServiceDao {
     }
 
     @Override
-    public Set<ServiceOffered> getAll() {
+    public List<ServiceOffered> getAll() {
         return null;
     }
 }

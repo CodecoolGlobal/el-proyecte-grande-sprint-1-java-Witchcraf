@@ -3,12 +3,14 @@ package com.codecool.PawPrint.repository;
 import com.codecool.PawPrint.model.entity.Search;
 import com.codecool.PawPrint.model.entity.User;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 
-@Component
+@Repository("userDaoMem")
 public class UserDaoMem implements UserDao{
     private final List<User> data = new ArrayList<>();
 

@@ -13,7 +13,6 @@ import com.codecool.PawPrint.repository.ServiceDao;
 import com.codecool.PawPrint.repository.UserDao;
 
 import org.springframework.beans.factory.annotation.Qualifier;
-import com.codecool.PawPrint.repository.UserDaoJpa;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -24,29 +23,29 @@ import java.time.LocalDateTime;
 @Component
 class Initializer implements CommandLineRunner {
 
-    private final UserDao repository;
-    private final ServiceDao dao;
+    private final UserDao userDao;
+    private final ServiceDao serviceDao;
     private final PasswordEncoder bCryptPasswordEncoder;
 
-    public Initializer(UserDao repository, @Qualifier("serviceDaoJPA") ServiceDao dao, PasswordEncoder bCryptPasswordEncoder) {
-        this.repository = repository;
-        this.dao = dao;
+    public Initializer(@Qualifier("userDaoJPA") UserDao userDao, @Qualifier("serviceDaoJPA") ServiceDao serviceDao, PasswordEncoder bCryptPasswordEncoder) {
+        this.userDao = userDao;
+        this.serviceDao = serviceDao;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
     public void run(String... strings) {
 
-        User pete = new User("Zoe", LocalDateTime.now(), "cafezoo@gmail.com",2 , bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
-        pete.setId(1);
-        User admin = new User("admin", LocalDateTime.now(), "admin",3,  bCryptPasswordEncoder.encode("admin"), UserType.ADMIN);
-        admin.setId(0);
-        User eve = new User("Eve", LocalDateTime.now(), "eve@gmail.com",4 , bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
-        eve.setId(2);
-        User John = new User("John", LocalDateTime.now(), "john@gmail.com",4, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
-        John.setId(3);
-        User rob = new User("Rob", LocalDateTime.now(), "rob@gmail.com",4, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
-        rob.setId(4);
+//        User pete = new User("Zoe", LocalDateTime.now(), "cafezoo@gmail.com",2 , bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
+//        pete.setId(1);
+//        User admin = new User("admin", LocalDateTime.now(), "admin",3,  bCryptPasswordEncoder.encode("admin"), UserType.ADMIN);
+//        admin.setId(0);
+//        User eve = new User("Eve", LocalDateTime.now(), "eve@gmail.com",4 , bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
+//        eve.setId(2);
+//        User John = new User("John", LocalDateTime.now(), "john@gmail.com",4, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
+//        John.setId(3);
+//        User rob = new User("Rob", LocalDateTime.now(), "rob@gmail.com",4, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
+//        rob.setId(4);
         User washAndVauUser = new User("WashAndVau", LocalDateTime.now(), "info@kutyamoso.hu",2, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
         washAndVauUser.setId(5);
         User washAndVauUserKecskemet = new User("WashAndVauKecskemét", LocalDateTime.now(), "kecskemet@kutyamoso.hu",1, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
@@ -67,13 +66,13 @@ class Initializer implements CommandLineRunner {
 //        repository.add(eve);
 //        repository.add(John);
 //        repository.add(rob);
-        repository.add(washAndVauUser);
-        repository.add(washAndVauUserKecskemet);
-        repository.add(BBsUser);
-        repository.add(HokedliUser);
-        repository.add(WanHaoUser);
-        repository.add(TerezaUser);
-        repository.add(NaspolyaUser);
+        userDao.add(washAndVauUser);
+        userDao.add(washAndVauUserKecskemet);
+        userDao.add(BBsUser);
+        userDao.add(HokedliUser);
+        userDao.add(WanHaoUser);
+        userDao.add(TerezaUser);
+        userDao.add(NaspolyaUser);
 
 
         //init contact
@@ -158,16 +157,16 @@ class Initializer implements CommandLineRunner {
 //        dao.add(garden);
 //        dao.add(animalHotel);
 //        dao.add(sheltFutr);
-        dao.add(washAndVau);
-        dao.add(washAndVau2);
-        dao.add(washAndVau3);
-        dao.add(washAndVau4);
-        dao.add(washAndVauKecskemet);
-        dao.add(BBs);
-        dao.add(Hokedli);
-        dao.add(WanHao);
-        dao.add(Tereza);
-        dao.add(Naspolya);
-        System.out.println(repository.getAll());
+        serviceDao.add(washAndVau);
+        serviceDao.add(washAndVau2);
+        serviceDao.add(washAndVau3);
+        serviceDao.add(washAndVau4);
+        serviceDao.add(washAndVauKecskemet);
+        serviceDao.add(BBs);
+        serviceDao.add(Hokedli);
+        serviceDao.add(WanHao);
+        serviceDao.add(Tereza);
+        serviceDao.add(Naspolya);
+        System.out.println(userDao.getAll());
     }
 }

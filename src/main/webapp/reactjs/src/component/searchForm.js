@@ -3,14 +3,18 @@ import {CountryDropdown, RegionDropdown} from 'react-country-region-selector';
 import {Button, Col, Form, Row} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ServiceSubtype from "./serviceSubtype";
+import RequiredField from "./requiredField";
 
-function SearchForm ({setResults}) {
+function SearchForm ({setResults, setIsResult}) {
     const [isCheckedDogOnly, setIsCheckedDogOnly] = useState(false);
     const [isCheckedCatOnly, setIsCheckedCatOnly] = useState(false);
     const [isCheckedBothOnly, setIsCheckedBothOnly] = useState(false);
     const [isCheckedAllDog, setIsCheckedAllDog] = useState(false);
     const [isCheckedAllCat, setIsCheckedAllCat] = useState(false);
     const [isCheckedAllPetType, setIsCheckedAllPetType] = useState(false);
+    const [isValidCountry, setIsValidCountry] = useState(true);
+    const [isValidCity, setIsValidCity] = useState(true);
+    const [isValidServiceType, setIsValidServiceType] = useState(true);
 
     const [search, setSearch] = useState({
         country: "",
@@ -41,31 +45,58 @@ function SearchForm ({setResults}) {
 
     const getSearchResults = async (search) => {
         const resultFromApi = await fetchResults(search);
-        setResults(resultFromApi)
+        setResults(resultFromApi);
+        setIsResult(true);
+    }
+
+    const setValidForm = (search) => {
+        if (search.country !== "") {
+            setIsValidCountry(true);
+        } else {
+            setIsValidCountry(false);
+        }
+        if (search.city !== "") {
+            setIsValidCity(true);
+        } else {
+            setIsValidCity(false);
+        }
+        if (search.serviceType !== null) {
+            setIsValidServiceType(true);
+        } else {
+            setIsValidServiceType(false);
+        }
+    }
+
+    const checkValidForm = (search) => {
+        return search.country !== "" && search.city !== "" && search.serviceType !== null;
     }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        await getSearchResults(search);
-        setIsCheckedDogOnly(false);
-        setIsCheckedCatOnly(false);
-        setIsCheckedBothOnly(false);
-        setIsCheckedAllDog(false);
-        setIsCheckedAllCat(false);
-        setIsCheckedAllPetType(false);
-        setSearch({
-            country: "",
-            city: "",
-            district: "",
-            serviceType: null,
-            serviceSubtype: null,
-            isDogOnly: false,
-            isCatOnly: false,
-            isBothOnly: false,
-            isAllDog: false,
-            isAllCat: false,
-            isAllPetType: false
-        })
+        setValidForm(search)
+        if (checkValidForm(search)) {
+            await getSearchResults(search);
+            setIsCheckedDogOnly(false);
+            setIsCheckedCatOnly(false);
+            setIsCheckedBothOnly(false);
+            setIsCheckedAllDog(false);
+            setIsCheckedAllCat(false);
+            setIsCheckedAllPetType(false);
+            setSearch({
+                country: "",
+                city: "",
+                district: "",
+                serviceType: null,
+                serviceSubtype: null,
+                isDogOnly: false,
+                isCatOnly: false,
+                isBothOnly: false,
+                isAllDog: false,
+                isAllCat: false,
+                isAllPetType: false
+            });
+        }
+
     }
 
 
@@ -77,11 +108,16 @@ function SearchForm ({setResults}) {
                     </Form.Label>
                     <Col md={10}>
                         <CountryDropdown
-                            style={{ height: "40px", width:"100%",fontFamily: 'Playfair Display',fontSize:"20px" }}
+                            style={{ height: "40px", width:"100%", fontFamily: 'Playfair Display', fontSize:"20px" }}
                             classename="country"
                             value={search.country}
-                            onChange={(val) => setSearch({...search, country: val}) }/>
+                            onChange={(val) => setSearch({...search, country: val}) }
+                        />
                     </Col>
+                    {
+                        !isValidCountry ?
+                            <RequiredField /> : null
+                    }
                 </Form.Group>
                 <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
                     <Form.Label column md={2} style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}>
@@ -92,8 +128,13 @@ function SearchForm ({setResults}) {
                             style={{ height: "40px" ,width:"100%", fontFamily: 'Playfair Display',fontSize:"20px"}}
                             country={search.country}
                             value={search.city}
-                            onChange={(val) => setSearch({...search, city: val})} />
+                            onChange={(val) => setSearch({...search, city: val})}
+                        />
                     </Col>
+                    {
+                        !isValidCity ?
+                            <RequiredField /> : null
+                    }
                 </Form.Group>
 
                 <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
@@ -123,6 +164,16 @@ function SearchForm ({setResults}) {
                        <option value="HEALTHCARE">Healthcare</option>
                        <option value="SHELTER">Shelter</option>
                    </Form.Control>
+                   {
+                       !isValidServiceType ?
+                           <>
+                               <Form.Group as={Row}>
+                                   <Col md={10} style={{color: "red"}}>
+                                       * Required field
+                                   </Col>
+                               </Form.Group>
+                           </> : null
+                   }
                    </Col>
                </Form.Group>
 
@@ -160,7 +211,7 @@ function SearchForm ({setResults}) {
                            !search.isAllCat &&
                            !search.isAllPetType) ?
                            <>
-                               <Col md={2}>
+                               <Col md={3}>
                                    <Form.Check type="checkbox" label="Cat" checked={isCheckedAllCat}
                                                value="CAT"
                                                style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}
@@ -178,8 +229,8 @@ function SearchForm ({setResults}) {
                            !search.isAllCat &&
                            !search.isAllPetType) ?
                            <>
-                               <Col md={2}>
-                                   <Form.Check type="checkbox" label="Cat&Dog" checked={isCheckedAllPetType}
+                               <Col md={3}>
+                                   <Form.Check type="checkbox" label="Cat or Dog" checked={isCheckedAllPetType}
                                                value="CATANDDOG"
                                                style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}
                                                onChange={() => {setIsCheckedAllPetType(!isCheckedAllPetType); setSearch({...search, isAllPetType: !isCheckedAllPetType})}} />
@@ -218,7 +269,7 @@ function SearchForm ({setResults}) {
                         !search.isAllCat &&
                         !search.isAllPetType) ?
                         <>
-                            <Col md={2}>
+                            <Col md={3}>
                                 <Form.Check type="checkbox" label="Cat only" checked={isCheckedCatOnly}
                                             value="CATONLY"
                                             style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}
@@ -236,8 +287,8 @@ function SearchForm ({setResults}) {
                         !search.isAllCat &&
                         !search.isAllPetType) ?
                         <>
-                            <Col md={2}>
-                                <Form.Check type="checkbox" label="Cat&Dog only" checked={isCheckedBothOnly}
+                            <Col md={3}>
+                                <Form.Check type="checkbox" label="Cat&Dog" checked={isCheckedBothOnly}
                                             value="CATANDDOGONLY"
                                             style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}
                                             onChange={() => {setIsCheckedBothOnly(!isCheckedBothOnly); setSearch({...search, isBothOnly: !isCheckedBothOnly})}}/>

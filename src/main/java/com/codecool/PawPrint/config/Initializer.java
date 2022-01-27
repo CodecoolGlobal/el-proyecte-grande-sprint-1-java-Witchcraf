@@ -107,17 +107,17 @@ class Initializer implements CommandLineRunner {
         ServiceOffered tereza = new ServiceOffered("Tereza Mexican Restaurant", PetType.DOG, 4.3, terezaCon, "H-P 18:00-00:00 Szo-V: 12:00-00:00", ServiceType.RESTAURANT, null, "MI CASA ES SU CASA! MEXICAN URBAN GARDEN IN DOWNTOWN BUDAPEST. TEREZA HAS TAKEN HER PERMANENT PLACE AND AWAITS ITS GUESTS WITH UNIQUE AMBIENCE, AUTHENTIC MEXICAN CUISINE BY REGIONS AND WILD SELECTION OF MEZCALS AND MARGARITAS.", "https://tereza.hu/");
         ServiceOffered naspolya = new ServiceOffered("Naspolya Nassolda", PetType.DOG, 4.5, naspolyaCon, "K-P 12:00-19:00 Szo-V 10:00-19:00", ServiceType.RESTAURANT, null, "Naspolya is a pioneering downtown café where all the sweets and salty snacks are raw vegan, made from organic fair trade ingredients, without additives or empty calories.", "https://naspolya.hu");
 
-//        // add user to service        // error
-//        washAndVau.setUser(washAndVauUser);
-//        washAndVau2.setUser(washAndVauUser);
-//        washAndVau3.setUser(washAndVauUser);
-//        washAndVau4.setUser(washAndVauUser);
-//        washAndVauKecskemet.setUser(washAndVauUserKecskemet);
-//        bbs.setUser(bbsUser);
-//        hokedli.setUser(hokedliUser);
-//        wanHao.setUser(wanHaoUser);
-//        tereza.setUser(terezaUser);
-//        naspolya.setUser(naspolyaUser);
+        // add user to service        // circular reference
+        washAndVau.setUser(washAndVauUser);
+        washAndVau2.setUser(washAndVauUser);
+        washAndVau3.setUser(washAndVauUser);
+        washAndVau4.setUser(washAndVauUser);
+        washAndVauKecskemet.setUser(washAndVauUserKecskemet);
+        bbs.setUser(bbsUser);
+        hokedli.setUser(hokedliUser);
+        wanHao.setUser(wanHaoUser);
+        tereza.setUser(terezaUser);
+        naspolya.setUser(naspolyaUser);
 
         // add service to user services
         washAndVauUser.getServices().add(washAndVau);

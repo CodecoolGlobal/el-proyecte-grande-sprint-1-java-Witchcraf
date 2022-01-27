@@ -192,7 +192,7 @@ function SearchForm ({setResults, setIsResult}) {
                            !search.isAllCat &&
                            !search.isAllPetType) ?
                            <>
-                               <Col md={3}>
+                               <Col md={"auto"} >
                                    <Form.Check type="checkbox" label="Dog" checked={isCheckedAllDog}
                                                value="DOG"
                                                style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}
@@ -210,7 +210,7 @@ function SearchForm ({setResults, setIsResult}) {
                            !search.isAllCat &&
                            !search.isAllPetType) ?
                            <>
-                               <Col md={3}>
+                               <Col md={"auto"}>
                                    <Form.Check type="checkbox" label="Cat" checked={isCheckedAllCat}
                                                value="CAT"
                                                style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}
@@ -228,7 +228,7 @@ function SearchForm ({setResults, setIsResult}) {
                            !search.isAllCat &&
                            !search.isAllPetType) ?
                            <>
-                               <Col md={3}>
+                               <Col md={"auto"}>
                                    <Form.Check type="checkbox" label="Cat or Dog" checked={isCheckedAllPetType}
                                                value="CATANDDOG"
                                                style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}
@@ -250,7 +250,7 @@ function SearchForm ({setResults, setIsResult}) {
                         !search.isAllCat &&
                         !search.isAllPetType) ?
                         <>
-                            <Col md={3}>
+                            <Col md={"auto"}>
                                 <Form.Check type="checkbox" label="Dog only" checked={isCheckedDogOnly}
                                             value="DOGONLY"
                                             style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}
@@ -268,7 +268,7 @@ function SearchForm ({setResults, setIsResult}) {
                         !search.isAllCat &&
                         !search.isAllPetType) ?
                         <>
-                            <Col md={3}>
+                            <Col md={"auto"}>
                                 <Form.Check type="checkbox" label="Cat only" checked={isCheckedCatOnly}
                                             value="CATONLY"
                                             style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}
@@ -286,7 +286,7 @@ function SearchForm ({setResults, setIsResult}) {
                         !search.isAllCat &&
                         !search.isAllPetType) ?
                         <>
-                            <Col md={3}>
+                            <Col md={"auto"}>
                                 <Form.Check type="checkbox" label="Cat&Dog" checked={isCheckedBothOnly}
                                             value="CATANDDOGONLY"
                                             style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}

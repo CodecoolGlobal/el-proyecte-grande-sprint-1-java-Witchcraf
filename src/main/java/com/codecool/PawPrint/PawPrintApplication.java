@@ -28,7 +28,7 @@ public class PawPrintApplication {
 		return new BCryptPasswordEncoder();
 	}
 
-	/*@Bean
+	@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
 			@Override
@@ -36,5 +36,5 @@ public class PawPrintApplication {
 				registry.addMapping("/**").allowedOrigins("http://localhost:3000");
 			}
 		};
-	}*/
+	}
 }

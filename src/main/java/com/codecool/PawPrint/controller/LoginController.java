@@ -5,6 +5,7 @@ import com.codecool.PawPrint.model.controllerEntity.UserRegEntity;
 import com.codecool.PawPrint.model.entity.User;
 import com.codecool.PawPrint.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,7 +43,7 @@ public class LoginController {
     }
 
     @PostMapping(value = "/checkLog")
-    public boolean checkUser(@RequestBody UserLogEntity userLogEntity) {
+    public UserDetails checkUser(@RequestBody UserLogEntity userLogEntity) {
         String email = userLogEntity.getEmail();
         String password = userLogEntity.getPassword();
         User current = userService.findUserByEmail(email);
@@ -50,14 +51,16 @@ public class LoginController {
 
         boolean isPasswordMatch;
         if (current == null) {
-            return false;
+            //return false;
         } else {
             isPasswordMatch = passwordEncoder.matches(password, current.getPassword());
             if (isPasswordMatch) {
-                return true;
+                return userService.loadUserByUsername(email);
+                //return true;
             } else {
-                return false;
+                //return false;
             }
         }
+        return null;
     }
 }

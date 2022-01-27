@@ -43,6 +43,11 @@ public class UserDaoJpa implements UserDao {
         return userRepository.findUserByUsername(name);
     }
 
+    @Override
+    public User findByFullName(String fullName) {
+        return userRepository.findUserByFullName(fullName);
+    }
+
 
     @Override
     public List<User> getAll() {

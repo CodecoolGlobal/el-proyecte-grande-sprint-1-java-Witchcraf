@@ -54,6 +54,11 @@ public class UserDaoMem implements UserDao{
     }
 
     @Override
+    public User findByFullName(String fullName) {
+        return null;
+    }
+
+    @Override
     public List<User> getAll() {
         return data;
     }

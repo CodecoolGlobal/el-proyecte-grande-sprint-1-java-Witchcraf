@@ -6,7 +6,7 @@ import {faEnvelope, faEye, faEyeSlash, faLock} from '@fortawesome/free-solid-svg
 import {useNavigate} from "react-router-dom";
 import {faFacebook, faGoogle} from "@fortawesome/free-brands-svg-icons";
 
-const emailValidator = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+//const emailValidator = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const passwordValidator = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
 
 function Login() {
@@ -14,7 +14,7 @@ function Login() {
     const [eye, seteye] = useState(true);
     const [inpass, setinpass] = useState("password");
     const [inputText, setInputText] = useState({
-        email: "",
+        username: "",
         password: ""
     });
 
@@ -28,12 +28,12 @@ function Login() {
 
     const validateField = (name) => {
         let isValid = false;
-        if (name === "email") isValid = validateEmailAddress();
+        if (name === "username") isValid = validateName();
         else if (name === "password") isValid = validatePassword();
         return isValid;
     }
 
-    const validateEmailAddress = () => {
+   /* const validateEmailAddress = () => {
         let emailAddressError = "";
         const value = inputText.email;
         if (value.trim === "") emailAddressError = "Email Address is required";
@@ -41,9 +41,15 @@ function Login() {
             emailAddressError = "Email is not valid";
         setWEmail(emailAddressError)
         return emailAddressError === "";
-
-
+    }*/
+    const validateName = () => {
+        let nameError = "";
+        const value = inputText.username;
+        if (value.trim() === "") nameError = "First Name is required";
+        setWEmail(nameError)
+        return nameError === "";
     }
+
 
     const validatePassword = () => {
         let passwordError = "";
@@ -81,11 +87,11 @@ function Login() {
     }
 
     const fetchResults = async (inputText) => {
-        const res = await fetch(`http://localhost:8080/api/checkLog`,{
+        const res = await fetch(`http://localhost:8080/login`,{
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
             },
             body: JSON.stringify(inputText)
         })
@@ -93,12 +99,14 @@ function Login() {
     }
 
     const checkUserInBackend = async (inputText) => {
-        return await fetchResults(inputText);
+        const details = await fetchResults(inputText);
+        console.log(details)
+        return details;
     }
 
     const checkIsInputFill = async () => {
         let formFields = [
-            "email",
+            "username",
             "password",
         ];
         let isValid = true;
@@ -120,18 +128,6 @@ function Login() {
         else{
             alert("Please try again! Email or password invalid!")
         }
-
-
-        /*if (isValid) {
-            const isValidLogin = await checkUserInBackend(inputText);
-            console.log(isValidLogin)
-            if(isValidLogin){
-                navigate("/")
-            }
-            else {
-                alert("Email or password incorrect, please try again!")
-            }
-        }*/
     }
 
 
@@ -160,11 +156,11 @@ function Login() {
 
                             <form onSubmit={submitForm}>
                                 <Package.InputTexts>
-                                    <Package.InputLabel>Email</Package.InputLabel>
+                                    <Package.InputLabel>UserName</Package.InputLabel>
                                     <FontAwesomeIcon icon={faEnvelope}/>
                                     <Package.InputText  type="text"
-                                                        value={inputText.email}
-                                                        onChange={inputEvent} name="email"
+                                                        value={inputText.username}
+                                                        onChange={inputEvent} name="username"
                                                         onBlur={handleBlur}
                                                         autoComplete="off"
                                                         />

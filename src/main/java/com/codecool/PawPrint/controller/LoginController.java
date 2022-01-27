@@ -3,6 +3,7 @@ package com.codecool.PawPrint.controller;
 import com.codecool.PawPrint.model.controllerEntity.UserLogEntity;
 import com.codecool.PawPrint.model.controllerEntity.UserRegEntity;
 import com.codecool.PawPrint.model.entity.User;
+import com.codecool.PawPrint.model.entity.UserType;
 import com.codecool.PawPrint.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,9 +37,8 @@ public class LoginController {
         String name = userRegEntity.getUsername();
         String email = userRegEntity.getEmail();
         String password = userRegEntity.getPassword();
-        User newUser = new User(name, email, password);
-        System.out.println(newUser.toString());
-        System.out.println(name);
+        User newUser = new User(name, email, password, UserType.NORMAL);
+
         return userService.registerUser(newUser);
     }
 

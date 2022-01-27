@@ -169,7 +169,7 @@ function Registration() {
 
                                 <form onSubmit={submitForm}>
                                     <Package.InputTexts>
-                                        <Package.InputLabel>FullName</Package.InputLabel>
+                                        <Package.InputLabel>User Name</Package.InputLabel>
                                         <FontAwesomeIcon icon={faUserCircle}/>
                                         <Package.InputText type="text"  value={inputText.username} onChange={inputEvent} name="username"  onBlur={handleBlur}  autoComplete="off"/>
                                         <br />

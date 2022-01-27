@@ -35,9 +35,6 @@ public class Address {
     private String floor;
     private String door;
     private String bell;
-//    @Transient
-//    @OneToOne(mappedBy = "address")
-//    private Contact contact;
 
     public Address(int contactId, String country, String city, String district) {
         this.contactId = contactId;

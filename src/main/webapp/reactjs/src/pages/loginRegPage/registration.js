@@ -118,7 +118,6 @@ function Registration() {
 
     const submitForm = async (e) => {
         e.preventDefault();
-        setIsReg(false)
 
         let formFileds = [
             "username",

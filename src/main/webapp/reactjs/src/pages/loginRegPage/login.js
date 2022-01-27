@@ -54,7 +54,7 @@ function Login() {
     const validatePassword = () => {
         let passwordError = "";
         const value = inputText.password;
-        if (value.trim === "") passwordError = "Password is required";
+        if (value.trim() === "") passwordError = "Password is required";
         else if (!passwordValidator.test(value))
             passwordError =
                 "Password must contain at least 8 characters, 1 number, 1 upper and 1 lowercase!";

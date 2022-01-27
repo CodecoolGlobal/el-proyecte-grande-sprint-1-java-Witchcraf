@@ -10,13 +10,13 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Set;
 
-@Repository
+
 public interface ServiceDao {
 
     void add(ServiceOffered service);
 
-    @Query
     ServiceOffered findByName(String name);
+
     Set<ServiceOffered> findServices(Set<PetType> petTypeSet, String country, String city, String district,
                                       ServiceType serviceType, ServiceSubtype serviceSubtype);
     Set<ServiceOffered> findServices(Set<PetType> petTypeSet, String country, String city, String district,

@@ -40,7 +40,8 @@ public class ServiceDaoJPA implements ServiceDao {
         Set<ServiceOffered> foundServices = new HashSet<>();
 
         for (PetType petType : petTypeSet) {
-            foundServices.add(serviceRepository.findByCountryAndCityAndDistrictAndServiceTypeAndServiceSubtypeAndPetType(country, city, district, serviceType, serviceSubtype, petType));
+            List<ServiceOffered> foundServicesSublist = serviceRepository.findBySearchCriteria(country, city, district, serviceType, serviceSubtype, petType);
+            foundServices.addAll(foundServicesSublist);
         }
         return foundServices;
     }
@@ -50,7 +51,8 @@ public class ServiceDaoJPA implements ServiceDao {
         Set<ServiceOffered> foundServices = new HashSet<>();
 
         for (PetType petType : petTypeSet) {
-            foundServices.add(serviceRepository.findByCountryAndCityAndDistrictAndServiceTypeAndPetType(country, city, district, serviceType, petType));
+            List<ServiceOffered> foundServicesSublist = serviceRepository.findBySearchCriteria(country, city, district, serviceType, petType);
+            foundServices.addAll(foundServicesSublist);
         }
         return foundServices;
     }

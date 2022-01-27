@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ServiceRepository extends JpaRepository<ServiceOffered, Integer> {
 
@@ -23,7 +25,7 @@ public interface ServiceRepository extends JpaRepository<ServiceOffered, Integer
                     "and s.serviceSubtype = ?5 " +
                     "and s.petType = ?6"
     )
-    ServiceOffered findByCountryAndCityAndDistrictAndServiceTypeAndServiceSubtypeAndPetType(String country, String city, String district, ServiceType serviceType, ServiceSubtype serviceSubtype, PetType petType);
+    List<ServiceOffered> findBySearchCriteria(String country, String city, String district, ServiceType serviceType, ServiceSubtype serviceSubtype, PetType petType);
 
     @Query(
             "select s " +
@@ -34,5 +36,5 @@ public interface ServiceRepository extends JpaRepository<ServiceOffered, Integer
                     "and s.serviceType = ?4 " +
                     "and s.petType = ?5 "
     )
-    ServiceOffered findByCountryAndCityAndDistrictAndServiceTypeAndPetType(String country, String city, String district, ServiceType serviceType, PetType petType);
+    List<ServiceOffered> findBySearchCriteria(String country, String city, String district, ServiceType serviceType, PetType petType);
 }

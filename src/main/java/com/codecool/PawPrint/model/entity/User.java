@@ -2,8 +2,11 @@ package com.codecool.PawPrint.model.entity;
 
 import com.codecool.PawPrint.model.service.ServiceOffered;
 import com.codecool.PawPrint.model.contact.Contact;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -12,6 +15,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@EqualsAndHashCode(exclude = {"services"})  // prevents circular references together with @JsonIgnoreProperties("nameOfConnectedVariable")
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -46,7 +50,8 @@ public class User {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Pet> pets = new HashSet<>();
 //    private Set<User> friends;        // how to annotate self-aggregation?
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)  // mapped by user removed
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")  // mapped by user removed
+    @JsonIgnoreProperties("user")       // prevents circular references together with @EqualsAndHashCode(exclude = {arrayOfConnectedVariableNames})
     private Set<ServiceOffered> services = new HashSet<>();
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Search> savedSearches = new HashSet<>();

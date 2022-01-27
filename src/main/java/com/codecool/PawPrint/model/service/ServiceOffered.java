@@ -4,8 +4,10 @@ import com.codecool.PawPrint.model.contact.Contact;
 import com.codecool.PawPrint.model.entity.PetType;
 import com.codecool.PawPrint.model.entity.Search;
 import com.codecool.PawPrint.model.entity.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -13,6 +15,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@EqualsAndHashCode(exclude = {"user"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -39,8 +42,9 @@ public class ServiceOffered {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "contact_id")
     private Contact contact;
-//    @ManyToOne(cascade = CascadeType.ALL) // produces error if user is added in initializer
-//    private User user;
+    @ManyToOne(cascade = CascadeType.ALL) // produces error if user is added in initializer
+    @JsonIgnoreProperties("services")
+    private User user;
     private String openingHours;
     private ServiceType serviceType;
     private ServiceSubtype serviceSubtype;

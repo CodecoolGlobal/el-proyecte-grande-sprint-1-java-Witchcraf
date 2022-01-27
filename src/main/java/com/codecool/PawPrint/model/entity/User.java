@@ -68,8 +68,28 @@ public class User {
     }
 
     public User(String name,  String email, String password) {
-        this.fullName = name;
+        this.username = name;
         this.email = email;
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", fullName='" + fullName + '\'' +
+                ", username='" + username + '\'' +
+                ", registrationTime=" + registrationTime +
+                ", description='" + description + '\'' +
+                ", gender=" + gender +
+                ", age=" + age +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", contact=" + contact +
+                ", userType=" + userType +
+                ", pets=" + pets +
+                ", services=" + services +
+                ", savedSearches=" + savedSearches +
+                '}';
     }
 }

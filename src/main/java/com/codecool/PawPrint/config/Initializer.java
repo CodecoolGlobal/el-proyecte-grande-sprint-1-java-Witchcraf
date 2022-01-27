@@ -39,13 +39,13 @@ class Initializer implements CommandLineRunner {
     public void run(String... strings) {
 
         // create user
-        User washAndVauUser = new User("WashAndVau", LocalDateTime.now(), "info@kutyamoso.hu",2, bCryptPasswordEncoder.encode("1Aa23456"), UserType.NORMAL);
-        User washAndVauUserKecskemet = new User("WashAndVauKecskemét", LocalDateTime.now(), "kecskemet@kutyamoso.hu",1, bCryptPasswordEncoder.encode("1Aa23456"), UserType.NORMAL);
-        User bbsUser = new User("BBsBar&Grill", LocalDateTime.now(), "hello@bbzbar.hu", 2,bCryptPasswordEncoder.encode("1Aa23456"), UserType.NORMAL);
-        User hokedliUser = new User("Hokedli", LocalDateTime.now(), "hokedlidelivery@gmail.com",2, bCryptPasswordEncoder.encode("1Aa23456"), UserType.NORMAL);
-        User wanHaoUser = new User("WanHao", LocalDateTime.now(), "info@monoricenter.hu",2, bCryptPasswordEncoder.encode("1Aa23456"), UserType.NORMAL);
-        User terezaUser = new User("Tereza", LocalDateTime.now(), "RESERVATION@TEREZA.HU",2, bCryptPasswordEncoder.encode("1Aa23456"), UserType.NORMAL);
-        User naspolyaUser = new User("Naspolya", LocalDateTime.now(), "info@naspolya.hu",2, bCryptPasswordEncoder.encode("1Aa23456"), UserType.NORMAL);
+        User washAndVauUser = new User("WashAndVau", LocalDateTime.now(), "info@kutyamoso.hu",2, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
+        User washAndVauUserKecskemet = new User("WashAndVauKecskemét", LocalDateTime.now(), "kecskemet@kutyamoso.hu",1, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
+        User bbsUser = new User("BBsBar&Grill", LocalDateTime.now(), "hello@bbzbar.hu", 2,bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
+        User hokedliUser = new User("Hokedli", LocalDateTime.now(), "hokedlidelivery@gmail.com",2, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
+        User wanHaoUser = new User("WanHao", LocalDateTime.now(), "info@monoricenter.hu",2, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
+        User terezaUser = new User("Tereza", LocalDateTime.now(), "RESERVATION@TEREZA.HU",2, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
+        User naspolyaUser = new User("Naspolya", LocalDateTime.now(), "info@naspolya.hu",2, bCryptPasswordEncoder.encode("1Aa123456"), UserType.NORMAL);
 
         // create contact
         Contact washAndVauCon= new Contact("+36205450145");

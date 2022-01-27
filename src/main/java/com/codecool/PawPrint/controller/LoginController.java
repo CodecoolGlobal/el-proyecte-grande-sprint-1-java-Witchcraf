@@ -5,12 +5,12 @@ import com.codecool.PawPrint.model.controllerEntity.UserRegEntity;
 import com.codecool.PawPrint.model.entity.User;
 import com.codecool.PawPrint.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api")
 public class LoginController {
@@ -31,33 +31,15 @@ public class LoginController {
     }
 
 
-
     @PostMapping(value = "/registerUser")
     public User registerNewUser(@RequestBody UserRegEntity userRegEntity) {
-        String name = userRegEntity.getFullname();
+        String name = userRegEntity.getUsername();
         String email = userRegEntity.getEmail();
         String password = userRegEntity.getPassword();
         User newUser = new User(name, email, password);
+        System.out.println(newUser.toString());
+        System.out.println(name);
         return userService.registerUser(newUser);
     }
 
-    @PostMapping(value = "/checkLog")
-    public boolean checkUser(@RequestBody UserLogEntity userLogEntity) {
-        String email = userLogEntity.getEmail();
-        String password = userLogEntity.getPassword();
-        User current = userService.findUserByEmail(email);
-        System.out.println(current);
-
-        boolean isPasswordMatch;
-        if (current == null) {
-            return false;
-        } else {
-            isPasswordMatch = passwordEncoder.matches(password, current.getPassword());
-            if (isPasswordMatch) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-    }
 }

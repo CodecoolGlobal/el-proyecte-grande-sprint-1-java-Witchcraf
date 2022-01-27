@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class UserRegEntity {
 
-    private String fullname;
+    private String username;
     private String email;
     private String password;
 }

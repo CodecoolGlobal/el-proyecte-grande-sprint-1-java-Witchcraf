@@ -4,10 +4,10 @@ import Footer from "../component/footer";
 import '../App.css';
 
 
-const Layout = ({ children}) => {
+const Layout = ({ children, token}) => {
     return (
         <div>
-            <HeaderSection />
+            <HeaderSection token={token} />
             <div>{children}</div>
             <Footer />
         </div>

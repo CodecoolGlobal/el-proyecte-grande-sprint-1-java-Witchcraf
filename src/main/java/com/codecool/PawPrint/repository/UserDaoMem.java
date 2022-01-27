@@ -21,14 +21,14 @@ public class UserDaoMem implements UserDao{
 
     }
 
-    @Override
-    public void add(User user, Search search) {
-        for (User datum : data) {
-            if (datum.equals(user)) {
-                datum.getSavedSearches().add(search);
-            }
-        }
-    }
+//    @Override
+//    public void add(User user, Search search) {
+//        for (User datum : data) {
+//            if (datum.equals(user)) {
+//                datum.getSavedSearches().add(search);
+//            }
+//        }
+//    }
 
     @Override
     public User findById(int id) {
@@ -54,8 +54,23 @@ public class UserDaoMem implements UserDao{
     }
 
     @Override
+    public User findByFullName(String fullName) {
+        return null;
+    }
+
+    @Override
     public List<User> getAll() {
         return data;
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return false;
+    }
+
+    @Override
+    public boolean existsByFullName(String fullName) {
+        return false;
     }
 
     @Override

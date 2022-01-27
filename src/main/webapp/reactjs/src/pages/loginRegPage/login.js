@@ -5,16 +5,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faEnvelope, faEye, faEyeSlash, faLock} from '@fortawesome/free-solid-svg-icons'
 import {useNavigate} from "react-router-dom";
 import {faFacebook, faGoogle} from "@fortawesome/free-brands-svg-icons";
+import jwt from 'jwt-decode'
 
-const emailValidator = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+//const emailValidator = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const passwordValidator = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
 
-function Login() {
+function Login({setToken}) {
     const navigate = useNavigate();
     const [eye, seteye] = useState(true);
     const [inpass, setinpass] = useState("password");
     const [inputText, setInputText] = useState({
-        email: "",
+        username: "",
         password: ""
     });
 
@@ -28,12 +29,12 @@ function Login() {
 
     const validateField = (name) => {
         let isValid = false;
-        if (name === "email") isValid = validateEmailAddress();
+        if (name === "username") isValid = validateName();
         else if (name === "password") isValid = validatePassword();
         return isValid;
     }
 
-    const validateEmailAddress = () => {
+   /* const validateEmailAddress = () => {
         let emailAddressError = "";
         const value = inputText.email;
         if (value.trim === "") emailAddressError = "Email Address is required";
@@ -41,9 +42,15 @@ function Login() {
             emailAddressError = "Email is not valid";
         setWEmail(emailAddressError)
         return emailAddressError === "";
-
-
+    }*/
+    const validateName = () => {
+        let nameError = "";
+        const value = inputText.username;
+        if (value.trim() === "") nameError = "First Name is required";
+        setWEmail(nameError)
+        return nameError === "";
     }
+
 
     const validatePassword = () => {
         let passwordError = "";
@@ -79,26 +86,45 @@ function Login() {
         });
 
     }
+    // JSON.stringify(inputText)
+
 
     const fetchResults = async (inputText) => {
-        const res = await fetch(`http://localhost:8080/api/checkLog`,{
+        const formData = new FormData();
+        formData.append('username', inputText.username)
+        formData.append('password', inputText.password)
+        let query = new URLSearchParams();
+        for (const item of formData){
+            query.append(item[0], item[1])
+        }
+        const res = await fetch(`/login`,{
             method: 'POST',
             headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': 'Basic '+btoa('username:password'),
             },
-            body: JSON.stringify(inputText)
+            body: query
         })
         return await res.json();
     }
 
     const checkUserInBackend = async (inputText) => {
-        return await fetchResults(inputText);
+        const details = await fetchResults(inputText);
+        const access_token = details.access_token;
+        //const refresh_token = details.refress_token;
+        const access = jwt(access_token);
+        //const refresh = jwt(refresh_token);
+        console.log(access.sub)
+        console.log(access)
+        setToken(access)
+
+
+        return details;
     }
 
     const checkIsInputFill = async () => {
         let formFields = [
-            "email",
+            "username",
             "password",
         ];
         let isValid = true;
@@ -120,18 +146,6 @@ function Login() {
         else{
             alert("Please try again! Email or password invalid!")
         }
-
-
-        /*if (isValid) {
-            const isValidLogin = await checkUserInBackend(inputText);
-            console.log(isValidLogin)
-            if(isValidLogin){
-                navigate("/")
-            }
-            else {
-                alert("Email or password incorrect, please try again!")
-            }
-        }*/
     }
 
 
@@ -160,11 +174,11 @@ function Login() {
 
                             <form onSubmit={submitForm}>
                                 <Package.InputTexts>
-                                    <Package.InputLabel>Email</Package.InputLabel>
+                                    <Package.InputLabel>UserName</Package.InputLabel>
                                     <FontAwesomeIcon icon={faEnvelope}/>
                                     <Package.InputText  type="text"
-                                                        value={inputText.email}
-                                                        onChange={inputEvent} name="email"
+                                                        value={inputText.username}
+                                                        onChange={inputEvent} name="username"
                                                         onBlur={handleBlur}
                                                         autoComplete="off"
                                                         />

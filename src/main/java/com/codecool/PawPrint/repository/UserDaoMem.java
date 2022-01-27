@@ -64,6 +64,16 @@ public class UserDaoMem implements UserDao{
     }
 
     @Override
+    public boolean existsByEmail(String email) {
+        return false;
+    }
+
+    @Override
+    public boolean existsByFullName(String fullName) {
+        return false;
+    }
+
+    @Override
     public User findByMail(String email) {
         User currentUser = null;
         for (User user : data) {

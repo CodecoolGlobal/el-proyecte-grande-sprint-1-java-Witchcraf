@@ -15,7 +15,7 @@ function Registration() {
 
 
     const [inputText, setInputText] = useState({
-        fullname:"",
+        username:"",
         email: "",
         password: ""
     });
@@ -33,14 +33,14 @@ function Registration() {
         let isValid = false;
         if (name === "email") isValid = validateEmailAddress();
         else if (name === "password") isValid = validatePassword();
-        else if (name === "fullname") isValid = validateName();
+        else if (name === "username") isValid = validateName();
         return isValid;
     }
 
 
     const validateName = () => {
         let nameError = "";
-        const value = inputText.fullname;
+        const value = inputText.username;
         if (value.trim() === "") nameError = "First Name is required";
         setWName(nameError)
         return nameError === "";
@@ -93,6 +93,7 @@ function Registration() {
     }
 
     const fetchCheckPreviousReg = async (inputText) => {
+        console.log(inputText)
         const res = await fetch(`http://localhost:8080/api/checkPreviousReg`,{
             method: 'POST',
             headers: {
@@ -119,7 +120,7 @@ function Registration() {
         e.preventDefault();
 
         let formFileds = [
-            "fullname",
+            "username",
             "email",
             "password",
         ];
@@ -170,7 +171,7 @@ function Registration() {
                                     <Package.InputTexts>
                                         <Package.InputLabel>FullName</Package.InputLabel>
                                         <FontAwesomeIcon icon={faUserCircle}/>
-                                        <Package.InputText type="text"  value={inputText.fullname} onChange={inputEvent} name="fullname"  onBlur={handleBlur}  autoComplete="off"/>
+                                        <Package.InputText type="text"  value={inputText.username} onChange={inputEvent} name="username"  onBlur={handleBlur}  autoComplete="off"/>
                                         <br />
                                         {wName && (
                                             <Package.ErrorMsg>{wName}</Package.ErrorMsg>

@@ -10,7 +10,7 @@ import java.util.List;
 public interface UserDao {
 
     void add(User user);
-    void add(User user, Search search);
+//    void add(User user, Search search);
     User findById(int id);
     User findByName(String name);
     User findByFullName(String fullName);

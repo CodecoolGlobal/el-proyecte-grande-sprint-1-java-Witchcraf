@@ -35,10 +35,12 @@ public class LoginController {
 
     @PostMapping(value = "/registerUser")
     public User registerNewUser(@RequestBody UserRegEntity userRegEntity) {
-        String name = userRegEntity.getFullname();
+        String name = userRegEntity.getUsername();
         String email = userRegEntity.getEmail();
         String password = userRegEntity.getPassword();
         User newUser = new User(name, email, password);
+        System.out.println(newUser.toString());
+        System.out.println(name);
         return userService.registerUser(newUser);
     }
 

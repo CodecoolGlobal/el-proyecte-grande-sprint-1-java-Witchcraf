@@ -85,15 +85,28 @@ function Login() {
         });
 
     }
+    // JSON.stringify(inputText)
+
 
     const fetchResults = async (inputText) => {
-        const res = await fetch(`http://localhost:8080/login`,{
+        const formData = new FormData();
+
+        formData.append('username', inputText.username)
+        formData.append('password', inputText.password)
+        let query = new URLSearchParams();
+        for (const item of formData){
+            query.append(item[0], item[1])
+        }
+        const res = await fetch(`/login`,{
             method: 'POST',
             headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                // 'Accept': '*/*',
+                // 'Accept-Encoding': 'gzip, deflate, br',
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': 'Basic '+btoa('username:password'),
+
             },
-            body: JSON.stringify(inputText)
+            body: query
         })
         return await res.json();
     }

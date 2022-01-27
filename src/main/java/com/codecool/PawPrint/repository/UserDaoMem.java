@@ -41,6 +41,7 @@ public class UserDaoMem implements UserDao{
         return currentUser;
     }
 
+
     @Override
     public User findByName(String name) {
         User currentUser = null;
@@ -55,5 +56,16 @@ public class UserDaoMem implements UserDao{
     @Override
     public List<User> getAll() {
         return data;
+    }
+
+    @Override
+    public User findByMail(String email) {
+        User currentUser = null;
+        for (User user : data) {
+            if(Objects.equals(user.getEmail(), email)){
+                currentUser = user;
+            }
+        }
+        return currentUser;
     }
 }

@@ -1,8 +1,10 @@
 package com.codecool.PawPrint.model.entity;
 
 import com.codecool.PawPrint.model.service.ServiceOffered;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -10,6 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@EqualsAndHashCode(exclude = {"user"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -31,6 +34,7 @@ public class Search {
     private int id;
     private String name = "MySearch";
     @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("savedSearches")
     private User user;
     @ManyToMany
     @JoinTable(

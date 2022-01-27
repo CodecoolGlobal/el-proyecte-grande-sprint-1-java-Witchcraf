@@ -15,7 +15,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
-@EqualsAndHashCode(exclude = {"services"})  // prevents circular references together with @JsonIgnoreProperties("nameOfConnectedVariable")
+@EqualsAndHashCode(exclude = {"services", "pets", "savedSearches"})  // prevents circular references together with @JsonIgnoreProperties("nameOfConnectedVariable")
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -48,12 +48,14 @@ public class User {
     private Contact contact;
     private UserType userType;
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonIgnoreProperties("user")
     private Set<Pet> pets = new HashSet<>();
 //    private Set<User> friends;        // how to annotate self-aggregation?
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")  // mapped by user removed
     @JsonIgnoreProperties("user")       // prevents circular references together with @EqualsAndHashCode(exclude = {arrayOfConnectedVariableNames})
     private Set<ServiceOffered> services = new HashSet<>();
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonIgnoreProperties("user")
     private Set<Search> savedSearches = new HashSet<>();
 
     public User(String userName, LocalDateTime registrationTime, String email, int age, String password, UserType userType) {

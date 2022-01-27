@@ -1,7 +1,9 @@
 package com.codecool.PawPrint.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -10,6 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@EqualsAndHashCode(exclude = {"user"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -30,6 +33,7 @@ public class Pet {
 
     private int id;
     @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("pets")
     private User user;
     private String fullName;
     private String userName;

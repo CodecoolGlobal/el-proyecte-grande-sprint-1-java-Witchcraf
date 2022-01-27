@@ -3,7 +3,7 @@ import styled from "styled-components";
 import SearchForm from './searchForm';
 
 
-function SearchSection({alt,topLine,heading,setResults}){
+function SearchSection({alt,topLine,heading,setResults,setIsResult}){
     return (<Package.Wrapper
             className="container-fluid px-0"
             style={{ backgroundColor: "#a8e6cd" }}
@@ -19,7 +19,7 @@ function SearchSection({alt,topLine,heading,setResults}){
                         <h1 className="display-3" style={{ fontFamily: 'Playfair Display'}}>{heading}</h1>
                         <br/>
                         <br/>
-                        <SearchForm setResults={setResults}/>
+                        <SearchForm setResults={setResults} setIsResult={setIsResult}/>
                     </Package.Box2Content>
                 </Package.Box2>
             </div>

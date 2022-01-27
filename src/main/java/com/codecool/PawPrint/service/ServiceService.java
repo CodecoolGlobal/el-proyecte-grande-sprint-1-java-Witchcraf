@@ -50,6 +50,7 @@ public class ServiceService {
         return petTypeEquivalentSet;
     }
 
+    // search by all
     public Set<ServiceOffered> findServices(String country, String city, String district,
                                              ServiceType serviceType, ServiceSubtype serviceSubtype,
                                              boolean isDogOnly, boolean isCatOnly, boolean isBothOnly,
@@ -58,6 +59,7 @@ public class ServiceService {
         return serviceDao.findServices(petTypeEquivalentSet, country, city, district, serviceType, serviceSubtype);
     }
 
+    // search without serviceSubtype
     public Set<ServiceOffered> findServices(String country, String city, String district,
                                             ServiceType serviceType, boolean isDogOnly, boolean isCatOnly,
                                             boolean isBothOnly, boolean isAllDog, boolean isAllCat) {
@@ -65,6 +67,22 @@ public class ServiceService {
         return serviceDao.findServices(petTypeEquivalentSet, country, city, district, serviceType);
     }
 
+    // search without district
+    public Set<ServiceOffered> findServices(String country, String city,
+                                            ServiceType serviceType, ServiceSubtype serviceSubtype,
+                                            boolean isDogOnly, boolean isCatOnly, boolean isBothOnly,
+                                            boolean isAllDog, boolean isAllCat) {
+        Set<PetType> petTypeEquivalentSet = convertPetType(isDogOnly, isCatOnly, isBothOnly, isAllDog, isAllCat);
+        return serviceDao.findServices(petTypeEquivalentSet, country, city, serviceType, serviceSubtype);
+    }
+
+    // search without serviceSubtype and district
+    public Set<ServiceOffered> findServices(String country, String city,
+                                            ServiceType serviceType, boolean isDogOnly, boolean isCatOnly,
+                                            boolean isBothOnly, boolean isAllDog, boolean isAllCat) {
+        Set<PetType> petTypeEquivalentSet = convertPetType(isDogOnly, isCatOnly, isBothOnly, isAllDog, isAllCat);
+        return serviceDao.findServices(petTypeEquivalentSet, country, city, serviceType);
+    }
 
     public ServiceOffered getService(String name) {
         return serviceDao.findByName(name);

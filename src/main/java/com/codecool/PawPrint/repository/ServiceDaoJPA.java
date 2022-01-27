@@ -35,6 +35,7 @@ public class ServiceDaoJPA implements ServiceDao {
         return serviceRepository.findByName(name);
     }
 
+    // all
     @Override
     public Set<ServiceOffered> findServices(Set<PetType> petTypeSet, String country, String city, String district, ServiceType serviceType, ServiceSubtype serviceSubtype) {
         Set<ServiceOffered> foundServices = new HashSet<>();
@@ -46,12 +47,37 @@ public class ServiceDaoJPA implements ServiceDao {
         return foundServices;
     }
 
+    // without serviceSubtype
     @Override
     public Set<ServiceOffered> findServices(Set<PetType> petTypeSet, String country, String city, String district, ServiceType serviceType) {
         Set<ServiceOffered> foundServices = new HashSet<>();
 
         for (PetType petType : petTypeSet) {
             List<ServiceOffered> foundServicesSublist = serviceRepository.findBySearchCriteria(country, city, district, serviceType, petType);
+            foundServices.addAll(foundServicesSublist);
+        }
+        return foundServices;
+    }
+
+    // without district
+    @Override
+    public Set<ServiceOffered> findServices(Set<PetType> petTypeSet, String country, String city, ServiceType serviceType, ServiceSubtype serviceSubtype) {
+        Set<ServiceOffered> foundServices = new HashSet<>();
+
+        for (PetType petType : petTypeSet) {
+            List<ServiceOffered> foundServicesSublist = serviceRepository.findBySearchCriteria(country, city, serviceType, serviceSubtype, petType);
+            foundServices.addAll(foundServicesSublist);
+        }
+        return foundServices;
+    }
+
+    // without serviceSubtype and district
+    @Override
+    public Set<ServiceOffered> findServices(Set<PetType> petTypeSet, String country, String city, ServiceType serviceType) {
+        Set<ServiceOffered> foundServices = new HashSet<>();
+
+        for (PetType petType : petTypeSet) {
+            List<ServiceOffered> foundServicesSublist = serviceRepository.findBySearchCriteria(country, city, serviceType, petType);
             foundServices.addAll(foundServicesSublist);
         }
         return foundServices;

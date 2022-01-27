@@ -6,11 +6,12 @@ import Content from "../../component/content";
 
 function Home({token}){
     const [results, setResults] = useState([]);
+    const [isResult, setIsResult] = useState(false);
 
     return (
         <Layout token={token} title="">
-            <SearchSection {...indexImgWithSearchField} setResults={setResults} />
-            <Content results={results}/>
+            <SearchSection {...indexImgWithSearchField} setResults={setResults} setIsResult={setIsResult}/>
+            <Content results={results} isResult={isResult}/>
         </Layout>
     );
 }

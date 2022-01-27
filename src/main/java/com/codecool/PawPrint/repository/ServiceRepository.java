@@ -26,7 +26,8 @@ public interface ServiceRepository extends JpaRepository<ServiceOffered, Integer
                     "and s.serviceSubtype = ?5 " +
                     "and s.petType = ?6"
     )
-    List<ServiceOffered> findBySearchCriteria(String country, String city, String district, ServiceType serviceType, ServiceSubtype serviceSubtype, PetType petType);
+    List<ServiceOffered> findBySearchCriteria(String country, String city, String district, ServiceType serviceType,
+                                              ServiceSubtype serviceSubtype, PetType petType);
 
     // search without serviceSubtype
     @Query(

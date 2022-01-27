@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @RestController
@@ -39,11 +40,11 @@ public class ServiceController {
         boolean isAllDog = searchService.isAllDog();
         boolean isAllCat = searchService.isAllCat();
 
-        if (serviceSubtype != null && district != null) {   // search without serviceSubtype and district
+        if (serviceSubtype == null && district.equals("")) {   // search without serviceSubtype and district
             return serviceService.findServices(country, city, serviceType, isDogOnly, isCatOnly, isBothOnly, isAllDog, isAllCat);
-        } else if (serviceSubtype == null && district != null) {    // search without serviceSubtype
+        } else if (serviceSubtype == null && !district.equals("")) {    // search without serviceSubtype
             return serviceService.findServices(country, city, district, serviceType, isDogOnly, isCatOnly, isBothOnly, isAllDog, isAllCat);
-        } else if (serviceSubtype != null) {    // search without district
+        } else if (serviceSubtype != null && district.equals("")) {    // search without district
             return serviceService.findServices(country, city, serviceType, serviceSubtype, isDogOnly, isCatOnly, isBothOnly, isAllDog, isAllCat);
         } else {    // search by all
             return serviceService.findServices(country, city, district, serviceType, serviceSubtype, isDogOnly, isCatOnly, isBothOnly, isAllDog, isAllCat);

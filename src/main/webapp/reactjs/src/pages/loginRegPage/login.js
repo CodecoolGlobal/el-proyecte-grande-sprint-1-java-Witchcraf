@@ -7,7 +7,6 @@ import {useNavigate} from "react-router-dom";
 import {faFacebook, faGoogle} from "@fortawesome/free-brands-svg-icons";
 import jwt from 'jwt-decode'
 
-//const emailValidator = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const passwordValidator = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
 
 function Login({setToken}) {
@@ -34,15 +33,7 @@ function Login({setToken}) {
         return isValid;
     }
 
-   /* const validateEmailAddress = () => {
-        let emailAddressError = "";
-        const value = inputText.email;
-        if (value.trim === "") emailAddressError = "Email Address is required";
-        else if (!emailValidator.test(value))
-            emailAddressError = "Email is not valid";
-        setWEmail(emailAddressError)
-        return emailAddressError === "";
-    }*/
+
     const validateName = () => {
         let nameError = "";
         const value = inputText.username;
@@ -55,7 +46,7 @@ function Login({setToken}) {
     const validatePassword = () => {
         let passwordError = "";
         const value = inputText.password;
-        if (value.trim === "") passwordError = "Password is required";
+        if (value.trim() === "") passwordError = "Password is required";
         else if (!passwordValidator.test(value))
             passwordError =
                 "Password must contain at least 8 characters, 1 number, 1 upper and 1 lowercase!";
@@ -86,7 +77,6 @@ function Login({setToken}) {
         });
 
     }
-    // JSON.stringify(inputText)
 
 
     const fetchResults = async (inputText) => {
@@ -114,8 +104,6 @@ function Login({setToken}) {
         //const refresh_token = details.refress_token;
         const access = jwt(access_token);
         //const refresh = jwt(refresh_token);
-        console.log(access.sub)
-        console.log(access)
         setToken(access)
 
 
@@ -249,7 +237,7 @@ const Package = {
     `,
 
     ContainerCard: styled.div`
-        height: 610px;
+        height: 630px;
         width: 800px;
         background-color: #fff;
         position: relative;

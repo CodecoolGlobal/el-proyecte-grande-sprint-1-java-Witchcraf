@@ -31,8 +31,7 @@ function SearchForm ({setResults, setIsResult}) {
     })
 
     const fetchResults = async (search) => {
-        console.log(search);
-        const res = await fetch(`http://localhost:8080/api/search`,{
+        const res = await fetch(`/api/search`,{
             method: 'POST',
                 headers: {
                 'Accept': 'application/json',

@@ -4,6 +4,7 @@ import Layout from "../layout";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faEnvelope, faEye, faEyeSlash, faLock, faUserCircle} from '@fortawesome/free-solid-svg-icons'
 import {useNavigate} from "react-router-dom";
+import {Alert, AlertTitle} from "@mui/material";
 
 const emailValidator = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const passwordValidator = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
@@ -49,7 +50,7 @@ function Registration() {
     const validateEmailAddress = () => {
         let emailAddressError = "";
         const value = inputText.email;
-        if (value.trim === "") emailAddressError = "Email Address is required";
+        if (value.trim() === "") emailAddressError = "Email Address is required";
         else if (!emailValidator.test(value))
             emailAddressError = "Email is not valid";
         setWEmail(emailAddressError)
@@ -60,7 +61,7 @@ function Registration() {
     const validatePassword = () => {
         let passwordError = "";
         const value = inputText.password;
-        if (value.trim === "") passwordError = "Password is required";
+        if (value.trim() === "") passwordError = "Password is required";
         else if (!passwordValidator.test(value))
             passwordError =
                 "Password must contain at least 8 characters, 1 number, 1 upper and 1 lowercase!";
@@ -81,7 +82,7 @@ function Registration() {
     }
 
     const fetchResults = async (inputText) => {
-        const res = await fetch(`http://localhost:8080/api/registerUser`,{
+        const res = await fetch(`/api/registerUser`,{
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -93,8 +94,7 @@ function Registration() {
     }
 
     const fetchCheckPreviousReg = async (inputText) => {
-        console.log(inputText)
-        const res = await fetch(`http://localhost:8080/api/checkPreviousReg`,{
+        const res = await fetch(`/api/checkPreviousReg`,{
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -118,6 +118,7 @@ function Registration() {
 
     const submitForm = async (e) => {
         e.preventDefault();
+        setIsReg(false)
 
         let formFileds = [
             "username",
@@ -132,7 +133,7 @@ function Registration() {
         if (isValid) {
             const isAlreadyRegistered = await checkPreviousRegistration(inputText);
             if(isAlreadyRegistered){
-                alert("You have already registered pls Login!")
+                alert('You are already registered, please log in!')
             }
             else{
                 await registerUser(inputText);

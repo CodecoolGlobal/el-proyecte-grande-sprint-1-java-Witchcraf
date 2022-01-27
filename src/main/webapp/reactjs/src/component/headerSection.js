@@ -3,7 +3,6 @@ import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 
 
 function HeaderSection({token}) {
-    console.log(token)
     return (
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
                 <Container>

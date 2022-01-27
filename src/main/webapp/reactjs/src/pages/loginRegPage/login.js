@@ -89,6 +89,7 @@ function Login({setToken}) {
         for (const item of formData){
             query.append(item[0], item[1])
         }
+        let data;
         const res = await fetch(`/login`,{
             method: 'POST',
             headers: {
@@ -96,8 +97,18 @@ function Login({setToken}) {
                 'Authorization': 'Basic '+btoa('username:password'),
             },
             body: query
+        }).then(function(response) {
+            if (response.status === 401) {
+                // do what you need to do here
+                setIsShow(true)
+                console.log("wrong")
+            }
+            else{
+                data = response.json();
+            }
+
         })
-        return await res.json();
+        return await data;
     }
 
     const checkUserInBackend = async (inputText) => {
@@ -132,11 +143,6 @@ function Login({setToken}) {
             const isValidLogin = await checkUserInBackend(inputText);
             if(isValidLogin){
                 navigate("/")
-            }
-            else{
-                setIsShow(true)
-                console.log("wrong")
-                navigate("/login")
             }
         }
     }
@@ -214,7 +220,7 @@ function Login({setToken}) {
                                     <Package.RegisterA href="/registration"> Register</Package.RegisterA>
                                 </Package.RegisterP>
                             </Package.Register>
-                            {!isShow ? (
+                            {isShow ? (
                                 <>
                                     <Alert  variant="outlined" severity="error" onClose={() => setIsShow(false)}>
                                         Email or password invalid!!</Alert>
@@ -248,7 +254,7 @@ const Package = {
     `,
 
     ContainerCard: styled.div`
-       height: 700px;
+       height: 770px;
         width: 930px;
         background-color: #fff;
         position: relative;

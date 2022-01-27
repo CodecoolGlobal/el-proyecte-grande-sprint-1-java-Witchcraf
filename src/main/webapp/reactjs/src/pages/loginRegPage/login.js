@@ -5,11 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faEnvelope, faEye, faEyeSlash, faLock} from '@fortawesome/free-solid-svg-icons'
 import {useNavigate} from "react-router-dom";
 import {faFacebook, faGoogle} from "@fortawesome/free-brands-svg-icons";
+import jwt from 'jwt-decode'
 
 //const emailValidator = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const passwordValidator = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
 
-function Login() {
+function Login({setToken}) {
     const navigate = useNavigate();
     const [eye, seteye] = useState(true);
     const [inpass, setinpass] = useState("password");
@@ -90,7 +91,6 @@ function Login() {
 
     const fetchResults = async (inputText) => {
         const formData = new FormData();
-
         formData.append('username', inputText.username)
         formData.append('password', inputText.password)
         let query = new URLSearchParams();
@@ -100,11 +100,8 @@ function Login() {
         const res = await fetch(`/login`,{
             method: 'POST',
             headers: {
-                // 'Accept': '*/*',
-                // 'Accept-Encoding': 'gzip, deflate, br',
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Authorization': 'Basic '+btoa('username:password'),
-
             },
             body: query
         })
@@ -113,7 +110,15 @@ function Login() {
 
     const checkUserInBackend = async (inputText) => {
         const details = await fetchResults(inputText);
-        console.log(details)
+        const access_token = details.access_token;
+        //const refresh_token = details.refress_token;
+        const access = jwt(access_token);
+        //const refresh = jwt(refresh_token);
+        console.log(access.sub)
+        console.log(access)
+        setToken(access)
+
+
         return details;
     }
 

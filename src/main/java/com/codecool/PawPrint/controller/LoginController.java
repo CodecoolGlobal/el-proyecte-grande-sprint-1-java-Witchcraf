@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api")
 public class LoginController {
@@ -32,7 +31,6 @@ public class LoginController {
     }
 
 
-
     @PostMapping(value = "/registerUser")
     public User registerNewUser(@RequestBody UserRegEntity userRegEntity) {
         String name = userRegEntity.getUsername();
@@ -44,25 +42,4 @@ public class LoginController {
         return userService.registerUser(newUser);
     }
 
-    @PostMapping(value = "/checkLog")
-    public UserDetails checkUser(@RequestBody UserLogEntity userLogEntity) {
-        String email = userLogEntity.getEmail();
-        String password = userLogEntity.getPassword();
-        User current = userService.findUserByEmail(email);
-        System.out.println(current);
-
-        boolean isPasswordMatch;
-        if (current == null) {
-            //return false;
-        } else {
-            isPasswordMatch = passwordEncoder.matches(password, current.getPassword());
-            if (isPasswordMatch) {
-                return userService.loadUserByUsername(email);
-                //return true;
-            } else {
-                //return false;
-            }
-        }
-        return null;
-    }
 }

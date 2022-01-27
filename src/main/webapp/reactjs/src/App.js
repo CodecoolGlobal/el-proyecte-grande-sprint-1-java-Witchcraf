@@ -11,16 +11,16 @@ import Profile from "./pages/profile";
 
 
 function App() {
-    const [user, setUser] = useState('');
+    const [token, setToken] = useState('');
 
 
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<Home token={token} />} />
                 <Route path="/search" element={<Search />} />
                 <Route path="/service-providers" element={<ServiceProviders />} />
-                <Route path="/login" element={<Login />} />
+                <Route path="/login" element={<Login setToken={setToken}/>} />
                 <Route path="/registration" element={<Registration />} />
                 <Route path="/profile" element={<Profile />} />
             </Routes>

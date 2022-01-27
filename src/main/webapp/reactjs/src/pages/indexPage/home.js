@@ -4,11 +4,11 @@ import {indexImgWithSearchField} from "./data";
 import SearchSection from "../../component/searchSection";
 import Content from "../../component/content";
 
-function Home(){
+function Home({token}){
     const [results, setResults] = useState([]);
 
     return (
-        <Layout title="">
+        <Layout token={token} title="">
             <SearchSection {...indexImgWithSearchField} setResults={setResults} />
             <Content results={results}/>
         </Layout>

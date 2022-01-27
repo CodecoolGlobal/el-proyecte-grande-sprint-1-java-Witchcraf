@@ -6,17 +6,22 @@ import {
     restaurantImageAndDetails, shelterImageAndDetails,
     wellnessImageAndDetails
 } from "../pages/indexPage/data";
+import NoResult from "./noResult";
 
 
-function Content({results}){
+function Content({results, isResult}){
     let content;
-    if (results.length === 0) {
+    if (!isResult) {
         content = <div>
-                    <Services {...restaurantImageAndDetails} />
-                    <Services {...hospitalImageAndDetails} />
-                    <Services {...wellnessImageAndDetails} />
-                    <Services {...shelterImageAndDetails} />
-                    </div>
+            <Services {...restaurantImageAndDetails} />
+            <Services {...hospitalImageAndDetails} />
+            <Services {...wellnessImageAndDetails} />
+            <Services {...shelterImageAndDetails} />
+        </div>
+    } else if (results.length === 0) {
+        content = <div>
+            <NoResult />
+        </div>
     } else {
         content = <SearchResult results={results} />
     }

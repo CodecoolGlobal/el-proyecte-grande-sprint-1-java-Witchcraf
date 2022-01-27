@@ -28,10 +28,10 @@ public class UserDaoJpa implements UserDao {
         userRepository.save(user);
     }
 
-    @Override
-    public void add(User user, Search search) {
-
-    }
+//    @Override
+//    public void add(User user, Search search) {
+//
+//    }
 
     @Override
     public User findById(int id) {
@@ -55,7 +55,19 @@ public class UserDaoJpa implements UserDao {
     }
 
     @Override
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
+    @Override
+    public boolean existsByFullName(String fullName) {
+        return userRepository.existsByFullName(fullName);
+    }
+
+    @Override
     public User findByMail(String email) {
         return userRepository.findUserByEmail(email);
     }
+
+
 }

@@ -18,5 +18,7 @@ public interface UserDao {
 
 
 
+    boolean existsByEmail(String email);
+    boolean existsByFullName(String fullName);
     User findByMail(String email);
 }

@@ -15,6 +15,7 @@ public interface ServiceRepository extends JpaRepository<ServiceOffered, Integer
 
     ServiceOffered findByName(String name);
 
+    // search by all
     @Query(
             "select s " +
                     "from ServiceOffered s " +
@@ -27,6 +28,7 @@ public interface ServiceRepository extends JpaRepository<ServiceOffered, Integer
     )
     List<ServiceOffered> findBySearchCriteria(String country, String city, String district, ServiceType serviceType, ServiceSubtype serviceSubtype, PetType petType);
 
+    // search without serviceSubtype
     @Query(
             "select s " +
                     "from ServiceOffered s " +
@@ -37,4 +39,27 @@ public interface ServiceRepository extends JpaRepository<ServiceOffered, Integer
                     "and s.petType = ?5 "
     )
     List<ServiceOffered> findBySearchCriteria(String country, String city, String district, ServiceType serviceType, PetType petType);
+
+    // search without district
+    @Query(
+            "select s " +
+                    "from ServiceOffered s " +
+                    "where s.contact.address.country = ?1 " +
+                    "and s.contact.address.city = ?2 " +
+                    "and s.serviceType = ?3 " +
+                    "and s.serviceSubtype = ?4 " +
+                    "and s.petType = ?5"
+    )
+    List<ServiceOffered> findBySearchCriteria(String country, String city, ServiceType serviceType, ServiceSubtype serviceSubtype, PetType petType);
+
+    // search without serviceSubtype and district
+    @Query(
+            "select s " +
+                    "from ServiceOffered s " +
+                    "where s.contact.address.country = ?1 " +
+                    "and s.contact.address.city = ?2 " +
+                    "and s.serviceType = ?3 " +
+                    "and s.petType = ?4 "
+    )
+    List<ServiceOffered> findBySearchCriteria(String country, String city, ServiceType serviceType, PetType petType);
 }

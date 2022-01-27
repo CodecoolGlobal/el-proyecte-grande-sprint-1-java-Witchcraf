@@ -17,9 +17,21 @@ public interface ServiceDao {
 
     ServiceOffered findByName(String name);
 
+    // search by all
     Set<ServiceOffered> findServices(Set<PetType> petTypeSet, String country, String city, String district,
                                       ServiceType serviceType, ServiceSubtype serviceSubtype);
+
+    // search without serviceSubtype
     Set<ServiceOffered> findServices(Set<PetType> petTypeSet, String country, String city, String district,
                                      ServiceType serviceType);
+
+    // search without district
+    Set<ServiceOffered> findServices(Set<PetType> petTypeSet, String country, String city,
+                                     ServiceType serviceType, ServiceSubtype serviceSubtype);
+
+    // search without serviceSubtype and district
+    Set<ServiceOffered> findServices(Set<PetType> petTypeSet, String country, String city,
+                                     ServiceType serviceType);
+
     List<ServiceOffered> getAll();
 }

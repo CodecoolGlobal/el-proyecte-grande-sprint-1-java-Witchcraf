@@ -51,10 +51,10 @@ public class ServiceController {
         }
     }
 
-//    @PostMapping(value = "/search/save")
-//    @ResponseBody
-//    public String saveSearch(@RequestParam String userId, @RequestBody Set<ServiceOffered> services) {
+    @PostMapping(value = "/search/save")
+    @ResponseBody
+    public String saveSearch(@RequestParam String userId, @RequestBody Set<ServiceOffered> services) {
 //        userService.saveSearch(Integer.parseInt(userId), services);
-//        return "redirect:";
-//    }
+        return "redirect:/";
+    }
 }

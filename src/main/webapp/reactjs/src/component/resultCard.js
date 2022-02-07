@@ -20,12 +20,12 @@ function resultCard({result, setSearches}){
         if (isCheckboxChecked === false) {
             setSearches({
                 ...searches,    // why doesn't see it
-                searchedServices: [...searchedServices, event.target.value]
+                searchedServices: [...searchedServices, event.target.value.valueAsNumber]   // conversion needed?
             })
         } else {
             setSearches({
                 ...searches,    // why doesn't see it
-                searchedServices: searchedServices.filter((id) => (id !== event.target.value))
+                searchedServices: searchedServices.filter((id) => (id !== event.target.value.valueAsNumber))    // conversion needed?
             })
         }
         console.log(searches);

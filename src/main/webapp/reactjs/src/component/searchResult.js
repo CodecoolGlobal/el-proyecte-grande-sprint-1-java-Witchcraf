@@ -27,11 +27,11 @@ function SearchResult({results}){
             },
             body: JSON.stringify(searches)  // user identification?
         })
-        setSearches({       // refact?
-            id: null,
-            name: "My Search",
-            searchedServices: []
-        })
+        // setSearches({       // refact?
+        //     id: null,
+        //     name: "My Search",
+        //     searchedServices: []
+        // })
         return await res.json();
     }
 
@@ -43,7 +43,7 @@ function SearchResult({results}){
         <Form onSubmit={handleSubmit}>
             <div className='results'>
                 {results.map((result, index) => (
-                    <ResultCard key={index} result={result} searches={setSearches}/>
+                    <ResultCard key={index} result={result} setSearches={setSearches}/>
                 ))}
                 {
                     searches.searchedServices.length !== 0 ?

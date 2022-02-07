@@ -1,7 +1,7 @@
-import React from "react";
+import React, {useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../App.css';
-import {Avatar, Button, Rating, Typography} from "@mui/material";
+import {Avatar, Button, Checkbox, Rating, Typography} from "@mui/material";
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import SpaIcon from '@mui/icons-material/Spa';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
@@ -10,9 +10,26 @@ import {green, purple, red, yellow} from "@mui/material/colors";
 import SendIcon from '@mui/icons-material/Send';
 
 
-function resultCard({result}){
+function resultCard({result, setSearches}){
     let currentAvatar = createAvatarBasedOnServiceType(result.serviceType);
 
+    const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+
+    const handleChange = (event) => {
+        setIsCheckboxChecked(!isCheckboxChecked);
+        if (isCheckboxChecked === false) {
+            setSearches({
+                ...searches,    // why doesn't see it
+                searchedServices: [...searchedServices, event.target.value]
+            })
+        } else {
+            setSearches({
+                ...searches,    // why doesn't see it
+                searchedServices: searchedServices.filter((id) => (id !== event.target.value))
+            })
+        }
+        console.log(searches);
+    }
 
     return (
         <div className="container-fluid">
@@ -24,7 +41,11 @@ function resultCard({result}){
                                 {currentAvatar}
                             </div>
                             <div className="card-body">
-                                <h4 className="card-title" style={{marginBottom: "30px", marginTop:"10px", fontFamily: 'Playfair Display',fontSize:"45px"}}>{result.name}</h4>
+                                <h4 className="card-title" style={{marginBottom: "30px", marginTop:"10px", fontFamily: 'Playfair Display',fontSize:"45px", display: "inline-block"}}>{result.name}</h4>
+                                <Checkbox
+                                    value={result.id}
+                                    checked={isCheckboxChecked}
+                                    onChange={handleChange} />
                                 <p style={{ fontFamily: 'Playfair Display',fontSize:"25px"}}>Rating:
                                     <Typography component="legend" ></Typography>
                                     <Rating style={{marginLeft:"10px"}} name="half-rating-read" defaultValue={result.rating} precision={0.5} readOnly />

@@ -1,12 +1,32 @@
 package com.codecool.PawPrint.model.contact;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "address")
 public class Address {
 
+    @Id
+    @SequenceGenerator(
+            name = "address_sequence",
+            sequenceName = "address_sequence",
+            allocationSize = 1
+    )
+
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "address_sequence"
+    )
+
     private int id;
-    private Contact contact;
+    private int contactId;
     private String country;
     private String district;
     private String city;
@@ -16,9 +36,20 @@ public class Address {
     private String door;
     private String bell;
 
-    public Address(Contact contact, String country, String city) {
-        this.contact = contact;
+    public Address(int contactId, String country, String city, String district) {
+        this.contactId = contactId;
         this.country = country;
         this.city = city;
+        this.district = district;
     }
+
+    public Address(int contactId, String country, String district, String city, String street, String number) {
+        this.contactId = contactId;
+        this.country = country;
+        this.district = district;
+        this.city = city;
+        this.street = street;
+        this.number = number;
+    }
+
 }

@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from "styled-components";
-import SearchForm from './form';
+import SearchForm from './searchForm';
 
 
-function SearchSection({alt,topLine,heading,description}){
+function SearchSection({alt,topLine,heading,setResults,setIsResult}){
     return (<Package.Wrapper
             className="container-fluid px-0"
             style={{ backgroundColor: "#a8e6cd" }}
@@ -13,14 +13,13 @@ function SearchSection({alt,topLine,heading,description}){
                 </Package.Box1>
                 <Package.Box2 className="col-md-6" alt={alt}>
                     <Package.Box2Content>
-                        <h2 className="mt-5" style={{ fontStyle: "italic" }}>
+                        <h2 className="mt-5" style={{ fontStyle: "italic", fontFamily: 'Playfair Display', fontSize: "35px"}}>
                             {topLine}
                         </h2>
-                        <h1 className="display-3">{heading}</h1>
-                        <p> {description} </p>
-                        <SearchForm />
-
-
+                        <h1 className="display-3" style={{ fontFamily: 'Playfair Display'}}>{heading}</h1>
+                        <br/>
+                        <br/>
+                        <SearchForm setResults={setResults} setIsResult={setIsResult}/>
                     </Package.Box2Content>
                 </Package.Box2>
             </div>
@@ -60,52 +59,4 @@ const Package = {
     }
   `
 };
-
-const Form = {
-    Input: styled.input`
-    display: block;
-    width: 100%;
-    border: none;
-    border-radius: 0.25rem;
-    padding: 1rem 2rem;
-  `,
-
-    Button: styled.input`
-    border: none;
-    background: hsl(0, 0%, 93%);
-    border-radius: 0.25rem;
-    padding: 1rem 2rem;
-    background: #35dba9;
-    color: #ffffff;
-    box-shadow: 0 0.75rem 0.5rem -0.5rem #a8e6cd;
-  `
-};
-/*         <form className="mt-5">
-                            <h3 className="mb-4">Reservations</h3>
-                            <div className="form-group">
-                                <Form.Input type="text" placeholder="Full Name" />
-                            </div>
-
-                            <div className="form-row">
-                                <div className="form-group col-md-4">
-                                    <Form.Input
-                                        type="text"
-                                        class="form-control"
-                                        placeholder="# of Guests"
-                                    />
-                                </div>
-                                <div className="form-group col-md-4">
-                                    <Form.Input
-                                        type="date"
-                                        class="form-control"
-                                        placeholder="Date"
-                                    />
-                                </div>
-
-                                <div className="form-group col-md-4">
-                                    <Form.Input type="time" class="form-control" />
-                                </div>
-                            </div>
-                            <Form.Button type="submit" placeholder="Submit" />
-                        </form>*/
 export default SearchSection;

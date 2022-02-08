@@ -1,16 +1,13 @@
 import React from 'react';
-import HeaderSection from '../component/HeaderSection'
+import HeaderSection from '../component/headerSection'
 import Footer from "../component/footer";
 import '../App.css';
 
 
-const Layout = ({title = "Title", children}) => {
+const Layout = ({ children, token}) => {
     return (
         <div>
-            <HeaderSection />
-            <div className="jumbotron">
-                <h1>{title}</h1>
-            </div>
+            <HeaderSection token={token} />
             <div>{children}</div>
             <Footer />
         </div>

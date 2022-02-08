@@ -4,80 +4,124 @@ import com.codecool.PawPrint.model.entity.PetType;
 import com.codecool.PawPrint.model.service.ServiceOffered;
 import com.codecool.PawPrint.model.service.ServiceSubtype;
 import com.codecool.PawPrint.model.service.ServiceType;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
-@Component
+@Repository
+@Qualifier("serviceDaoMem")
 public class ServiceDaoMem implements ServiceDao {
 
-    private Set<ServiceOffered> services = new HashSet<>();
+    private final Set<ServiceOffered> services = new HashSet<>();
 
 
     @Override
     public void add(ServiceOffered service) {
-
+        services.add(service);
     }
 
-    @Override
-    public ServiceOffered findById(int id) {
-        return null;
-    }
 
     @Override
     public ServiceOffered findByName(String name) {
-        return null;
+        return services.stream().filter(service -> service.getName().equals(name)).findFirst().orElse(null);
     }
 
+    // search by all
     @Override
-    public Set<ServiceOffered> findServices(PetType petType, String country, String city, String district, ServiceType serviceType, ServiceSubtype serviceSubtype) {
+    public Set<ServiceOffered> findServices(Set<PetType> petTypeSet, String country, String city, String district, ServiceType serviceType, ServiceSubtype serviceSubtype) {
         Set<ServiceOffered> foundServices = new HashSet<>();
-        Set<PetType> petTypeEquivalentSet = convertPetType(petType);
 
         for (ServiceOffered serviceOffered : services) {
-            if (checkSearchCondition(serviceOffered, petTypeEquivalentSet, country, city,district, serviceType, serviceSubtype)) {
+            if (checkSearchCondition(serviceOffered, petTypeSet, country, city, district, serviceType, serviceSubtype)) {
                 foundServices.add(serviceOffered);
             }
         }
         return foundServices;
     }
 
-    private boolean checkSearchCondition(ServiceOffered serviceOffered, Set<PetType> petTypeEquivalentSet, String country, String city, String district, ServiceType serviceType, ServiceSubtype serviceSubtype) {
-        return serviceOffered.getServiceType().equals(serviceType) && serviceOffered.getServiceSubtype().equals(serviceSubtype)
-                && petTypeEquivalentSet.contains(serviceOffered.getPetType()) && serviceOffered.getContact().getAddress().getCountry().equals(country)
-                && serviceOffered.getContact().getAddress().getCity().equals(city) && serviceOffered.getContact().getAddress().getDistrict().equals(district);
-    }
+    // search without serviceSubtype
+    @Override
+    public Set<ServiceOffered> findServices(Set<PetType> petTypeSet, String country, String city, String district, ServiceType serviceType) {
+        Set<ServiceOffered> foundServices = new HashSet<>();
 
-    private Set<PetType> convertPetType(PetType petType) {
-        Set<PetType> petTypeEquivalentSet = new HashSet<>();
-        if (petType == null) {
-            petTypeEquivalentSet.add(PetType.CAT);
-            petTypeEquivalentSet.add(PetType.DOG);
-            petTypeEquivalentSet.add(PetType.CATANDDOG);
-        } else {
-            switch (petType) {
-                case CAT:
-                    petTypeEquivalentSet.add(PetType.CAT);
-                    petTypeEquivalentSet.add(PetType.CATANDDOG);
-                    break;
-                case DOG:
-                    petTypeEquivalentSet.add(PetType.DOG);
-                    petTypeEquivalentSet.add(PetType.CATANDDOG);
-                    break;
-                case CATANDDOG:
-                case NONE:
-                    petTypeEquivalentSet.add(PetType.CAT);
-                    petTypeEquivalentSet.add(PetType.DOG);
-                    petTypeEquivalentSet.add(PetType.CATANDDOG);
-                    break;
+        for (ServiceOffered serviceOffered : services) {
+            if (checkSearchCondition(serviceOffered, petTypeSet, country, city, district, serviceType)) {
+                foundServices.add(serviceOffered);
             }
         }
-        return petTypeEquivalentSet;
+        return foundServices;
+    }
+
+    // search without district
+    @Override
+    public Set<ServiceOffered> findServices(Set<PetType> petTypeSet, String country, String city, ServiceType serviceType, ServiceSubtype serviceSubtype) {
+        Set<ServiceOffered> foundServices = new HashSet<>();
+
+        for (ServiceOffered serviceOffered : services) {
+            if (checkSearchCondition(serviceOffered, petTypeSet, country, city, serviceType, serviceSubtype)) {
+                foundServices.add(serviceOffered);
+            }
+        }
+        return foundServices;
+    }
+
+    // search without serviceSubtype and district
+    @Override
+    public Set<ServiceOffered> findServices(Set<PetType> petTypeSet, String country, String city, ServiceType serviceType) {
+        Set<ServiceOffered> foundServices = new HashSet<>();
+
+        for (ServiceOffered serviceOffered : services) {
+            if (checkSearchCondition(serviceOffered, petTypeSet, country, city, serviceType)) {
+                foundServices.add(serviceOffered);
+            }
+        }
+        return foundServices;
+    }
+
+    // all
+    private boolean checkSearchCondition(ServiceOffered serviceOffered, Set<PetType> petTypeEquivalentSet, String country, String city, String district, ServiceType serviceType, ServiceSubtype serviceSubtype) {
+        return serviceOffered.getServiceType().equals(serviceType)
+                && serviceOffered.getServiceSubtype().equals(serviceSubtype)
+                && petTypeEquivalentSet.contains(serviceOffered.getPetType())
+                && serviceOffered.getContact().getAddress().getCountry().equals(country)
+                && serviceOffered.getContact().getAddress().getCity().equals(city)
+                && serviceOffered.getContact().getAddress().getDistrict().equals(district);
+    }
+
+    // without serviceSubtype
+    private boolean checkSearchCondition(ServiceOffered serviceOffered, Set<PetType> petTypeEquivalentSet, String country, String city, String district, ServiceType serviceType) {
+        return serviceOffered.getServiceType().equals(serviceType)
+                && petTypeEquivalentSet.contains(serviceOffered.getPetType())
+                && serviceOffered.getContact().getAddress().getCountry().equals(country)
+                && serviceOffered.getContact().getAddress().getCity().equals(city)
+                && serviceOffered.getContact().getAddress().getDistrict().equals(district);
+    }
+
+    // without district
+    private boolean checkSearchCondition(ServiceOffered serviceOffered, Set<PetType> petTypeEquivalentSet, String country, String city, ServiceType serviceType, ServiceSubtype serviceSubtype) {
+        return serviceOffered.getServiceType().equals(serviceType)
+                && serviceOffered.getServiceSubtype().equals(serviceSubtype)
+                && petTypeEquivalentSet.contains(serviceOffered.getPetType())
+                && serviceOffered.getContact().getAddress().getCountry().equals(country)
+                && serviceOffered.getContact().getAddress().getCity().equals(city);
+    }
+
+    // without serviceSubtype and district
+    private boolean checkSearchCondition(ServiceOffered serviceOffered, Set<PetType> petTypeEquivalentSet, String country, String city, ServiceType serviceType) {
+        return serviceOffered.getServiceType().equals(serviceType)
+                && petTypeEquivalentSet.contains(serviceOffered.getPetType())
+                && serviceOffered.getContact().getAddress().getCountry().equals(country)
+                && serviceOffered.getContact().getAddress().getCity().equals(city);
+    }
+
+    private boolean checkSearchCondition(ServiceOffered serviceOffered, Set<PetType> petTypeEquivalentSet, String country) {
+        return petTypeEquivalentSet.contains(serviceOffered.getPetType())
+                && serviceOffered.getContact().getAddress().getCountry().equals(country);
     }
 
     @Override
-    public Set<ServiceOffered> getAll() {
+    public List<ServiceOffered> getAll() {
         return null;
     }
 }

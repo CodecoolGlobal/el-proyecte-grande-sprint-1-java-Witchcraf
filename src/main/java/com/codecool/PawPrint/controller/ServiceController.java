@@ -1,20 +1,20 @@
 package com.codecool.PawPrint.controller;
 
-import com.codecool.PawPrint.model.entity.PetType;
+import com.codecool.PawPrint.model.controllerEntity.SearchService;
 import com.codecool.PawPrint.model.service.ServiceOffered;
 import com.codecool.PawPrint.model.service.ServiceSubtype;
 import com.codecool.PawPrint.model.service.ServiceType;
 import com.codecool.PawPrint.service.ServiceService;
 import com.codecool.PawPrint.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-@Controller
-@RequestMapping("/")
+@RestController
+@RequestMapping("/api")
 public class ServiceController {
 
     private ServiceService serviceService;
@@ -26,19 +26,34 @@ public class ServiceController {
         this.userService = userService;
     }
 
-    @GetMapping(value = "/search/{petType}/{country}/{city}/{district}/{serviceType}/{serviceSubtype}/{userId}")
-    public Set<ServiceOffered> getServices(@PathVariable PetType petType, @PathVariable String country,
-                                           @PathVariable String city, @PathVariable String district,
-                                           @PathVariable ServiceType serviceType, @PathVariable ServiceSubtype serviceSubtype,
-                                           @PathVariable Optional<Integer> userId) {
+    @PostMapping(value = "/search")
+    public Set<ServiceOffered> findServices(@RequestBody SearchService searchService) {
+        String country = searchService.getCountry();
+        String city = searchService.getCity();
+        String district = searchService.getDistrict();
+        ServiceType serviceType = searchService.getServiceType();
+        ServiceSubtype serviceSubtype = searchService.getServiceSubtype();
+        boolean isDogOnly = searchService.isDogOnly();
+        boolean isCatOnly = searchService.isCatOnly();
+        boolean isBothOnly = searchService.isBothOnly();
+        boolean isAllDog = searchService.isAllDog();
+        boolean isAllCat = searchService.isAllCat();
 
-        return serviceService.findServices(petType, country, city, district, serviceType, serviceSubtype);
-
+        if (serviceSubtype != null && district != null) {   // search without serviceSubtype and district
+            return serviceService.findServices(country, city, serviceType, isDogOnly, isCatOnly, isBothOnly, isAllDog, isAllCat);
+        } else if (serviceSubtype == null && district != null) {    // search without serviceSubtype
+            return serviceService.findServices(country, city, district, serviceType, isDogOnly, isCatOnly, isBothOnly, isAllDog, isAllCat);
+        } else if (serviceSubtype != null) {    // search without district
+            return serviceService.findServices(country, city, serviceType, serviceSubtype, isDogOnly, isCatOnly, isBothOnly, isAllDog, isAllCat);
+        } else {    // search by all
+            return serviceService.findServices(country, city, district, serviceType, serviceSubtype, isDogOnly, isCatOnly, isBothOnly, isAllDog, isAllCat);
+        }
     }
 
-    @PostMapping(value = "/search/save/{userId}")
-    public String saveSearch(@PathVariable String userId, @RequestBody Set<ServiceOffered> services) {
-        userService.saveSearch(Integer.parseInt(userId), services);
-        return "redirect:";
-    }
+//    @PostMapping(value = "/search/save")
+//    @ResponseBody
+//    public String saveSearch(@RequestParam String userId, @RequestBody Set<ServiceOffered> services) {
+//        userService.saveSearch(Integer.parseInt(userId), services);
+//        return "redirect:";
+//    }
 }

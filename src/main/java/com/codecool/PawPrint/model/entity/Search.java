@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
-@EqualsAndHashCode(exclude = {"user"})
+@EqualsAndHashCode(exclude = {"user", "searchedServices"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -41,6 +41,7 @@ public class Search {
             name = "saved_searches",
             joinColumns = @JoinColumn(name = "search_id"),
             inverseJoinColumns = @JoinColumn(name = "service_id"))
+    @JsonIgnoreProperties("searches")
     private Set<ServiceOffered> searchedServices = new HashSet<>();
 
 //    public Search(Set<ServiceOffered> searchedServices) {

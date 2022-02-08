@@ -15,7 +15,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
-@EqualsAndHashCode(exclude = {"user"})
+@EqualsAndHashCode(exclude = {"user", "searches"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -55,6 +55,7 @@ public class ServiceOffered {
     private String reservationUrl;
     private String image;
     @ManyToMany(mappedBy = "searchedServices")
+    @JsonIgnoreProperties("searchedServices")
     private Set<Search> searches = new HashSet<>();
 
     public ServiceOffered(String name, PetType petType, ServiceType serviceType, ServiceSubtype serviceSubtype, Contact contact) {

@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Button} from "react-bootstrap";
 
-function multiButton({label, bWidth}) {
+function MultiButton({label, bWidth}) {
 
     return (
         <Button variant="success" type="submit"
@@ -12,4 +12,4 @@ function multiButton({label, bWidth}) {
 
 }
 
-export default multiButton;
+export default MultiButton;

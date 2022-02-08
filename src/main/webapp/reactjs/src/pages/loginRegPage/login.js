@@ -114,9 +114,11 @@ function Login({setToken}) {
     const checkUserInBackend = async (inputText) => {
         const details = await fetchResults(inputText);
         const access_token = details.access_token;
-        //const refresh_token = details.refress_token;
+        //const refresh_token = details.refresh_token;
         const access = jwt(access_token);
         //const refresh = jwt(refresh_token);
+        window.localStorage.setItem("token", access);
+        window.localStorage.setItem("username", access.sub);
         setToken(access)
         return details;
     }

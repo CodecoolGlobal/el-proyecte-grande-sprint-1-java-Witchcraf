@@ -38,8 +38,9 @@ function SearchForm ({setResults, setIsResult}) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(search)
-        })
-        return await res.json();
+        });
+        const resJSON = await res.json();
+        return resJSON;
     }
 
     const getSearchResults = async (search) => {

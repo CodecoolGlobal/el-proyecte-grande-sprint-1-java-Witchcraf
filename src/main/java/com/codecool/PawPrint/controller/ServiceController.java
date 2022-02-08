@@ -1,5 +1,6 @@
 package com.codecool.PawPrint.controller;
 
+import com.codecool.PawPrint.model.controllerEntity.SaveSearchEntity;
 import com.codecool.PawPrint.model.controllerEntity.SearchService;
 import com.codecool.PawPrint.model.service.ServiceOffered;
 import com.codecool.PawPrint.model.service.ServiceSubtype;
@@ -7,6 +8,7 @@ import com.codecool.PawPrint.model.service.ServiceType;
 import com.codecool.PawPrint.service.ServiceService;
 import com.codecool.PawPrint.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -53,8 +55,9 @@ public class ServiceController {
 
     @PostMapping(value = "/search/save")
     @ResponseBody
-    public String saveSearch(@RequestParam String userId, @RequestBody Set<ServiceOffered> services) {
+    public ResponseEntity saveSearch(@RequestBody SaveSearchEntity saveSearchEntity) {
+        System.out.println(saveSearchEntity);
 //        userService.saveSearch(Integer.parseInt(userId), services);
-        return "redirect:/";
+        return ResponseEntity.ok().build();
     }
 }

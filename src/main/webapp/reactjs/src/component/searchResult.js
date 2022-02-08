@@ -1,14 +1,18 @@
 import React, {useState} from "react";
 import ResultCard from "../component/resultCard";
 import {Form} from "react-bootstrap";
+import MultiButton from "./multiButton";
 
 
 
 function SearchResult({results}){
 
+    const username = window.localStorage.getItem("username");
+
     const [searches, setSearches] = useState({
-        id: null,
-        name: "My Search",
+        username: username,
+        // username: "Hokedli",
+        searchName: "My Search",
         searchedServices: []
     })
 
@@ -36,19 +40,27 @@ function SearchResult({results}){
     }
 
     const saveSearchResults = async (search) => {
-        await fetchSaveSearch(search);
+        const resultFromApi = await fetchSaveSearch(search);
     }
 
     return (
         <Form onSubmit={handleSubmit}>
             <div className='results'>
                 {results.map((result, index) => (
-                    <ResultCard key={index} result={result} setSearches={setSearches}/>
+                    <ResultCard key={index} result={result} searches={searches} setSearches={setSearches}/>
                 ))}
-                {
-                    searches.searchedServices.length !== 0 ?
-                        <multiButton label={"Save Search"} bWidth={"100%"}/> : null
-                }
+                <div className="container-fluid">
+                    <div className="row justify-content-center">
+                        <div className="col-8 mt-5">
+                            <div className="card">
+                                {
+                                    searches.searchedServices.length !== 0 ?
+                                            <MultiButton label={"Save Search"} bWidth={"100%"}/> : null
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </Form>
     );

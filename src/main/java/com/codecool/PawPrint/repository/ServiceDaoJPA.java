@@ -37,11 +37,13 @@ public class ServiceDaoJPA implements ServiceDao {
 
     // all
     @Override
-    public Set<ServiceOffered> findServices(Set<PetType> petTypeSet, String country, String city, String district, ServiceType serviceType, ServiceSubtype serviceSubtype) {
+    public Set<ServiceOffered> findServices(Set<PetType> petTypeSet, String country, String city, String district,
+                                            ServiceType serviceType, ServiceSubtype serviceSubtype) {
         Set<ServiceOffered> foundServices = new HashSet<>();
 
         for (PetType petType : petTypeSet) {
-            List<ServiceOffered> foundServicesSublist = serviceRepository.findBySearchCriteria(country, city, district, serviceType, serviceSubtype, petType);
+            List<ServiceOffered> foundServicesSublist = serviceRepository.findBySearchCriteria(country, city,
+                    district, serviceType, serviceSubtype, petType);
             foundServices.addAll(foundServicesSublist);
         }
         return foundServices;

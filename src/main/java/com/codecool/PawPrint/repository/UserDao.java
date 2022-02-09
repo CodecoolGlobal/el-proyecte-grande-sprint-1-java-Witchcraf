@@ -12,7 +12,7 @@ public interface UserDao {
     void add(User user);
 //    void add(User user, Search search);
     User findById(int id);
-    User findByName(String name);
+    User findByUserName(String name);
     User findByFullName(String fullName);
     List<User> getAll();
 

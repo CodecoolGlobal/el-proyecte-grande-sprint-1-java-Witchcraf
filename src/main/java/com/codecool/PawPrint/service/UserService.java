@@ -1,11 +1,8 @@
 package com.codecool.PawPrint.service;
 
-import com.codecool.PawPrint.model.entity.Search;
 import com.codecool.PawPrint.model.entity.User;
-import com.codecool.PawPrint.model.service.ServiceOffered;
 import com.codecool.PawPrint.repository.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -45,7 +41,7 @@ public class UserService implements UserDetailsService {
     }
 
     public User findUserByName(String name) {
-       return userDao.findByName(name);
+       return userDao.findByUserName(name);
     }
 
     public boolean checkRegEmailAndName(String email, String fullName){
@@ -63,7 +59,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userDao.findByName(username);
+        User user = userDao.findByUserName(username);
         Collection<SimpleGrantedAuthority> userTypes = new ArrayList<>();
         if(user == null){
             throw new UsernameNotFoundException("Not found this User!");

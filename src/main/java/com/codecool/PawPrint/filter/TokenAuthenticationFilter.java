@@ -13,13 +13,19 @@ import java.util.Map;
 @NoArgsConstructor
 public class TokenAuthenticationFilter {
 
-    public String tokenVerification(HttpServletRequest request){
+    public String tokenVerification(HttpServletRequest request) throws Exception {
         Map<String, String> tokenDetails = new HashMap<>();
         String token = request.getHeader("Authorization");
         Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
-        JWTVerifier verifier = JWT.require(algorithm).build();
-        DecodedJWT decodedJWT = verifier.verify(token);
-        return decodedJWT.getSubject();
+        try {
+            JWTVerifier verifier = JWT.require(algorithm).build();
+            DecodedJWT decodedJWT = verifier.verify(token);
+            return decodedJWT.getSubject();
+
+        }
+        catch (Exception e){
+            throw new Exception("Invalid Token");
+        }
     }
 
 }

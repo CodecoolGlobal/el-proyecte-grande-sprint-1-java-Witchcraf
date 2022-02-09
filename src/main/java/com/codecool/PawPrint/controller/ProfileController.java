@@ -25,7 +25,7 @@ public class ProfileController {
     }
 
     @GetMapping("/getuseralldata")
-    public User getAllUserDataById(HttpServletRequest httpRequest){
+    public User getAllUserDataById(HttpServletRequest httpRequest) throws Exception {
         return userService.findUserByName(tokenAuthenticationFilter.tokenVerification(httpRequest));
     }
 }

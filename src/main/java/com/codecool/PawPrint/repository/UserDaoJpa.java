@@ -28,11 +28,6 @@ public class UserDaoJpa implements UserDao {
         userRepository.save(user);
     }
 
-//    @Override
-//    public void add(User user, Search search) {
-//
-//    }
-
     @Override
     public User findById(int id) {
         return userRepository.findById(id);

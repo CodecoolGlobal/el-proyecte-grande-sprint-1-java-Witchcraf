@@ -16,12 +16,10 @@ import java.util.Set;
 @RequestMapping("/api")
 public class LoginController {
     private UserService userService;
-    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public LoginController(UserService userService, BCryptPasswordEncoder passwordEncoder) {
+    public LoginController(UserService userService) {
         this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
     }
 
 

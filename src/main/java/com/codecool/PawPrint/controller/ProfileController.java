@@ -1,4 +1,30 @@
 package com.codecool.PawPrint.controller;
 
+import com.codecool.PawPrint.filter.TokenAuthenticationFilter;
+import com.codecool.PawPrint.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+
+@RestController
+@RequestMapping("/api")
 public class ProfileController {
+
+    private UserService userService;
+    private TokenAuthenticationFilter tokenAuthenticationFilter;
+
+    @Autowired
+    public ProfileController(UserService userService, TokenAuthenticationFilter tokenAuthenticationFilter) {
+        this.userService = userService;
+        this.tokenAuthenticationFilter = tokenAuthenticationFilter;
+    }
+
+    @GetMapping("/getuseralldata")
+    public String getAllUserDataById(HttpServletRequest httpRequest){
+        return userService.findUserByName(tokenAuthenticationFilter.tokenVerification(httpRequest)).getEmail();
+    }
 }

@@ -39,7 +39,7 @@ public class UserDaoJpa implements UserDao {
     }
 
     @Override
-    public User findByName(String name) {
+    public User findByUserName(String name) {
         return userRepository.findUserByUsername(name);
     }
 

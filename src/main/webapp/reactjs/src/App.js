@@ -22,7 +22,7 @@ function App() {
                 <Route path="/service-providers" element={<ServiceProviders />} />
                 <Route path="/login" element={<Login setToken={setToken}/>} />
                 <Route path="/registration" element={<Registration />} />
-                <Route path="/profile" element={<Profile />} />
+                <Route path="/profile" element={<Profile token={token} />} />
             </Routes>
         </BrowserRouter>
     );

@@ -11,7 +11,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -56,7 +58,7 @@ public class User {
     private Set<ServiceOffered> services = new HashSet<>();
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
     @JsonIgnoreProperties("user")
-    private Set<Search> savedSearches = new HashSet<>();
+    private List<Search> savedSearches = new ArrayList<>();
 
     public User(String userName, LocalDateTime registrationTime, String email, int age, String password, UserType userType) {
         this.username = userName;

@@ -6,14 +6,15 @@ import {faEnvelope, faEye, faEyeSlash, faLock} from '@fortawesome/free-solid-svg
 import {useNavigate} from "react-router-dom";
 import {faFacebook, faGoogle} from "@fortawesome/free-brands-svg-icons";
 import jwt from 'jwt-decode'
+import {Alert} from "@mui/material";
 
-//const emailValidator = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const passwordValidator = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
 
 function Login({setToken}) {
     const navigate = useNavigate();
     const [eye, seteye] = useState(true);
     const [inpass, setinpass] = useState("password");
+    const [isShow, setIsShow] = useState(false);
     const [inputText, setInputText] = useState({
         username: "",
         password: ""
@@ -34,15 +35,7 @@ function Login({setToken}) {
         return isValid;
     }
 
-   /* const validateEmailAddress = () => {
-        let emailAddressError = "";
-        const value = inputText.email;
-        if (value.trim === "") emailAddressError = "Email Address is required";
-        else if (!emailValidator.test(value))
-            emailAddressError = "Email is not valid";
-        setWEmail(emailAddressError)
-        return emailAddressError === "";
-    }*/
+
     const validateName = () => {
         let nameError = "";
         const value = inputText.username;
@@ -55,10 +48,10 @@ function Login({setToken}) {
     const validatePassword = () => {
         let passwordError = "";
         const value = inputText.password;
-        if (value.trim === "") passwordError = "Password is required";
+        if (value.trim() === "") passwordError = "Password is required";
         else if (!passwordValidator.test(value))
             passwordError =
-                "Password must contain at least 8 characters, 1 number, 1 upper and 1 lowercase!";
+                "Password is wrong format, please try again!";
         setWPassword(passwordError)
         return passwordError === "";
 
@@ -86,7 +79,6 @@ function Login({setToken}) {
         });
 
     }
-    // JSON.stringify(inputText)
 
 
     const fetchResults = async (inputText) => {
@@ -97,6 +89,7 @@ function Login({setToken}) {
         for (const item of formData){
             query.append(item[0], item[1])
         }
+        let data;
         const res = await fetch(`/login`,{
             method: 'POST',
             headers: {
@@ -104,8 +97,18 @@ function Login({setToken}) {
                 'Authorization': 'Basic '+btoa('username:password'),
             },
             body: query
+        }).then(function(response) {
+            if (response.status === 401) {
+                // do what you need to do here
+                setIsShow(true)
+                console.log("wrong")
+            }
+            else{
+                data = response.json();
+            }
+
         })
-        return await res.json();
+        return await data;
     }
 
     const checkUserInBackend = async (inputText) => {
@@ -114,18 +117,16 @@ function Login({setToken}) {
         window.localStorage.setItem("token", access_token)
         console.log(access_token)
         console.log(details)
-        //const refresh_token = details.refress_token;
+
         const access = jwt(access_token);
         //const refresh = jwt(refresh_token);
-        console.log(access.sub)
-        console.log(access)
+        window.localStorage.setItem("token", access);
+        window.localStorage.setItem("username", access.sub);
         setToken(access)
-
-
         return details;
     }
 
-    const checkIsInputFill = async () => {
+    const checkIsInputFill = () => {
         let formFields = [
             "username",
             "password",
@@ -141,13 +142,13 @@ function Login({setToken}) {
 
     const submitForm = async (e) => {
         e.preventDefault();
-        const isFill = await checkIsInputFill();
-        const isValidLogin = await checkUserInBackend(inputText);
-        if(isValidLogin && isFill){
-            navigate("/")
-        }
-        else{
-            alert("Please try again! Email or password invalid!")
+        setIsShow(false)
+        const isFill = checkIsInputFill();
+        if(isFill){
+            const isValidLogin = await checkUserInBackend(inputText);
+            if(isValidLogin){
+                navigate("/")
+            }
         }
     }
 
@@ -224,6 +225,12 @@ function Login({setToken}) {
                                     <Package.RegisterA href="/registration"> Register</Package.RegisterA>
                                 </Package.RegisterP>
                             </Package.Register>
+                            {isShow ? (
+                                <>
+                                    <Alert  variant="outlined" severity="error" onClose={() => setIsShow(false)}>
+                                        Email or password invalid!!</Alert>
+                                </>
+                            ):(<></>)}
 
 
                         </Package.CardRight>
@@ -252,8 +259,8 @@ const Package = {
     `,
 
     ContainerCard: styled.div`
-        height: 610px;
-        width: 800px;
+       height: 770px;
+        width: 930px;
         background-color: #fff;
         position: relative;
         box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
@@ -292,7 +299,7 @@ const Package = {
 
     HeadP: styled.p`
         margin-top: 5px;
-        font-size: 16px;
+        font-size: 20px;
         color: #898989;
         font-family: 'Playfair Display';
     `,
@@ -312,7 +319,7 @@ const Package = {
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 12px;
+        font-size: 15px;
         font-weight: 600;
         cursor: pointer;
         font-family: 'Playfair Display';
@@ -332,7 +339,7 @@ const Package = {
     ORP: styled.div`
       background-color: #fff;
     padding: 0 4px;
-    font-size: 10px;
+    font-size: 15px;
     font-weight: 700;
     `,
 
@@ -350,7 +357,7 @@ const Package = {
         background-color: #f5f5f5;
         outline: 0;
         padding: 0 5px;
-        font-size: 13px;
+        font-size: 15px;
         padding-left: 30px
 
     `,
@@ -358,7 +365,7 @@ const Package = {
     InputLabel: styled.label`
         position: absolute;
         left: 30px;
-        font-size: 12px;
+        font-size: 15px;
         pointer-events: none;
         transition: all 0.5s;
         font-family: 'Playfair Display';
@@ -373,7 +380,7 @@ const Package = {
 
 
     ForgotPassWord: styled.a`
-       font-size: 12px;
+       font-size: 15px;
        color: blue;
        text-decoration: none;
        cursor: pointer;
@@ -394,7 +401,7 @@ const Package = {
         border-radius: 8px;
         color: #fff;
         cursor: pointer;
-        font-size: 20px;
+        font-size: 23px;
         transition: all 0.5s;
           &:hover {
         background-color: #e33606
@@ -407,7 +414,7 @@ const Package = {
         justify-content: center;
     `,
     RegisterP: styled.p`
-        font-size: 12px;
+        font-size: 15px;
         font-weight: 700;
         font-family: 'Playfair Display';
     `,
@@ -421,7 +428,7 @@ const Package = {
     ErrorMsg: styled.div`
         color: red;
         text-align: center;
-        font-size: 12px;
+        font-size: 15px;
         font-family: 'Playfair Display';
     `,
 

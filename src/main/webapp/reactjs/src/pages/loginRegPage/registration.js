@@ -4,6 +4,8 @@ import Layout from "../layout";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faEnvelope, faEye, faEyeSlash, faLock, faUserCircle} from '@fortawesome/free-solid-svg-icons'
 import {useNavigate} from "react-router-dom";
+import {Alert} from "@mui/material";
+
 
 const emailValidator = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const passwordValidator = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
@@ -12,6 +14,7 @@ function Registration() {
     const navigate = useNavigate();
     const [inpass, setinpass] = useState("password");
     const [eye, seteye] = useState(true);
+    const [isShow, setIsShow] = useState(false);
 
 
     const [inputText, setInputText] = useState({
@@ -49,7 +52,7 @@ function Registration() {
     const validateEmailAddress = () => {
         let emailAddressError = "";
         const value = inputText.email;
-        if (value.trim === "") emailAddressError = "Email Address is required";
+        if (value.trim() === "") emailAddressError = "Email Address is required";
         else if (!emailValidator.test(value))
             emailAddressError = "Email is not valid";
         setWEmail(emailAddressError)
@@ -60,7 +63,7 @@ function Registration() {
     const validatePassword = () => {
         let passwordError = "";
         const value = inputText.password;
-        if (value.trim === "") passwordError = "Password is required";
+        if (value.trim() === "") passwordError = "Password is required";
         else if (!passwordValidator.test(value))
             passwordError =
                 "Password must contain at least 8 characters, 1 number, 1 upper and 1 lowercase!";
@@ -81,7 +84,7 @@ function Registration() {
     }
 
     const fetchResults = async (inputText) => {
-        const res = await fetch(`http://localhost:8080/api/registerUser`,{
+        const res = await fetch(`/api/registerUser`,{
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -93,8 +96,7 @@ function Registration() {
     }
 
     const fetchCheckPreviousReg = async (inputText) => {
-        console.log(inputText)
-        const res = await fetch(`http://localhost:8080/api/checkPreviousReg`,{
+        const res = await fetch(`/api/checkPreviousReg`,{
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -118,6 +120,7 @@ function Registration() {
 
     const submitForm = async (e) => {
         e.preventDefault();
+        setIsShow(false);
 
         let formFileds = [
             "username",
@@ -132,7 +135,8 @@ function Registration() {
         if (isValid) {
             const isAlreadyRegistered = await checkPreviousRegistration(inputText);
             if(isAlreadyRegistered){
-                alert("You have already registered pls Login!")
+                setIsShow(true);
+                navigate("/registration")
             }
             else{
                 await registerUser(inputText);
@@ -217,6 +221,12 @@ function Registration() {
                                         <Package.RegisterA href="/login"> Login</Package.RegisterA>
                                     </Package.RegisterP>
                                 </Package.Register>
+                                {isShow ? (
+                                    <>
+                                        <Alert  variant="outlined" severity="error" onClose={() => setIsShow(false)}>
+                                            You are already registered!</Alert>
+                                    </>
+                                ):(<></>)}
 
 
                             </Package.CardRight>
@@ -247,8 +257,8 @@ const Package = {
     `,
 
     ContainerCard: styled.div`
-        height: 610px;
-        width: 800px;
+       height: 700px;
+        width: 930px;
         background-color: #fff;
         position: relative;
         box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
@@ -287,7 +297,7 @@ const Package = {
 
     HeadP: styled.p`
         margin-top: 5px;
-        font-size: 12px;
+        font-size: 15px;
         color: #898989;
         font-family: 'Playfair Display';
     `,
@@ -307,7 +317,7 @@ const Package = {
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 12px;
+        font-size: 15px;
         font-weight: 600;
         cursor: pointer;
         font-family: 'Playfair Display';
@@ -326,7 +336,7 @@ const Package = {
     ORP: styled.p`
       background-color: #fff;
     padding: 0 4px;
-    font-size: 10px;
+    font-size: 15px;
     font-weight: 700;
     font-family: 'Playfair Display';
     `,
@@ -341,7 +351,7 @@ const Package = {
     InputLabel: styled.label`
         position: absolute;
         left: 30px;
-        font-size: 12px;
+        font-size: 15px;
         pointer-events: none;
         transition: all 0.5s;
         font-family: 'Playfair Display';
@@ -354,7 +364,7 @@ const Package = {
     background-color: #f5f5f5;
     outline: 0;
     padding: 0 10px;
-    font-size: 13px;
+    font-size: 15px;
     padding-left: 30px
 
     `,
@@ -384,12 +394,12 @@ const Package = {
     `,
 
     RememberP: styled.p`
-         font-size: 12px;
+         font-size: 15px;
         margin-left: 5px;
         font-weight: 700
     `,
     ForgorPassWord: styled.a`
-       font-size: 12px;
+       font-size: 15px;
     color: blue;
     text-decoration: none;
     cursor: pointer
@@ -410,7 +420,7 @@ const Package = {
         border-radius: 8px;
         color: #fff;
         cursor: pointer;
-        font-size: 20px;
+        font-size: 23px;
         transition: all 0.5s;
           &:hover {
         background-color: #e33606
@@ -423,7 +433,7 @@ const Package = {
         justify-content: center;
     `,
     RegisterP: styled.p`
-        font-size: 12px;
+        font-size: 15px;
         font-weight: 700;
         font-family: 'Playfair Display';
     `,
@@ -437,7 +447,7 @@ const Package = {
     ErrorMsg: styled.div`
         color: red;
         text-align: center;
-        font-size: 12px;
+        font-size: 15px;
         font-family: 'Playfair Display';
     `,
 

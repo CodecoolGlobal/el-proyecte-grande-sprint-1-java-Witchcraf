@@ -24,6 +24,7 @@ public class TokenAuthenticationFilter {
 
         }
         catch (Exception e){
+
             throw new Exception("Invalid Token");
         }
     }

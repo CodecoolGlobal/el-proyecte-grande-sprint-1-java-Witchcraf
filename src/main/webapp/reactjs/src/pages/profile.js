@@ -8,7 +8,7 @@ function Profile({token}){
     })
     let tokenEncoded = window.localStorage.getItem("token");
 
-    const details = async (tokenEncoded) => {
+    async function profilFetch(tokenEncoded) {
         const res = await fetch(`/api/getuseralldata`, {
             method: 'GET',
             headers: {
@@ -17,20 +17,15 @@ function Profile({token}){
                 'Authorization': tokenEncoded,
             },
         })
-        return res.json();
+        let userDetails = await res.json();
+        setUser({...user, name: userDetails.username});
     }
 
-    let userDetails = details(tokenEncoded);
-    setUser({...user, name: userDetails.username});
-
-
-
-
+    profilFetch(tokenEncoded)
 
     return (
         <Layout >
-          <p>{user.name}</p>
-
+          <a>{user.name}</a>
         </Layout>
     );
 }

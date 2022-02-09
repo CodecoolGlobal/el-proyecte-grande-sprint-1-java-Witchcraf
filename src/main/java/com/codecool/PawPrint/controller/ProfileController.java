@@ -25,7 +25,7 @@ public class ProfileController {
         this.tokenAuthenticationFilter = tokenAuthenticationFilter;
     }
 
-    @PostMapping("/getuseralldata")
+    @GetMapping("/getuseralldata")
     public User getAllUserDataById(HttpServletRequest httpRequest) throws Exception {
         return userService.findUserByName(tokenAuthenticationFilter.tokenVerification(httpRequest));
     }

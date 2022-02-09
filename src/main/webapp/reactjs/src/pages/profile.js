@@ -2,23 +2,26 @@ import React, {useState} from 'react';
 import Layout from "./layout";
 
 function Profile({token}){
-    const [user, setUser] = useState("Tamás")
+    const [user, setUser] = useState({
+        name:"",
+        age:""
+    })
+    let tokenEncoded = window.localStorage.getItem("token");
 
-
-
-    const details = async (token) => {
-        const res = await fetch(`/getalluserdata`, {
-            method: 'POST',
+    const details = async (tokenEncoded) => {
+        const res = await fetch(`/api/getuseralldata`, {
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 //add token to header?
-                'Authorization': 'Basic ' + btoa(token),
+                'Authorization': tokenEncoded,
             },
         })
-        return res;
+        return res.json();
     }
 
-    console.log(details(token))
+    let userDetails = details(tokenEncoded);
+    setUser({...user, name: userDetails.username});
 
 
 
@@ -26,7 +29,8 @@ function Profile({token}){
 
     return (
         <Layout >
-            <p>Hello {user}</p>
+          <p>{user.name}</p>
+
         </Layout>
     );
 }

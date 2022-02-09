@@ -32,6 +32,7 @@ public class PawPrintApplication {
 
 	@Bean
 	public TokenAuthenticationFilter tokenAuthenticationFilter(){return new TokenAuthenticationFilter();}
+
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {

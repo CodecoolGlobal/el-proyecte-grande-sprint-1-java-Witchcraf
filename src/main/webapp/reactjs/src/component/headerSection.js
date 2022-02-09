@@ -30,10 +30,11 @@ function HeaderSection({token}) {
                                 </>
                             ) : (
                                 <>
-                                <Nav.Link href="/registration" style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}>Sing up</Nav.Link>
+                                <Nav.Link href="/Logout" style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}>Logout</Nav.Link>
                                 <Nav.Link eventKey={2} href="/login" style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}>
                                     Sing in as: {token.sub}
                                 </Nav.Link>
+                                <Nav.Link href="/profile" style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}>Profile</Nav.Link>
                                 </>
                                 )}
 

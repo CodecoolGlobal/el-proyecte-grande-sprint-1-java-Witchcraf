@@ -7,12 +7,12 @@ function Profile({token}){
 
 
     const details = async (token) => {
-        const res = await fetch(`/api/getalluserdata`, {
+        const res = await fetch(`/getalluserdata`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 //add token to header?
-                'Authorization': 'Basic ' + btoa('username:password'),
+                'Authorization': 'Basic ' + btoa(token),
             },
         })
         return res;

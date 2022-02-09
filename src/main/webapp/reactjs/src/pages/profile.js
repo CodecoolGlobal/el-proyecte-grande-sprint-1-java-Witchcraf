@@ -15,6 +15,7 @@ function Profile({token}){
                 'Authorization': 'Basic ' + btoa(token),
             },
         })
+
         return res;
     }
 

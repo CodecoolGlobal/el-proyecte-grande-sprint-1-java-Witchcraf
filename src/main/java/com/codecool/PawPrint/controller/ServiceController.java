@@ -55,9 +55,9 @@ public class ServiceController {
 
     @PostMapping(value = "/search/save")
     @ResponseBody
-    public ResponseEntity saveSearch(@RequestBody SaveSearchEntity saveSearchEntity) {
+    public SaveSearchEntity saveSearch(@RequestBody SaveSearchEntity saveSearchEntity) {
         System.out.println(saveSearchEntity);
 //        userService.saveSearch(Integer.parseInt(userId), services);
-        return ResponseEntity.ok().build();
+        return saveSearchEntity;
     }
 }

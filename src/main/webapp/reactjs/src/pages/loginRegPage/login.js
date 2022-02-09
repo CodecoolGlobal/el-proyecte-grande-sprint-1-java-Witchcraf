@@ -10,7 +10,7 @@ import {Alert} from "@mui/material";
 
 const passwordValidator = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
 
-function Login({setToken}) {
+function Login() {
     const navigate = useNavigate();
     const [eye, seteye] = useState(true);
     const [inpass, setinpass] = useState("password");
@@ -90,7 +90,7 @@ function Login({setToken}) {
             query.append(item[0], item[1])
         }
         let data;
-        const res = await fetch(`/login`,{
+        await fetch(`/login`,{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -101,7 +101,6 @@ function Login({setToken}) {
             if (response.status === 401) {
                 // do what you need to do here
                 setIsShow(true)
-                console.log("wrong")
             }
             else{
                 data = response.json();
@@ -114,19 +113,9 @@ function Login({setToken}) {
     const checkUserInBackend = async (inputText) => {
         const details = await fetchResults(inputText);
         const access_token = details.access_token;
-        //window.localStorage.setItem("token", access_token)
-        //console.log(access_token)
-        //console.log(details)
-
         const access = jwt(access_token);
-        //const refresh = jwt(refresh_token);
-        //window.localStorage.setItem("token", access);
-        //window.localStorage.setItem("username", access.sub);
-
+        window.localStorage.setItem("username", access.sub);
         window.localStorage.setItem("token",access_token);
-        console.log(access)
-
-        setToken(access)
         return details;
     }
 

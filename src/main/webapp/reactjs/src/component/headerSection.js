@@ -2,7 +2,11 @@ import React from 'react';
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 
 
-function HeaderSection({token}) {
+function HeaderSection() {
+    const username = window.localStorage.getItem("username");
+    console.log(username)
+
+
     return (
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
                 <Container>
@@ -21,7 +25,7 @@ function HeaderSection({token}) {
                             </NavDropdown>
                         </Nav>
                         <Nav>
-                            {!token ? (
+                            {username !== "Betti" ? (
                                 <>
                                 <Nav.Link href="/registration" style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}>Sing up</Nav.Link>
                                 <Nav.Link eventKey={2} href="/login" style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}>
@@ -30,9 +34,9 @@ function HeaderSection({token}) {
                                 </>
                             ) : (
                                 <>
-                                <Nav.Link href="/Logout" style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}>Logout</Nav.Link>
+                                <Nav.Link href="/logout" style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}>Logout</Nav.Link>
                                 <Nav.Link eventKey={2} href="/login" style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}>
-                                    Sing in as: {token.sub}
+                                    Sing in as: {username}
                                 </Nav.Link>
                                 <Nav.Link href="/profile" style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}>Profile</Nav.Link>
                                 </>

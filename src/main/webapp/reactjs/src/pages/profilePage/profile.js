@@ -1,14 +1,39 @@
-import React, {useState} from 'react';
-import Layout from "./layout";
+import React, {useEffect, useState} from 'react';
+import Layout from "../layout";
 
-function Profile({token}){
+function Profile(){
     const [user, setUser] = useState({
         name:"",
-        age:""
+        age:"",
+        email:"",
+        reg:"",
+        pets: [],
+        searches: []
     })
     let tokenEncoded = window.localStorage.getItem("token");
 
-    async function profilFetch(tokenEncoded) {
+    useEffect(()=>{
+            const profile = async (tokenEncoded) => {
+                const res = await fetch(`/api/getuseralldata`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        //add token to header?
+                        'Authorization': tokenEncoded,
+                    },
+                })
+                let userDetails = await res.json();
+                console.log(userDetails)
+                setUser({...user, name: userDetails.username,
+                    email: userDetails.email,
+                    age: userDetails.age,
+                    reg: userDetails.registrationTime
+                });
+            }
+            profile(tokenEncoded)
+    }, [])
+
+    /*async function profilFetch(tokenEncoded) {
         const res = await fetch(`/api/getuseralldata`, {
             method: 'GET',
             headers: {
@@ -18,14 +43,17 @@ function Profile({token}){
             },
         })
         let userDetails = await res.json();
-        setUser({...user, name: userDetails.username});
+        console.log(userDetails)
+        setUser({...user, name: userDetails.username,
+                                email: userDetails.email,
+                                age: userDetails.age,
+                                reg: userDetails.registrationTime
+                                });
     }
-
-    profilFetch(tokenEncoded)
+    profilFetch(tokenEncoded)*/
 
     return (
         <Layout>
-            <>
             <section className="h-100 gradient-custom-2">
                 <div className="container py-5 h-100">
                     <div className="row d-flex justify-content-center align-items-center h-100">
@@ -39,43 +67,27 @@ function Profile({token}){
                                     {/*        alt="Generic placeholder image"*/}
                                     {/*        className="img-fluid img-thumbnail mt-4 mb-2"*/}
                                     {/*        style="width: 150px; z-index: 1">*/}
-                                    {/*        <button type="button" className="btn btn-outline-dark"*/}
-                                    {/*                data-mdb-ripple-color="dark" style="z-index: 1;">*/}
-                                    {/*            Edit profile*/}
-                                    {/*        </button>*/}
+                                                <button type="button" className="btn btn-outline-dark"
+                                                    data-mdb-ripple-color="dark" style={{zIndex: "1"}}>
+                                                       Edit profile
+                                            </button>
                                     </div>
                                     <div className="ms-3" style={{marginTop: "130px"}}>
                                         <h5>{user.name}</h5>
-                                        <p>New York</p>
-                                    </div>
-                                </div>
-                                <div className="p-4 text-black" style={{backgroundColor: "#f8f9fa"}}>
-                                    <div className="d-flex justify-content-end text-center py-1">
-                                        <div>
-                                            <p className="mb-1 h5">253</p>
-                                            <p className="small text-muted mb-0">Photos</p>
-                                        </div>
-                                        <div className="px-3">
-                                            <p className="mb-1 h5">1026</p>
-                                            <p className="small text-muted mb-0">Followers</p>
-                                        </div>
-                                        <div>
-                                            <p className="mb-1 h5">478</p>
-                                            <p className="small text-muted mb-0">Following</p>
-                                        </div>
+                                        <p>{user.registrationTime}</p>
                                     </div>
                                 </div>
                                 <div className="card-body p-4 text-black">
                                     <div className="mb-5">
                                         <p className="lead fw-normal mb-1">About</p>
                                         <div className="p-4" style={{backgroundColor: "#f8f9fa"}}>
-                                            <p className="font-italic mb-1">Web Developer</p>
-                                            <p className="font-italic mb-1">Lives in New York</p>
-                                            <p className="font-italic mb-0">Photographer</p>
+                                            <p className="font-italic mb-1">{user.age}</p>
+                                            <p className="font-italic mb-1">{user.email}</p>
+                                            <p className="font-italic mb-0">Pets:</p>
                                         </div>
                                     </div>
                                     <div className="d-flex justify-content-between align-items-center mb-4">
-                                        <p className="lead fw-normal mb-0">Recent photos</p>
+                                        <p className="lead fw-normal mb-0">Saved Searches:</p>
                                         <p className="mb-0"><a href="#!" className="text-muted">Show all</a></p>
                                     </div>
                                     <div className="row g-2">
@@ -108,7 +120,6 @@ function Profile({token}){
                     </div>
                 </div>
             </section>
-            </>
         </Layout>
     );
 }

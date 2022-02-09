@@ -5,7 +5,7 @@ function MultiButton({label, bWidth}) {
 
     return (
         <Button variant="success" type="submit"
-                style={{ fontFamily: 'Playfair Display',fontSize:"20px", width: {bWidth} }}>
+                style={{ fontFamily: 'Playfair Display',fontSize:"20px", width: bWidth }}>
             {label}
         </Button>
     );

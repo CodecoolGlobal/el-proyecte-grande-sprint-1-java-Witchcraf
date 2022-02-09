@@ -124,4 +124,9 @@ public class ServiceDaoMem implements ServiceDao {
     public List<ServiceOffered> getAll() {
         return null;
     }
+
+    @Override
+    public ServiceOffered findById(int id) {
+        return services.stream().filter(service -> service.getId() == id).findFirst().orElse(null);
+    }
 }

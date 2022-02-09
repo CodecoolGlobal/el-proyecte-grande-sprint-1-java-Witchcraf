@@ -87,4 +87,8 @@ public class ServiceService {
     public ServiceOffered getService(String name) {
         return serviceDao.findByName(name);
     }
+
+    public ServiceOffered findServiceById(int id) {
+        return serviceDao.findById(id);
+    }
 }

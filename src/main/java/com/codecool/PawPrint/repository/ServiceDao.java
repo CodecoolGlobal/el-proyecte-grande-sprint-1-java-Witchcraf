@@ -34,4 +34,6 @@ public interface ServiceDao {
                                      ServiceType serviceType);
 
     List<ServiceOffered> getAll();
+
+    ServiceOffered findById(int id);
 }

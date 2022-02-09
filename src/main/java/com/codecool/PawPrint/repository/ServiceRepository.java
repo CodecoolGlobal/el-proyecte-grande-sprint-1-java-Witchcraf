@@ -14,6 +14,7 @@ import java.util.List;
 public interface ServiceRepository extends JpaRepository<ServiceOffered, Integer> {
 
     ServiceOffered findByName(String name);
+    ServiceOffered findById(int id);
 
     // search by all
     @Query(

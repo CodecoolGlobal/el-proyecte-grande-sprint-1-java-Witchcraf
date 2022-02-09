@@ -2,6 +2,7 @@ package com.codecool.PawPrint.config;
 
 import com.codecool.PawPrint.model.contact.Address;
 import com.codecool.PawPrint.model.contact.Contact;
+import com.codecool.PawPrint.model.entity.Gender;
 import com.codecool.PawPrint.model.entity.PetType;
 import com.codecool.PawPrint.model.entity.User;
 import com.codecool.PawPrint.model.entity.UserType;
@@ -35,17 +36,19 @@ class Initializer implements CommandLineRunner {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
+
+
     @Override
     public void run(String... strings) {
 
         // create user
-        User washAndVauUser = new User("WashAndVau", LocalDateTime.now(), "info@kutyamoso.hu",2, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
-        User washAndVauUserKecskemet = new User("WashAndVauKecskemét", LocalDateTime.now(), "kecskemet@kutyamoso.hu",1, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
-        User bbsUser = new User("BBsBar&Grill", LocalDateTime.now(), "hello@bbzbar.hu", 2,bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
-        User hokedliUser = new User("Hokedli", LocalDateTime.now(), "hokedlidelivery@gmail.com",2, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
-        User wanHaoUser = new User("WanHao", LocalDateTime.now(), "info@monoricenter.hu",2, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
-        User terezaUser = new User("Tereza", LocalDateTime.now(), "RESERVATION@TEREZA.HU",2, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
-        User naspolyaUser = new User("Naspolya", LocalDateTime.now(), "info@naspolya.hu",2, bCryptPasswordEncoder.encode("1Aa123456"), UserType.NORMAL);
+        User washAndVauUser = new User("WashAndVau", LocalDateTime.now(), "info@kutyamoso.hu",34, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
+        User washAndVauUserKecskemet = new User("WashAndVauKecskemét", LocalDateTime.now(), "kecskemet@kutyamoso.hu",1, bCryptPasswordEncoder.encode("1234"),UserType.NORMAL);
+        User bbsUser = new User("BBsBar&Grill", LocalDateTime.now(), "hello@bbzbar.hu", 12,bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
+        User hokedliUser = new User("Hokedli", LocalDateTime.now(), "hokedlidelivery@gmail.com",45, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
+        User wanHaoUser = new User("WanHao", LocalDateTime.now(), "info@monoricenter.hu",23, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
+        User terezaUser = new User("Tereza", LocalDateTime.now(), "RESERVATION@TEREZA.HU",34, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
+        User naspolyaUser = new User("Naspolya", LocalDateTime.now(), "info@naspolya.hu",32, bCryptPasswordEncoder.encode("1Aa123456"), UserType.NORMAL);
 
         // create contact
         Contact washAndVauCon= new Contact("+36205450145");

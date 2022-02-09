@@ -69,12 +69,15 @@ public class User {
         this.userType = userType;
     }
 
-    public User(String name,  String email, String password, UserType userType) {
+    public User(String name,  String email, String password, UserType userType, String fullName, Gender gender) {
         this.username = name;
         this.email = email;
         this.password = password;
         this.userType = userType;
+        this.fullName = fullName;
+        this.gender = gender;
     }
+
 
     @Override
     public String toString() {

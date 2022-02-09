@@ -2,9 +2,19 @@ import React, {useState} from "react";
 import styled from "styled-components";
 import Layout from "../layout";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faEnvelope, faEye, faEyeSlash, faLock, faUserCircle} from '@fortawesome/free-solid-svg-icons'
-import {useNavigate} from "react-router-dom";
+import {
+    faEnvelope,
+    faEye,
+    faEyeSlash,
+    faLock,
+    faTransgender,
+    faUserCircle
+} from '@fortawesome/free-solid-svg-icons'
 import {Alert} from "@mui/material";
+import "react-datepicker/dist/react-datepicker.css";
+import {useNavigate} from "react-router-dom";
+
+
 
 
 const emailValidator = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -15,17 +25,22 @@ function Registration() {
     const [inpass, setinpass] = useState("password");
     const [eye, seteye] = useState(true);
     const [isShow, setIsShow] = useState(false);
+    const [isService, setIsService] = useState(false);
 
 
     const [inputText, setInputText] = useState({
+        fullname:"",
         username:"",
         email: "",
-        password: ""
+        password: "",
+        gender: null,
+        isService: false,
     });
 
     const [wemail, setWEmail] = useState("");
     const [wPassword, setWPassword] = useState("");
     const [wName, setWName] = useState("");
+    const [wGender, setWGender] = useState("");
 
     const handleBlur = (event) => {
         const { name } = event.target;
@@ -37,14 +52,25 @@ function Registration() {
         if (name === "email") isValid = validateEmailAddress();
         else if (name === "password") isValid = validatePassword();
         else if (name === "username") isValid = validateName();
+        else if (name === "fullname") isValid = validateName();
+        else if (name === "gender") isValid = validateGender();
+        else if (name === "isService") isValid = true;
         return isValid;
+    }
+
+    const validateGender = () => {
+        let genderError = "";
+        const value = inputText.gender;
+        if (value.trim() === null) genderError = "Gender is required";
+        setWGender(genderError)
+        return genderError === "";
     }
 
 
     const validateName = () => {
         let nameError = "";
         const value = inputText.username;
-        if (value.trim() === "") nameError = "First Name is required";
+        if (value.trim() === "") nameError = "Name is required";
         setWName(nameError)
         return nameError === "";
     }
@@ -123,10 +149,14 @@ function Registration() {
         setIsShow(false);
 
         let formFileds = [
+            "fullname",
             "username",
             "email",
             "password",
+            "gender",
+            "isService"
         ];
+
         let isValid = true;
         formFileds.forEach(field => {
             isValid = validateField(field) && isValid;
@@ -173,6 +203,16 @@ function Registration() {
 
                                 <form onSubmit={submitForm}>
                                     <Package.InputTexts>
+                                        <Package.InputLabel>Full Name</Package.InputLabel>
+                                        <FontAwesomeIcon icon={faUserCircle}/>
+                                        <Package.InputText type="text"  value={inputText.fullname} onChange={inputEvent} name="fullname"  onBlur={handleBlur}  autoComplete="off"/>
+                                        <br />
+                                        {wName && (
+                                            <Package.ErrorMsg>{wName}</Package.ErrorMsg>
+                                        )}
+                                    </Package.InputTexts>
+
+                                    <Package.InputTexts>
                                         <Package.InputLabel>User Name</Package.InputLabel>
                                         <FontAwesomeIcon icon={faUserCircle}/>
                                         <Package.InputText type="text"  value={inputText.username} onChange={inputEvent} name="username"  onBlur={handleBlur}  autoComplete="off"/>
@@ -209,6 +249,33 @@ function Registration() {
                                         <FontAwesomeIcon onClick={Eye} icon={eye ? faEyeSlash : faEye}/>
 
                                     </Package.InputTexts >
+
+
+                                    <Package.InputTexts>
+                                        <Package.InputLabel>Gender</Package.InputLabel>
+                                        <FontAwesomeIcon icon={faTransgender}/>
+                                        <Package.InputSelect
+                                            as="select"
+                                            value={inputText.gender === null ? "" : inputText.gender}
+                                            onChange={(e) => {setInputText({...inputText, gender: e.target.value})}}
+                                        >
+                                            <option value="Female">Female</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Other">Other</option>
+                                        </Package.InputSelect>
+                                    </Package.InputTexts >
+
+
+                                    <Package.InputTexts>
+                                        <Package.InputLabel>IsService</Package.InputLabel>
+                                        <Package.CheckBoxInput
+                                            type="checkbox"
+                                            name="service"
+                                        />
+
+                                    </Package.InputTexts >
+
+
 
 
                                     <Package.Button className="button">
@@ -343,7 +410,7 @@ const Package = {
 
     InputTexts: styled.div`
         position: relative;
-        margin-top: 30px;
+        margin-top: 10px;
         width: 100%;
 
     `,
@@ -357,15 +424,28 @@ const Package = {
         font-family: 'Playfair Display';
     `,
     InputText: styled.input`
-          height: 45px;
-    width: 100%;
-    border: none;
-    border-radius: 7px;
-    background-color: #f5f5f5;
-    outline: 0;
-    padding: 0 10px;
-    font-size: 15px;
-    padding-left: 30px
+        height: 30px;
+        width: 100%;
+        border: none;
+        border-radius: 7px;
+        background-color: #f5f5f5;
+        outline: 0;
+        padding: 0 10px;
+        font-size: 15px;
+        padding-left: 30px
+
+    `,
+
+    InputSelect: styled.select`
+        height: 30px;
+        width: 100%;
+        border: none;
+        border-radius: 7px;
+        background-color: #f5f5f5;
+        outline: 0;
+        padding: 0 10px;
+        font-size: 15px;
+        padding-left: 30px
 
     `,
 
@@ -451,6 +531,13 @@ const Package = {
         font-family: 'Playfair Display';
     `,
 
+
+    CheckBoxInput: styled.input`
+        margin-left: 10px;
+        float: center;
+        width: 15px;
+        height: 15px;
+    `,
 
 }
 

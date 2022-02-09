@@ -31,26 +31,7 @@ function Profile(){
                 });
             }
             profile(tokenEncoded)
-    }, [])
-
-    /*async function profilFetch(tokenEncoded) {
-        const res = await fetch(`/api/getuseralldata`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                //add token to header?
-                'Authorization': tokenEncoded,
-            },
-        })
-        let userDetails = await res.json();
-        console.log(userDetails)
-        setUser({...user, name: userDetails.username,
-                                email: userDetails.email,
-                                age: userDetails.age,
-                                reg: userDetails.registrationTime
-                                });
-    }
-    profilFetch(tokenEncoded)*/
+    }, [tokenEncoded])
 
     return (
         <Layout>

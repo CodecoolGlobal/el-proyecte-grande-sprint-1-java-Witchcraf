@@ -33,6 +33,7 @@ public class Search {
 
     private int id;
     private String name = "MySearch";
+    private String description;
     @ManyToOne(cascade = CascadeType.ALL)
     @JsonIgnoreProperties("savedSearches")
     private User user;

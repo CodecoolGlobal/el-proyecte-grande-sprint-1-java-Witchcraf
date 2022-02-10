@@ -26,34 +26,14 @@ public class LoginController {
     }
 
 
-    @PostMapping(value = "/checkPreviousReg")
-    public boolean checkUserInDataBase(@RequestBody UserRegEntity userRegEntity) {
-        User user = userService.findUserByEmail(userRegEntity.getEmail());
+    @PostMapping(value = "/checkPreviousReg{email}")
+    public boolean checkUserInDataBase(@PathVariable String email) {
+        User user = userService.findUserByEmail(email);
         return user != null;
     }
 
-
     @PostMapping(value = "/registerUser")
     public User registerNewUser(@RequestBody UserRegEntity userRegEntity) {
-        String name = userRegEntity.getUsername();
-        String email = userRegEntity.getEmail();
-        String password = userRegEntity.getPassword();
-        String fullname = userRegEntity.getFullname();
-        Gender gender = userRegEntity.getGender();
-        System.out.println(userRegEntity.getGender());
-        System.out.println(userRegEntity.getIsService());
-
-        String isService = userRegEntity.getIsService();
-        UserType type;
-        if(!Objects.equals(isService, "on")){
-           type = UserType.ADMIN;
-        }
-        else{
-            type = UserType.NORMAL;
-        }
-        User newUser = new User(name, email, password,type, fullname, gender);
-        newUser.setRegistrationTime(LocalDateTime.now());
-        return userService.registerUser(newUser);
+        return userService.registerUser(userRegEntity);
     }
-
 }

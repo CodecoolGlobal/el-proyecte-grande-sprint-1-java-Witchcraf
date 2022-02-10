@@ -1,6 +1,9 @@
 package com.codecool.PawPrint.service;
 
+import com.codecool.PawPrint.model.controllerEntity.UserRegEntity;
+import com.codecool.PawPrint.model.entity.Gender;
 import com.codecool.PawPrint.model.entity.User;
+import com.codecool.PawPrint.model.entity.UserType;
 import com.codecool.PawPrint.repository.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -10,6 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -30,10 +34,25 @@ public class UserService implements UserDetailsService {
         return userDao.getAll();
     }
 
-    public User registerUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userDao.add(user);
-        return user;
+    public User registerUser(UserRegEntity userRegEntity) {
+        String name = userRegEntity.getUsername();
+        String email = userRegEntity.getEmail();
+        String password = userRegEntity.getPassword();
+        String fullname = userRegEntity.getFullname();
+        Gender gender = userRegEntity.getGender();
+        String isService = userRegEntity.getIsService();
+        UserType type;
+        if(isService.equals("true")){
+            type = UserType.ADMIN;
+        }
+        else{
+            type = UserType.NORMAL;
+        }
+        User newUser = new User(name, email, password,type, fullname, gender);
+        newUser.setRegistrationTime(LocalDateTime.now());
+        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+        userDao.add(newUser);
+        return newUser;
     }
 
     public User findUserById(int id) {

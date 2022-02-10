@@ -25,7 +25,7 @@ function Registration() {
     const [inpass, setinpass] = useState("password");
     const [eye, seteye] = useState(true);
     const [isShow, setIsShow] = useState(false);
-    const [isService, setIsService] = useState(false);
+    const [service, setService] = useState(true);
 
 
     const [inputText, setInputText] = useState({
@@ -33,7 +33,7 @@ function Registration() {
         username:"",
         email: "",
         password: "",
-        gender: "",
+        gender: null,
         isService: false,
     });
 
@@ -91,11 +91,13 @@ function Registration() {
 
     const inputEvent = (event) => {
         const name = event.target.name;
-        let value = event.target.value;
+        let value;
         if(name ==="isService"){
-            setIsService(!isService)
-            value = isService;
-
+            setService(!service)
+            value = service;
+        }
+        else{
+            value = event.target.value;
         }
         setInputText((lastValue) => {
             return {
@@ -119,14 +121,13 @@ function Registration() {
 
 
     const fetchCheckPreviousReg = async (inputText) => {
-        console.log(inputText)
-        const res = await fetch(`/api/checkPreviousReg`,{
+        let email = inputText.email;
+        const res = await fetch(`/api/checkPreviousReg/?email=${email}`,{
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(inputText)
         })
         return await res.json();
     }
@@ -143,6 +144,7 @@ function Registration() {
 
 
     const submitForm = async (e) => {
+        console.log(inputText)
         e.preventDefault();
         setIsShow(false);
 
@@ -258,9 +260,9 @@ function Registration() {
                                             name="gender"
                                         >
                                             <option value="Select" > Select Gender</option>
-                                            <option value="Female">Female</option>
-                                            <option value="Male">Male</option>
-                                            <option value="Other">Other</option>
+                                            <option value="FEMALE">Female</option>
+                                            <option value="MALE">Male</option>
+                                            <option value="OTHER">Other</option>
                                         </Package.InputSelect>
                                     </Package.InputTexts >
 

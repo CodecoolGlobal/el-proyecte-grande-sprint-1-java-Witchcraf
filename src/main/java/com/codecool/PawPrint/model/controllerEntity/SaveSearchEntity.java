@@ -10,5 +10,6 @@ public class SaveSearchEntity {
 
     private String username;
     private String searchName;
+    private String description;
     private List<Integer> searchedServices = new ArrayList<>();
 }

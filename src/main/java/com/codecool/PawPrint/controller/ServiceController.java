@@ -2,6 +2,8 @@ package com.codecool.PawPrint.controller;
 
 import com.codecool.PawPrint.model.controllerEntity.SaveSearchEntity;
 import com.codecool.PawPrint.model.controllerEntity.SearchService;
+import com.codecool.PawPrint.model.entity.Search;
+import com.codecool.PawPrint.model.entity.User;
 import com.codecool.PawPrint.model.service.ServiceOffered;
 import com.codecool.PawPrint.model.service.ServiceSubtype;
 import com.codecool.PawPrint.model.service.ServiceType;
@@ -55,9 +57,13 @@ public class ServiceController {
 
     @PostMapping(value = "/search/save")
     @ResponseBody
-    public ResponseEntity saveSearch(@RequestBody SaveSearchEntity saveSearchEntity) {
+    public Search saveSearch(@RequestBody SaveSearchEntity saveSearchEntity) {
         System.out.println(saveSearchEntity);
-//        userService.saveSearch(Integer.parseInt(userId), services);
-        return ResponseEntity.ok().build();
+        User user = userService.findUserByName(saveSearchEntity.getUsername());
+        Set<ServiceOffered> services = new HashSet<>();
+        saveSearchEntity.getSearchedServices().forEach(serviceId -> services.add(serviceService.findServiceById(serviceId)));
+        Search search = userService.saveSearch(user,services, saveSearchEntity.getSearchName(), saveSearchEntity.getDescription());
+        System.out.println(search);
+        return search;
     }
 }

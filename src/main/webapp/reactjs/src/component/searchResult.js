@@ -2,45 +2,27 @@ import React, {useState} from "react";
 import ResultCard from "../component/resultCard";
 import {Form} from "react-bootstrap";
 import MultiButton from "./multiButton";
-
-
+import SaveSearchModal from "./saveSearchModal";
 
 function SearchResult({results}){
 
     const username = window.localStorage.getItem("username");
+    console.log(username);
 
+    const [displayModal, setDisplayModal] = useState(false);
     const [searches, setSearches] = useState({
-        username: username,
-        // username: "Hokedli",
+        // username: username,
+        username: "Hokedli",    // change in saveSearchModal setSearches too!
         searchName: "My Search",
+        description: "",
         searchedServices: []
     })
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         // TODO: modal for naming search
-        await saveSearchResults(searches);
-    }
-
-    const fetchSaveSearch = async (searches) => {
-        const res = await fetch(`/api/search/save`,{
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(searches)  // user identification?
-        })
-        // setSearches({       // refact?
-        //     id: null,
-        //     name: "My Search",
-        //     searchedServices: []
-        // })
-        return await res.json();
-    }
-
-    const saveSearchResults = async (search) => {
-        const resultFromApi = await fetchSaveSearch(search);
+        setDisplayModal(true);
+          //
     }
 
     return (
@@ -60,6 +42,16 @@ function SearchResult({results}){
                             </div>
                         </div>
                     </div>
+                </div>
+                <div>
+                    {
+                        displayModal ?
+                            <SaveSearchModal
+                                searches={searches}
+                                setSearches={setSearches}
+                                setDisplayModal={setDisplayModal} /> : null
+                    }
+
                 </div>
             </div>
         </Form>

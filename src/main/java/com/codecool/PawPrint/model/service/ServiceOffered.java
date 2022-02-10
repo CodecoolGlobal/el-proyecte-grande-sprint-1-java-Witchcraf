@@ -5,16 +5,15 @@ import com.codecool.PawPrint.model.entity.PetType;
 import com.codecool.PawPrint.model.entity.Search;
 import com.codecool.PawPrint.model.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@JsonIgnoreProperties(value = {"user", "searches"})
 @EqualsAndHashCode(exclude = {"user", "searches"})
 @NoArgsConstructor
 @AllArgsConstructor
@@ -42,8 +41,10 @@ public class ServiceOffered {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "contact_id")
     private Contact contact;
-    @ManyToOne(cascade = CascadeType.ALL) // produces error if user is added in initializer
+    @ManyToOne(fetch = FetchType.EAGER) // produces error if user is added in initializer
+    @JsonProperty("user")
     @JsonIgnoreProperties("services")
+    @ToString.Exclude
     private User user;
     private String openingHours;
     private ServiceType serviceType;
@@ -55,7 +56,8 @@ public class ServiceOffered {
     private String reservationUrl;
     private String image;
     @ManyToMany(mappedBy = "searchedServices")
-    @JsonIgnoreProperties("searchedServices")
+    @JsonProperty("searches")
+    @ToString.Exclude
     private Set<Search> searches = new HashSet<>();
 
     public ServiceOffered(String name, PetType petType, ServiceType serviceType, ServiceSubtype serviceSubtype, Contact contact) {

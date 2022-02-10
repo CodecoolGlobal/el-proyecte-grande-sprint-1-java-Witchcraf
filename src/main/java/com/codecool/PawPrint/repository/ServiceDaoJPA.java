@@ -89,4 +89,9 @@ public class ServiceDaoJPA implements ServiceDao {
     public List<ServiceOffered> getAll() {
         return serviceRepository.findAll();
     }
+
+    @Override
+    public ServiceOffered findById(int id) {
+        return serviceRepository.findById(id);
+    }
 }

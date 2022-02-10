@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import Layout from "../layout";
+import Layout from "../../component/layout";
 import {indexImgWithSearchField} from "./data";
-import SearchSection from "../../component/searchSection";
-import Content from "../../component/content";
+import SearchSection from "./components/searchSection";
+import Content from "./components/content";
 
 function Home(){
     const [results, setResults] = useState([]);

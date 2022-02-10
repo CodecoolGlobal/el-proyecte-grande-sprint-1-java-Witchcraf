@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import ResultCard from "../component/resultCard";
+import ResultCard from "./resultCard";
 import {Form} from "react-bootstrap";
 import MultiButton from "./multiButton";
 import Modal from 'react-bootstrap/Modal';
@@ -13,7 +13,6 @@ function SaveSearchModal({searches, setSearches, setDisplayModal, open, setOpen,
 
     const handleSave = async () => {
         let response = await saveSearchResults(searches);
-        console.log(response);
         if (response.username !== "") {
             setIsSuccessfulSave(true);
             setSearches({

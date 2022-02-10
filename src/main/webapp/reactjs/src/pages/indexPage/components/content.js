@@ -5,7 +5,7 @@ import {
     hospitalImageAndDetails,
     restaurantImageAndDetails, shelterImageAndDetails,
     wellnessImageAndDetails
-} from "../pages/indexPage/data";
+} from "../data";
 import NoResult from "./noResult";
 
 

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import '../App.css';
+import '../../../App.css';
 import {Avatar, Button, Checkbox, Rating, Typography} from "@mui/material";
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import SpaIcon from '@mui/icons-material/Spa';
@@ -15,7 +15,6 @@ function ResultCard({result, searches, setSearches, clearCheckbox}){
 
     const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
 
-    console.log(isCheckboxChecked);
     useEffect(() => {
         clearCheckbox ? setIsCheckboxChecked(false) : setIsCheckboxChecked(isCheckboxChecked);
     }, [clearCheckbox])
@@ -37,7 +36,6 @@ function ResultCard({result, searches, setSearches, clearCheckbox}){
 
     const handleChange = (event, id) => {
         setIsCheckboxChecked(!isCheckboxChecked);
-        console.log(event.target.value);
         modifySearches(event, id);
     }
 

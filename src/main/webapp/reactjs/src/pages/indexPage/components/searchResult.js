@@ -1,13 +1,11 @@
 import React, {useState} from "react";
-import ResultCard from "../component/resultCard";
+import ResultCard from "./resultCard";
 import {Form} from "react-bootstrap";
 import MultiButton from "./multiButton";
 import SaveSearchModal from "./saveSearchModal";
 
 function SearchResult({results}){
-
     const username = window.localStorage.getItem("username");
-    console.log(username);
 
     const [displayModal, setDisplayModal] = useState(false);
     const [clearCheckbox, setClearCheckbox] = useState(false);

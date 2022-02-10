@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Layout from "../layout";
+import Layout from "../../component/layout";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faEnvelope, faEye, faEyeSlash, faLock} from '@fortawesome/free-solid-svg-icons'
 import {useNavigate} from "react-router-dom";

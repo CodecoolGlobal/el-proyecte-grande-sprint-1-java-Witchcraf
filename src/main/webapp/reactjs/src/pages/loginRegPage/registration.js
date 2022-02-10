@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import styled from "styled-components";
-import Layout from "../layout";
+import Layout from "../../component/layout";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {
     faEnvelope,
@@ -144,7 +144,6 @@ function Registration() {
 
 
     const submitForm = async (e) => {
-        console.log(inputText)
         e.preventDefault();
         setIsShow(false);
 

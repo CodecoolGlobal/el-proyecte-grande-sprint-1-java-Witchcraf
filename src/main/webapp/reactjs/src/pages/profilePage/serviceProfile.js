@@ -1,13 +1,11 @@
-import Cards from "../../component/cards"
+import Cards from "./components/cards"
 import React from "react";
 
 function ServiceProfile({user, cards}) {
 
 
     return (
-        <>
         <section className="h-100 gradient-custom-2">
-            <s className="container py-5 h-100">
                 <div className="row d-flex justify-content-center align-items-center h-100">
                     <div className="col col-lg-9 col-xl-7">
                         <div className="card">
@@ -30,30 +28,29 @@ function ServiceProfile({user, cards}) {
                                 </div>
                                 <div className="ms-3" style={{marginTop: "130px"}}>
                                     <h5>{user.name}</h5>
-                                    <p>{user.registrationTime}</p>
                                 </div>
                             </div>
+                            <br/><br/><br/>
                             <div className="card-body p-4 text-black">
                                 <div className="mb-5">
                                     <p className="lead fw-normal mb-1">About</p>
                                     <div className="p-4" style={{backgroundColor: "#f8f9fa"}}>
                                         <p className="font-italic mb-1">{user.age}</p>
-                                        <p className="font-italic mb-1">{user.email}</p>
-                                        <p className="font-italic mb-0">Pets:</p>
+                                        <p className="font-italic mb-1">Email: {user.email}</p>
                                     </div>
+                                </div>
+                                <div className="d-flex justify-content-between align-items-center mb-4">
+                                    <p className="lead fw-normal mb-0">Services:</p>
                                 </div>
                             </div>
                             <div className="row g-2">
-                                <Cards cards={cards}/>
-                                <Cards cards={cards}/>
+                                <Cards user={user} cards={cards}/>
                             </div>
                         </div>
                     </div>
                 </div>
-            </s>
         </section>
 
-        </>
     );
 }
 

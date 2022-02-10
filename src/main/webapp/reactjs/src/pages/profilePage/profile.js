@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import Layout from "../layout";
+import Layout from "../../component/layout";
 import ServiceProfile from "../profilePage/serviceProfile";
 import UserProfile from "../profilePage/userProfile";
 
 
 function Profile(){
-    //edit + info
     const [user, setUser] = useState({
         name:"",
         age:"",
@@ -29,12 +28,13 @@ function Profile(){
                     },
                 })
                 let userDetails = await res.json();
-                console.log(userDetails)
                 setUser({...user, name: userDetails.username,
                     email: userDetails.email,
                     age: userDetails.age,
                     reg: userDetails.registrationTime,
-                    role: userDetails.userType
+                    role: userDetails.userType,
+                    searches: userDetails.searches,
+                    services: userDetails.services
                 });
             }
             profile(tokenEncoded)
@@ -48,8 +48,7 @@ function Profile(){
                         minHeight: "100vh"}}>
 
             {user.role === "ADMIN" ?
-                <ServiceProfile user={user} cards={user.services}/> :
-                <UserProfile user={user} cards={user.searches}/>
+                <ServiceProfile user={user} cards={user.services}/> : <UserProfile user={user} cards={user.searches}/>
             }
             </div>
         </Layout>

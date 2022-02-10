@@ -33,14 +33,14 @@ function Registration() {
         username:"",
         email: "",
         password: "",
-        gender: null,
+        gender: "",
         isService: false,
     });
 
     const [wemail, setWEmail] = useState("");
     const [wPassword, setWPassword] = useState("");
     const [wName, setWName] = useState("");
-    const [wGender, setWGender] = useState("");
+
 
     const handleBlur = (event) => {
         const { name } = event.target;
@@ -53,17 +53,9 @@ function Registration() {
         else if (name === "password") isValid = validatePassword();
         else if (name === "username") isValid = validateName();
         else if (name === "fullname") isValid = validateName();
-        else if (name === "gender") isValid = validateGender();
+        else if (name === "gender") isValid = true;
         else if (name === "isService") isValid = true;
         return isValid;
-    }
-
-    const validateGender = () => {
-        let genderError = "";
-        const value = inputText.gender;
-        if (value.trim() === null) genderError = "Gender is required";
-        setWGender(genderError)
-        return genderError === "";
     }
 
 
@@ -99,14 +91,18 @@ function Registration() {
 
     const inputEvent = (event) => {
         const name = event.target.name;
-        const value = event.target.value;
+        let value = event.target.value;
+        if(name ==="isService"){
+            setIsService(!isService)
+            value = isService;
+
+        }
         setInputText((lastValue) => {
             return {
                 ...lastValue,
                 [name]: value
             }
         });
-
     }
 
     const fetchResults = async (inputText) => {
@@ -121,7 +117,9 @@ function Registration() {
         return await res.json();
     }
 
+
     const fetchCheckPreviousReg = async (inputText) => {
+        console.log(inputText)
         const res = await fetch(`/api/checkPreviousReg`,{
             method: 'POST',
             headers: {
@@ -256,9 +254,10 @@ function Registration() {
                                         <FontAwesomeIcon icon={faTransgender}/>
                                         <Package.InputSelect
                                             as="select"
-                                            value={inputText.gender === null ? "" : inputText.gender}
-                                            onChange={(e) => {setInputText({...inputText, gender: e.target.value})}}
+                                            onChange={inputEvent}
+                                            name="gender"
                                         >
+                                            <option value="Select" > Select Gender</option>
                                             <option value="Female">Female</option>
                                             <option value="Male">Male</option>
                                             <option value="Other">Other</option>
@@ -270,9 +269,8 @@ function Registration() {
                                         <Package.InputLabel>IsService</Package.InputLabel>
                                         <Package.CheckBoxInput
                                             type="checkbox"
-                                            name="service"
-                                        />
-
+                                            name="isService"
+                                            onChange={inputEvent}                                        />
                                     </Package.InputTexts >
 
 

@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Set;
 
 @RestController
@@ -39,9 +40,12 @@ public class LoginController {
         String password = userRegEntity.getPassword();
         String fullname = userRegEntity.getFullname();
         Gender gender = userRegEntity.getGender();
-        Boolean isService = userRegEntity.isService();
+        System.out.println(userRegEntity.getGender());
+        System.out.println(userRegEntity.getIsService());
+
+        String isService = userRegEntity.getIsService();
         UserType type;
-        if(isService){
+        if(!Objects.equals(isService, "on")){
            type = UserType.ADMIN;
         }
         else{

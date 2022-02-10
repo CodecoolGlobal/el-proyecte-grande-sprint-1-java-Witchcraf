@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Layout from "../layout";
 
 function Profile(){
+    //edit + info
     const [user, setUser] = useState({
         name:"",
         age:"",

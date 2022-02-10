@@ -12,6 +12,6 @@ public class UserRegEntity {
     private String fullname;
     private String birthday;
     private Gender gender;
-    private boolean isService;
+    private String isService;
 
 }

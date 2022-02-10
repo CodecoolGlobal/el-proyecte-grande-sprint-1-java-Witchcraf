@@ -1,14 +1,14 @@
 import {Card, Button, ButtonGroup} from "react-bootstrap";
 import React from "react";
 
-function Cards({user, cards}){
+function Cards({user, details}){
     console.log(user)
-    console.log(cards)
+    console.log(details)
     return (
         <Card style={{ width: '18rem' }}>
             <Card.Body>
-                <Card.Title>Card Title</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle>
+                {user.role === "ADMIN" ? <Card.Title>Service Title</Card.Title> : <Card.Title>Search Title</Card.Title>}
+                {user.role === "ADMIN" ? <Card.Subtitle className="mb-2 text-muted">Description</Card.Subtitle> : <Card.Subtitle className="mb-2 text-muted">Description</Card.Subtitle>}
                 <Card.Text>
                     Some quick example text to build on the card title and make up the bulk of
                     the card's content.

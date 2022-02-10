@@ -3,6 +3,7 @@ import Layout from "../layout";
 import ServiceProfile from "../profilePage/serviceProfile";
 import UserProfile from "../profilePage/userProfile";
 
+
 function Profile(){
     //edit + info
     const [user, setUser] = useState({
@@ -12,10 +13,10 @@ function Profile(){
         reg:"",
         pets: [],
         searches: [],
-        role: ""
+        role: "",
+        services:[]
     })
     let tokenEncoded = window.localStorage.getItem("token");
-    console.log(tokenEncoded)
 
     useEffect(()=>{
             const profile = async (tokenEncoded) => {
@@ -42,10 +43,15 @@ function Profile(){
 
     return (
         <Layout>
+            <div style={{background: "radial-gradient(yellow, green)",
+                        minWidth: "100%",
+                        minHeight: "100vh"}}>
+
             {user.role === "ADMIN" ?
-                <ServiceProfile /> :
-                <UserProfile user={user}/>
+                <ServiceProfile user={user} cards={user.services}/> :
+                <UserProfile user={user} cards={user.searches}/>
             }
+            </div>
         </Layout>
     );
 }

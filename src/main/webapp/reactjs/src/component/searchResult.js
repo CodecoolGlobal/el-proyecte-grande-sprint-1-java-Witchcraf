@@ -10,6 +10,8 @@ function SearchResult({results}){
     console.log(username);
 
     const [displayModal, setDisplayModal] = useState(false);
+    const [clearCheckbox, setClearCheckbox] = useState(false);
+    const [open, setOpen] = useState(true);
     const [searches, setSearches] = useState({
         // username: username,
         username: "Hokedli",    // change in saveSearchModal setSearches too!
@@ -29,7 +31,13 @@ function SearchResult({results}){
         <Form onSubmit={handleSubmit}>
             <div className='results'>
                 {results.map((result, index) => (
-                    <ResultCard key={index} result={result} searches={searches} setSearches={setSearches}/>
+                    <ResultCard
+                        key={index}
+                        result={result}
+                        searches={searches}
+                        setSearches={setSearches}
+                        clearCheckbox={clearCheckbox}
+                    />
                 ))}
                 <div className="container-fluid">
                     <div className="row justify-content-center">
@@ -49,7 +57,11 @@ function SearchResult({results}){
                             <SaveSearchModal
                                 searches={searches}
                                 setSearches={setSearches}
-                                setDisplayModal={setDisplayModal} /> : null
+                                setDisplayModal={setDisplayModal}
+                                open={open}
+                                setOpen={setOpen}
+                                setClearCheckbox={setClearCheckbox}
+                            /> : null
                     }
 
                 </div>

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../App.css';
 import {Avatar, Button, Checkbox, Rating, Typography} from "@mui/material";
@@ -10,29 +10,35 @@ import {green, purple, red, yellow} from "@mui/material/colors";
 import SendIcon from '@mui/icons-material/Send';
 
 
-function ResultCard({result, searches, setSearches}){
+function ResultCard({result, searches, setSearches, clearCheckbox}){
     let currentAvatar = createAvatarBasedOnServiceType(result.serviceType);
 
     const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
 
-    const modifySearches = (event) => {
-        const id = parseInt(event.target.value);
+    console.log(isCheckboxChecked);
+    useEffect(() => {
+        clearCheckbox ? setIsCheckboxChecked(false) : setIsCheckboxChecked(isCheckboxChecked);
+    }, [clearCheckbox])
+
+    const modifySearches = (event, id) => {
+        const serviceId = parseInt(id);
         if (!isCheckboxChecked) {
             setSearches({
                 ...searches,
-                searchedServices: [...searches.searchedServices, id]   // conversion needed?
+                searchedServices: [...searches.searchedServices, serviceId]   // conversion needed?
             })
         } else {
             setSearches({
                 ...searches,
-                searchedServices: searches.searchedServices.filter((item) => (item !== id))    // conversion needed?
+                searchedServices: searches.searchedServices.filter((item) => (item !== serviceId))    // conversion needed?
             })
         }
     }
 
-    const handleChange = (event) => {
+    const handleChange = (event, id) => {
         setIsCheckboxChecked(!isCheckboxChecked);
-        modifySearches(event);
+        console.log(event.target.value);
+        modifySearches(event, id);
     }
 
     return (
@@ -54,9 +60,8 @@ function ResultCard({result, searches, setSearches}){
                                             <>
                                                 Save
                                                 <Checkbox
-                                                    value={result.id}
                                                     checked={isCheckboxChecked}
-                                                    onChange={handleChange}
+                                                    onChange={(event) => handleChange(event, result.id)}
                                                 />
                                             </> : null
                                     }

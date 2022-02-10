@@ -7,11 +7,9 @@ import Button from 'react-bootstrap/Button';
 
 
 
-function SaveSearchModal({searches, setSearches, setDisplayModal}) {
+function SaveSearchModal({searches, setSearches, setDisplayModal, open, setOpen, setClearCheckbox}) {
 
-    const [open, setOpen] = useState(true);
     const [isSuccessfulSave, setIsSuccessfulSave] = useState(false);
-
 
     const handleSave = async () => {
         let response = await saveSearchResults(searches);
@@ -31,6 +29,7 @@ function SaveSearchModal({searches, setSearches, setDisplayModal}) {
     const handleClose = async () => {
         setOpen(false);
         setDisplayModal(false);
+        setClearCheckbox(true);
     }
 
     const fetchSaveSearch = async (searches) => {

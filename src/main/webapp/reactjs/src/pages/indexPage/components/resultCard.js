@@ -54,7 +54,7 @@ function ResultCard({result, searches, setSearches, clearCheckbox}){
                                     <Typography component="legend" ></Typography>
                                     <Rating style={{marginLeft:"10px"}} name="half-rating-read" defaultValue={result.rating} precision={0.5} readOnly />
                                     {
-                                        searches.username !== "hello" ?
+                                        searches.username !== null ?
                                             <>
                                                 Save
                                                 <Checkbox

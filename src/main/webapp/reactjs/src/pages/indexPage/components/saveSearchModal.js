@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 
 
 
-function SaveSearchModal({searches, setSearches, setDisplayModal, open, setOpen, setClearCheckbox}) {
+function SaveSearchModal({searches, setSearches, setDisplayModal, open, setOpen, setClearCheckbox, username}) {
 
     const [isSuccessfulSave, setIsSuccessfulSave] = useState(false);
 
@@ -16,8 +16,8 @@ function SaveSearchModal({searches, setSearches, setDisplayModal, open, setOpen,
         if (response.username !== "") {
             setIsSuccessfulSave(true);
             setSearches({
-                // username: username,
-                username: "Hokedli",
+                username: username,
+                // username: "Hokedli",
                 searchName: "My Search",
                 description: "",
                 searchedServices: []

@@ -6,13 +6,14 @@ import SaveSearchModal from "./saveSearchModal";
 
 function SearchResult({results}){
     const username = window.localStorage.getItem("username");
+    console.log(username);
 
     const [displayModal, setDisplayModal] = useState(false);
     const [clearCheckbox, setClearCheckbox] = useState(false);
     const [open, setOpen] = useState(true);
     const [searches, setSearches] = useState({
-        // username: username,
-        username: "Hokedli",    // change in saveSearchModal setSearches too!
+        username: username,
+        // username: "Hokedli",    // change in saveSearchModal setSearches too!
         searchName: "My Search",
         description: "",
         searchedServices: []
@@ -59,6 +60,7 @@ function SearchResult({results}){
                                 open={open}
                                 setOpen={setOpen}
                                 setClearCheckbox={setClearCheckbox}
+                                username={username}
                             /> : null
                     }
 

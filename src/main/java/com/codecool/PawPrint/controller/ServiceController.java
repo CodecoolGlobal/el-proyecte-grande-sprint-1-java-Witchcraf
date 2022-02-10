@@ -62,6 +62,8 @@ public class ServiceController {
         User user = userService.findUserByName(saveSearchEntity.getUsername());
         Set<ServiceOffered> services = new HashSet<>();
         saveSearchEntity.getSearchedServices().forEach(serviceId -> services.add(serviceService.findServiceById(serviceId)));
-        return userService.saveSearch(user,services, saveSearchEntity.getSearchName(), saveSearchEntity.getDescription());
+        Search search = userService.saveSearch(user,services, saveSearchEntity.getSearchName(), saveSearchEntity.getDescription());
+        System.out.println(search);
+        return search;
     }
 }

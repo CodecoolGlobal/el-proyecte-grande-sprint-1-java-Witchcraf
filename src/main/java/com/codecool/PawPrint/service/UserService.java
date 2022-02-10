@@ -60,7 +60,7 @@ public class UserService implements UserDetailsService {
         Search search = new Search(0, searchName, description, user, servicesInSearch);
         user.getSavedSearches().add(search);
         userDao.add(user);
-        searchDao.add(search);
+//        searchDao.add(search);
         return search;
     }
 

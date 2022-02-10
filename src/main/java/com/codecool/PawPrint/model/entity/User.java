@@ -4,10 +4,8 @@ import com.codecool.PawPrint.model.service.ServiceOffered;
 import com.codecool.PawPrint.model.contact.Contact;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -17,7 +15,8 @@ import java.util.List;
 import java.util.Set;
 
 @Data
-@EqualsAndHashCode(exclude = {"services", "pets", "savedSearches"})  // prevents circular references together with @JsonIgnoreProperties("nameOfConnectedVariable")
+@JsonIgnoreProperties(value = {"services", "pets", "savedSearches"})  // prevents circular references together with @JsonIgnoreProperties("nameOfConnectedVariable")
+@EqualsAndHashCode(exclude = {"services", "pets", "savedSearches"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -47,18 +46,24 @@ public class User {
     private String password;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "contact_id")
+    @ToString.Exclude
     private Contact contact;
     private UserType userType;
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonProperty("pets")
     @JsonIgnoreProperties("user")
+    @ToString.Exclude
     private Set<Pet> pets = new HashSet<>();
 //    private Set<User> friends;        // how to annotate self-aggregation?
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")  // mapped by user removed
-    @JsonIgnoreProperties("user")       // prevents circular references together with @EqualsAndHashCode(exclude = {arrayOfConnectedVariableNames})
-    private Set<ServiceOffered> services = new HashSet<>();
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")  // mapped by user removed
+    @JsonProperty("services")       // prevents circular references together with @EqualsAndHashCode(exclude = {arrayOfConnectedVariableNames})
     @JsonIgnoreProperties("user")
-    private List<Search> savedSearches = new ArrayList<>();
+    @ToString.Exclude
+    private Set<ServiceOffered> services = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonProperty("savedSearches")
+    @JsonIgnoreProperties("user")
+    private Set<Search> savedSearches = new HashSet<>();
 
     public User(String userName, LocalDateTime registrationTime, String email, int age, String password, UserType userType) {
         this.username = userName;

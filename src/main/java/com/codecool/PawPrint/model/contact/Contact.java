@@ -4,6 +4,7 @@ import com.codecool.PawPrint.model.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -30,6 +31,7 @@ public class Contact {
     private int id;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
+    @ToString.Exclude
     private Address address;
     private String phone;
     private String businessPhone;

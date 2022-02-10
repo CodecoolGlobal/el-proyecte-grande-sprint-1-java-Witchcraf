@@ -1,10 +1,8 @@
 package com.codecool.PawPrint.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,6 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@JsonIgnoreProperties(value = {"user"})
 @EqualsAndHashCode(exclude = {"user"})
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,11 +31,13 @@ public class Pet {
     )
 
     private int id;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonProperty("user")
     @JsonIgnoreProperties("pets")
+    @ToString.Exclude
     private User user;
     private String fullName;
-    private String userName;
+    private String username;
     private LocalDateTime registrationTime;
     private String description;
     private Gender gender;
@@ -46,8 +47,8 @@ public class Pet {
     private PetType compatibility;
 //    private Set<Pet> petFriends = new HashSet<>();
 
-    public Pet(String userName, LocalDateTime registrationTime, User user, PetType petType) {
-        this.userName = userName;
+    public Pet(String username, LocalDateTime registrationTime, User user, PetType petType) {
+        this.username = username;
         this.registrationTime = registrationTime;
         this.user = user;
         this.petType = petType;

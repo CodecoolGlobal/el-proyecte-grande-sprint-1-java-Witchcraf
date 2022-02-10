@@ -139,7 +139,7 @@ function SearchForm ({setResults, setIsResult}) {
 
                 <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
                     <Form.Label column md={2} style={{ fontFamily: 'Playfair Display',fontSize:"20px"}}>
-                        Zip
+                        Postal Code
                     </Form.Label>
                     <Col md={10}>
                         <Form.Control

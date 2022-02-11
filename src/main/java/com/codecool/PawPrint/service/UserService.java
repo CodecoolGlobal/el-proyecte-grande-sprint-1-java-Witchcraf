@@ -68,7 +68,8 @@ public class UserService implements UserDetailsService {
     }
 
     public User findUserByName(String name) {
-       return userDao.findByUsername(name);
+       User user = userDao.findByUsername(name);
+       return user;
     }
 
     public boolean checkRegEmailAndName(String email, String fullName){

@@ -50,17 +50,18 @@ function ResultCard({result, searches, setSearches, clearCheckbox}){
                             </div>
                             <div className="card-body">
                                 <h4 className="card-title" style={{marginBottom: "30px", marginTop:"10px", fontFamily: 'Playfair Display',fontSize:"45px", display: "inline-block"}}>{result.name}</h4>
-                                <p style={{ fontFamily: 'Playfair Display',fontSize:"25px"}}>Rating:
+                                <p style={{ fontFamily: 'Playfair Display', fontSize:"25px"}}>Rating:
                                     <Typography component="legend" ></Typography>
                                     <Rating style={{marginLeft:"10px"}} name="half-rating-read" defaultValue={result.rating} precision={0.5} readOnly />
                                     {
                                         searches.username !== null ?
                                             <>
-                                                Save
+                                                &emsp;
                                                 <Checkbox
                                                     checked={isCheckboxChecked}
                                                     onChange={(event) => handleChange(event, result.id)}
                                                 />
+                                                <span style={{ fontSize:"16px"}}>Save</span>
                                             </> : null
                                     }
                                 </p>

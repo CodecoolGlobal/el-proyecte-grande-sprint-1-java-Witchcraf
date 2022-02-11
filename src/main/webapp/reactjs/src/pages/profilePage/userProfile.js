@@ -1,5 +1,6 @@
 import React from "react";
 import Cards from "./components/cards";
+import ResultCard from "../indexPage/components/resultCard";
 
 function UserProfile({user, cards}) {
 
@@ -39,7 +40,13 @@ function UserProfile({user, cards}) {
                                     <p className="lead fw-normal mb-0">Saved Searches:</p>
                                 </div>
                                 <div className="row g-2">
-                                    <Cards user={user} cards={cards}/>
+                                    {cards.map((details, index) => (
+                                        <Cards
+                                            user={user}
+                                            details={details}
+                                        />
+                                    ))}
+
                                 </div>
                             </div>
                         </div>

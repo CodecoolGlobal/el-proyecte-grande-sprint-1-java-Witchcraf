@@ -63,6 +63,7 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     @JsonProperty("savedSearches")
     @JsonIgnoreProperties("user")
+    @ToString.Exclude
     private Set<Search> savedSearches = new HashSet<>();
 
     public User(String userName, LocalDateTime registrationTime, String email, int age, String password, UserType userType) {

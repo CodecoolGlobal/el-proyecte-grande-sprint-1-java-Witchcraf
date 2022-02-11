@@ -28,12 +28,13 @@ function Profile(){
                     },
                 })
                 let userDetails = await res.json();
+                console.log(userDetails);
                 setUser({...user, name: userDetails.username,
                     email: userDetails.email,
                     age: userDetails.age,
                     reg: userDetails.registrationTime,
                     role: userDetails.userType,
-                    searches: userDetails.searches,
+                    searches: userDetails.savedSearches,
                     services: userDetails.services
                 });
             }

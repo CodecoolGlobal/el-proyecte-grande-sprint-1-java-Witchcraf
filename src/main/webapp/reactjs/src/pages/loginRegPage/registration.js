@@ -267,7 +267,7 @@ function Registration() {
 
 
                                     <Package.InputTexts>
-                                        <Package.InputLabel>IsService</Package.InputLabel>
+                                        <Package.InputLabel>Service</Package.InputLabel>
                                         <Package.CheckBoxInput
                                             type="checkbox"
                                             name="isService"

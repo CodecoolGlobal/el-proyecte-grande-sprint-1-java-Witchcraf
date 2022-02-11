@@ -15,7 +15,8 @@ import java.util.List;
 import java.util.Set;
 
 @Data
-@JsonIgnoreProperties(value = {"services", "pets", "savedSearches"})  // prevents circular references together with @JsonIgnoreProperties("nameOfConnectedVariable")
+//@JsonIgnoreProperties(value = {"services", "pets", "savedSearches"})
+@JsonIgnoreProperties(value = {"services", "pets"})
 @EqualsAndHashCode(exclude = {"services", "pets", "savedSearches"})
 @NoArgsConstructor
 @AllArgsConstructor
@@ -61,7 +62,7 @@ public class User {
     @ToString.Exclude
     private Set<ServiceOffered> services = new HashSet<>();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    @JsonProperty("savedSearches")
+//    @JsonProperty("savedSearches")
     @JsonIgnoreProperties("user")
     @ToString.Exclude
     private Set<Search> savedSearches = new HashSet<>();

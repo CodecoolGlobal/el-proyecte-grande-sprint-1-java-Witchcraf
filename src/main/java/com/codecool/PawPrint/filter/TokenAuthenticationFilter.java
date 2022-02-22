@@ -14,14 +14,12 @@ import java.util.Map;
 public class TokenAuthenticationFilter {
 
     public String tokenVerification(HttpServletRequest request) throws Exception {
-        Map<String, String> tokenDetails = new HashMap<>();
         String token = request.getHeader("Authorization");
         Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
         try {
             JWTVerifier verifier = JWT.require(algorithm).build();
             DecodedJWT decodedJWT = verifier.verify(token);
             return decodedJWT.getSubject();
-
         }
         catch (Exception e){
 

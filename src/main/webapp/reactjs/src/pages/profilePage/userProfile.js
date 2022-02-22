@@ -1,8 +1,17 @@
-import React from "react";
+import React, {useState} from "react";
 import Cards from "./components/cards";
 import ResultCard from "../indexPage/components/resultCard";
+import {Form} from "react-bootstrap";
+import EditModal from "./components/editModal"
+
 
 function UserProfile({user, cards}) {
+    const [displayModal, setDisplayModal] = useState(false);
+
+    async function submit(event) {
+        event.preventDefault();
+        setDisplayModal(true);
+    }
 
     return (
         <section className="h-100 gradient-custom-2">
@@ -18,10 +27,12 @@ function UserProfile({user, cards}) {
                                         alt="Generic placeholder image"
                                         className="img-fluid img-thumbnail mt-4 mb-2"
                                         style={{width: "150px",  zIndex:"1"}}/>
-                                    <button type="button" className="btn btn-outline-dark"
-                                            data-mdb-ripple-color="dark" style={{zIndex: "1"}}>
-                                        Edit profile
-                                    </button>
+                                    {/*<Form>*/}
+                                        <button type="button" className="btn btn-outline-dark"
+                                                data-mdb-ripple-color="dark" style={{zIndex: "1"}} onClick={submit}>
+                                            Edit profile
+                                        </button>
+                                    {/*</Form>*/}
                                 </div>
                                 <div className="ms-3" style={{marginTop: "130px"}}>
                                     <h5>{user.name}</h5>
@@ -46,8 +57,20 @@ function UserProfile({user, cards}) {
                                             details={details}
                                         />
                                     ))}
-
                                 </div>
+                            </div>
+                            <div>
+                                {
+                                    displayModal ?
+                                        <EditModal
+                                            name={user.name}
+                                            age={user.age}
+                                            email={user.email}
+                                            setDisplayModal={setDisplayModal}
+                                            open={true}
+                                            setOpen={true}
+                                        /> : null
+                                }
                             </div>
                         </div>
                     </div>

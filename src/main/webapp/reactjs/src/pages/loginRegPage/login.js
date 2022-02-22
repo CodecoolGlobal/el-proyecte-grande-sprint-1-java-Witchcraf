@@ -171,7 +171,7 @@ function Login() {
 
                             <form onSubmit={submitForm}>
                                 <Package.InputTexts>
-                                    <Package.InputLabel>UserName</Package.InputLabel>
+                                    <Package.InputLabel>Username</Package.InputLabel>
                                     <FontAwesomeIcon icon={faEnvelope}/>
                                     <Package.InputText  type="text"
                                                         value={inputText.username}

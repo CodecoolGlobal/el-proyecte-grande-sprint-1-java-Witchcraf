@@ -2,9 +2,15 @@ import React, {useEffect, useState} from 'react';
 import Layout from "../../component/layout";
 import ServiceProfile from "../profilePage/serviceProfile";
 import UserProfile from "../profilePage/userProfile";
+import SaveServiceModal from "./saveServiceModal";
 
 
 function Profile(){
+
+    const [isAddServiceForm, setIsAddServiceForm] = useState(false);
+    const [displayAddServiceModal, setDisplayAddServiceModal] = useState(false);
+    const [open, setOpen] = useState(true);
+
     const [user, setUser] = useState({
         name:"",
         age:"",
@@ -48,9 +54,31 @@ function Profile(){
                         minWidth: "100%",
                         minHeight: "100vh"}}>
 
-            {user.role === "ADMIN" ?
-                <ServiceProfile user={user} cards={user.services}/> : <UserProfile user={user} cards={user.searches}/>
+            {
+                user.role === "ADMIN" ?
+                    <ServiceProfile
+                        user={user}
+                        cards={user.services}
+                        setDisplayAddServiceModal={setDisplayAddServiceModal}
+                    /> :
+                    <UserProfile
+                        user={user}
+                        cards={user.searches}
+                    />
             }
+                {/*<Outlet context={{user, cards:user.services}}/>*/}
+                <div>
+                    {
+                        displayAddServiceModal ?
+                            <SaveServiceModal
+                                setDisplayAddServiceModal={setDisplayAddServiceModal}
+                                open={open}
+                                setOpen={setOpen}
+                                username={user.name}
+                            /> : null
+                    }
+
+                </div>
             </div>
         </Layout>
     );

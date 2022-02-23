@@ -48,9 +48,9 @@ public class UserService implements UserDetailsService {
         String password = userRegEntity.getPassword();
         String fullname = userRegEntity.getFullname();
         Gender gender = userRegEntity.getGender();
-        String isService = userRegEntity.getIsService();
+        boolean isService = userRegEntity.isService();
         UserType type;
-        if(isService.equals("true")){
+        if(isService){
             type = UserType.ADMIN;
         }
         else{

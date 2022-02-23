@@ -42,6 +42,7 @@ function UserProfile({user, cards}) {
                                 <div className="row g-2">
                                     {cards.map((details, index) => (
                                         <Cards
+                                            key={index}
                                             user={user}
                                             details={details}
                                         />

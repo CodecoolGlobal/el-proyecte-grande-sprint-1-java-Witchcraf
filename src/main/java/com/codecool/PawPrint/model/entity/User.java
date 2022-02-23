@@ -16,7 +16,8 @@ import java.util.Set;
 
 @Data
 //@JsonIgnoreProperties(value = {"services", "pets", "savedSearches"})
-@JsonIgnoreProperties(value = {"services", "pets"})
+//@JsonIgnoreProperties(value = {"services", "pets"})
+@JsonIgnoreProperties(value = {"pets"})
 @EqualsAndHashCode(exclude = {"services", "pets", "savedSearches"})
 @NoArgsConstructor
 @AllArgsConstructor
@@ -57,7 +58,7 @@ public class User {
     private Set<Pet> pets = new HashSet<>();
 //    private Set<User> friends;        // how to annotate self-aggregation?
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")  // mapped by user removed
-    @JsonProperty("services")       // prevents circular references together with @EqualsAndHashCode(exclude = {arrayOfConnectedVariableNames})
+//    @JsonProperty("services")       // prevents circular references together with @EqualsAndHashCode(exclude = {arrayOfConnectedVariableNames})
     @JsonIgnoreProperties("user")
     @ToString.Exclude
     private Set<ServiceOffered> services = new HashSet<>();

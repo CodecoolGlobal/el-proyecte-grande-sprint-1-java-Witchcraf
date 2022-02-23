@@ -1,7 +1,5 @@
 import React, {useState} from "react";
-import ResultCard from "./resultCard";
 import {Form} from "react-bootstrap";
-import MultiButton from "./multiButton";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 

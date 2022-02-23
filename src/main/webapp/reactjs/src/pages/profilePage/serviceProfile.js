@@ -1,8 +1,10 @@
 import Cards from "./components/cards"
 import React from "react";
+import {useNavigate} from "react-router-dom";
 
-function ServiceProfile({user, cards}) {
+function ServiceProfile({user, cards, setDisplayAddServiceModal}) {
 
+    const navigate = useNavigate();
 
     return (
         <section className="h-100 gradient-custom-2">
@@ -17,20 +19,30 @@ function ServiceProfile({user, cards}) {
                                         alt="Generic placeholder image"
                                         className="img-fluid img-thumbnail mt-4 mb-2"
                                         style={{width: "150px",  zIndex:"1"}}/>
-
-                                        <button type="button"
-                                                className="btn btn-outline-dark"
-                                                data-mdb-ripple-color="dark"
-                                                style={{zIndex:"1"}}
-                                        >
-                                            Edit profile
-                                        </button>
                                 </div>
                                 <div className="ms-3" style={{marginTop: "130px"}}>
                                     <h5>{user.name}</h5>
                                 </div>
                             </div>
-                            <br/><br/><br/>
+                            <br/>
+                            <div className="card-body p-4 text-black">
+                                <button type="button"
+                                        className="btn btn-outline-dark"
+                                        data-mdb-ripple-color="dark"
+                                        style={{zIndex:"1"}}
+                                >
+                                    Edit profile
+                                </button>
+                                &nbsp;
+                                <button type="button"
+                                        className="btn btn-outline-dark"
+                                        data-mdb-ripple-color="dark"
+                                        style={{zIndex:"1"}}
+                                        onClick={() => {setDisplayAddServiceModal(true)}}
+                                >
+                                    Add service
+                                </button>
+                            </div>
                             <div className="card-body p-4 text-black">
                                 <div className="mb-5">
                                     <p className="lead fw-normal mb-1">About</p>
@@ -44,7 +56,13 @@ function ServiceProfile({user, cards}) {
                                 </div>
                             </div>
                             <div className="row g-2">
-                                <Cards user={user} cards={cards}/>
+                                {cards.map((details, index) => (
+                                    <Cards
+                                        key={index}
+                                        user={user}
+                                        details={details}
+                                    />
+                                ))}
                             </div>
                         </div>
                     </div>

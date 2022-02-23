@@ -1,6 +1,7 @@
 package com.codecool.PawPrint.model.controllerEntity;
 
 import com.codecool.PawPrint.model.entity.Gender;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
@@ -12,6 +13,7 @@ public class UserRegEntity {
     private String fullname;
     private String birthday;
     private Gender gender;
-    private String isService;
+    @JsonProperty
+    private boolean isService;
 
 }

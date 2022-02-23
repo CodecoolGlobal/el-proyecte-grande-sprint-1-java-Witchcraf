@@ -34,6 +34,7 @@ public class LoginController {
 
     @PostMapping(value = "/registerUser")
     public User registerNewUser(@RequestBody UserRegEntity userRegEntity) {
+        System.out.println(userRegEntity);
         return userService.registerUser(userRegEntity);
     }
 }

@@ -87,6 +87,14 @@ public class UserService implements UserDetailsService {
         return search;
     }
 
+    public void updateUser(UserRegEntity userRegEntity) {
+        userDao.updateUser(userRegEntity);
+    }
+
+    public User findUserByEmail(String email) {
+        return userDao.findByMail(email);
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userDao.findByUsername(username);
@@ -97,9 +105,5 @@ public class UserService implements UserDetailsService {
         assert userTypes != null;
         userTypes.add(new SimpleGrantedAuthority("ROLE_" + user.getUserType().toString()));
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), userTypes);
-    }
-
-    public User findUserByEmail(String email) {
-        return userDao.findByMail(email);
     }
 }

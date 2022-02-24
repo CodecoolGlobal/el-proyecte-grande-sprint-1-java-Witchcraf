@@ -1,5 +1,6 @@
 package com.codecool.PawPrint.repository;
 
+import com.codecool.PawPrint.model.controllerEntity.UserRegEntity;
 import com.codecool.PawPrint.model.entity.Search;
 import com.codecool.PawPrint.model.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,11 @@ public class UserDaoJpa implements UserDao {
     @Override
     public User findByMail(String email) {
         return userRepository.findUserByEmail(email);
+    }
+
+    @Override
+    public void updateUser(UserRegEntity userRegEntity) {
+        userRepository.updateUserInfoByEmail(userRegEntity.getUsername(), userRegEntity.getUsername(), userRegEntity.getEmail());
     }
 
 

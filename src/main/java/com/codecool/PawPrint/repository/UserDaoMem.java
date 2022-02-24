@@ -1,5 +1,6 @@
 package com.codecool.PawPrint.repository;
 
+import com.codecool.PawPrint.model.controllerEntity.UserRegEntity;
 import com.codecool.PawPrint.model.entity.Search;
 import com.codecool.PawPrint.model.entity.User;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -82,5 +83,9 @@ public class UserDaoMem implements UserDao{
             }
         }
         return currentUser;
+    }
+
+    @Override
+    public void updateUser(UserRegEntity userRegEntity) {
     }
 }

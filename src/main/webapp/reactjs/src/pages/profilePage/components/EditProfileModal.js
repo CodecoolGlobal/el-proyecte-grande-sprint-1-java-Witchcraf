@@ -7,34 +7,29 @@ import styled from "styled-components";
 
 
 
-function EditProfileModal({user, setUser, setDisplayModal, open, setOpen}) {
+function EditProfileModal({user, setUser, setDisplayModal}) {
+    const [open, setOpen] = useState(true);
 
     const [inputTextField, setInputTextField] = useState({
-        fullname:"",
-        username:"",
-        email: "",
-        password: "",
+        fullname: user.fullname,
+        username: user.username,
+        email: user.username,
+        // password: "",
     });
 
     async function updateUserInfo(){
-        setUser({...user, name: inputTextField.username,
-            email: inputTextField.email,
-            age: user.age,
-            reg: user.registrationTime,
-            role: user.userType,
-            searches: user.savedSearches,
-            services: user.services,
-            fullname: inputTextField.fullName
-        });
-        handleClose();
+        const valami = await fetchUserUpdate();
+        const akrmi = await handleClose();
     }
 
     const handleClose = async () => {
-        setOpen(false);
-        setDisplayModal(false);
+        // setOpen(false);
+        console.log("f2")
+        // setDisplayModal(false);
     }
 
     const fetchUserUpdate = async (user) => {
+        console.log("f")
         const res = await fetch(`/api/updateuser`,{
             method: 'POST',
             headers: {
@@ -46,24 +41,20 @@ function EditProfileModal({user, setUser, setDisplayModal, open, setOpen}) {
         return await res.json();
     }
 
-    const profileInputEvent = (event) => {
-        const name = event.target.name;
-        let value;
-
-        setInputTextField((lastValue) => {
-            return {
-                ...lastValue,
-                [name]: value
-            }
-        });
-    }
+    // const profileInputEvent = (event) => {
+    //     console.log(event);
+    //     // const name = event.target.value;
+    //     // let value;
+    //     //
+    //     // setInputTextField()
+    // }
 
     return (
         <>
             <Modal
                 className = "myModal"
                 show={open}
-                onHide={handleClose}
+                // onHide={handleClose}
                 backdrop="static"
                 keyboard={false}
             >
@@ -72,30 +63,30 @@ function EditProfileModal({user, setUser, setDisplayModal, open, setOpen}) {
                 </Modal.Header>
                 <Modal.Body className="modalBody">
 
-                    <form onSubmit={updateUserInfo()}>
+                    <form>
                         <Package.InputTexts>
                             <Package.InputLabel>Full Name</Package.InputLabel>
                             <FontAwesomeIcon icon={faUserCircle}/>
-                            <Package.InputText type="text" value={user.fullname} onChange={profileInputEvent} autoComplete="off"/>
+                            <Package.InputText type="text" value={inputTextField.fullname} onChange={(e) => {setInputTextField({...setInputTextField, fullname: e.target.value})}} autoComplete="off"/>
                             <br />
                         </Package.InputTexts>
 
                         <Package.InputTexts>
                             <Package.InputLabel>User Name</Package.InputLabel>
                             <FontAwesomeIcon icon={faUserCircle}/>
-                            <Package.InputText type="text" value={user.name} onChange={profileInputEvent} autoComplete="off"/>
+                            <Package.InputText type="text" value={inputTextField.name} onChange={(e) => {setInputTextField({...setInputTextField, username: e.target.value})}} autoComplete="off"/>
                             <br />
                         </Package.InputTexts>
 
                         <Package.InputTexts>
                             <Package.InputLabel>Email</Package.InputLabel>
                             <FontAwesomeIcon icon={faEnvelope}/>
-                            <Package.InputText type="text" value={user.email} onChange={profileInputEvent} autoComplete="off"/>
+                            <Package.InputText type="text" value={inputTextField.email} onChange={(e) => {setInputTextField({...setInputTextField, email: e.target.value})}} autoComplete="off"/>
                             <br />
                         </Package.InputTexts>
 
                         <Package.Button className="button">
-                            <Package.SubmitButton type="submit" onClick={updateUserInfo()}>Save</Package.SubmitButton>
+                            <Package.SubmitButton type="submit" onClick={() => {updateUserInfo()}}>Save</Package.SubmitButton>
                         </Package.Button>
                     </form>
 

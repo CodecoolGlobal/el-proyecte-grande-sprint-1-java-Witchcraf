@@ -1,5 +1,6 @@
 package com.codecool.PawPrint.repository;
 
+import com.codecool.PawPrint.model.controllerEntity.UserRegEntity;
 import com.codecool.PawPrint.model.entity.Search;
 import com.codecool.PawPrint.model.entity.User;
 import org.springframework.data.repository.CrudRepository;
@@ -21,4 +22,6 @@ public interface UserDao {
     boolean existsByEmail(String email);
     boolean existsByFullName(String fullName);
     User findByMail(String email);
+
+    void updateUser(UserRegEntity userRegEntity);
 }

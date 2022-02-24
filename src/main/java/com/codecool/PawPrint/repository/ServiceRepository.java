@@ -64,4 +64,5 @@ public interface ServiceRepository extends JpaRepository<ServiceOffered, Integer
                     "and s.petType = ?4 "
     )
     List<ServiceOffered> findBySearchCriteria(String country, String city, ServiceType serviceType, PetType petType);
+
 }

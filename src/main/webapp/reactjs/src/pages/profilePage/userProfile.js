@@ -5,9 +5,9 @@ import {Form} from "react-bootstrap";
 import EditProfileModal from "./components/EditProfileModal"
 
 
-function UserProfile({user, cards}) {
+function UserProfile({user, setUser, cards}) {
     const [displayModal, setDisplayModal] = useState(false);
-    const [open, setOpen] = useState(true);
+
 
 
     async function submit(event) {
@@ -66,8 +66,6 @@ function UserProfile({user, cards}) {
                                             user={user}
                                             setUser={setUser}
                                             setDisplayModal={setDisplayModal}
-                                            open={open}
-                                            setOpen={setOpen}
                                         /> : null
                                 }
                             </div>

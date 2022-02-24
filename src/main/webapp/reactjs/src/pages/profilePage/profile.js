@@ -9,7 +9,6 @@ function Profile(){
 
     const [isAddServiceForm, setIsAddServiceForm] = useState(false);
     const [displayAddServiceModal, setDisplayAddServiceModal] = useState(false);
-    const [open, setOpen] = useState(true);
 
     const [user, setUser] = useState({
         name:"",
@@ -50,7 +49,7 @@ function Profile(){
 
     return (
         <Layout>
-            <div style={{background: "radial-gradient(yellow, green)",
+            <div style={{background: "rgb(168, 230, 205)",
                         minWidth: "100%",
                         minHeight: "100vh"}}>
 
@@ -72,9 +71,10 @@ function Profile(){
                         displayAddServiceModal ?
                             <SaveServiceModal
                                 setDisplayAddServiceModal={setDisplayAddServiceModal}
-                                open={open}
-                                setOpen={setOpen}
                                 username={user.name}
+                                user={user}
+                                setUser={setUser}
+                                tokenEncoded={tokenEncoded}
                             /> : null
                     }
 

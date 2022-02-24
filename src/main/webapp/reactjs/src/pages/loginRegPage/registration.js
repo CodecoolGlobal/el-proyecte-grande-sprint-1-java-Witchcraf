@@ -321,7 +321,7 @@ const Package = {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: radial-gradient(yellow, green);
+    background: rgb(168, 230, 205);
     `,
 
     ContainerCard: styled.div`

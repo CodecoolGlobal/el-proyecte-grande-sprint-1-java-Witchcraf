@@ -1,19 +1,19 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Col, Form, Row} from "react-bootstrap";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import {CountryDropdown, RegionDropdown} from "react-country-region-selector";
 
+function SaveServiceModal({setDisplayAddServiceModal, username, user, setUser, tokenEncoded}) {
 
-
-function SaveServiceModal({setDisplayModal, open, setOpen, username}) {
+    const [open, setOpen] = useState(true);
 
     const [isSuccessfulSave, setIsSuccessfulSave] = useState(false);
 
     const [serviceInput, setServiceInput] = useState({
         username: username,
         serviceName: "",
-        petType: null,
+        petType: "",
         country: "",
         district: "",
         city: "",
@@ -25,21 +25,55 @@ function SaveServiceModal({setDisplayModal, open, setOpen, username}) {
         phone: "",
         email: "",
         openingHours: "",
-        serviceType: null,
-        serviceSubtype: null,
+        serviceType: "",
+        serviceSubtype: "",
         description: "",
         homepage: "",
-        image: null
+        image: ""
     });
 
+    const makePayload = () => {     // exclude image
+        const payload = {
+            username: serviceInput.username,
+            serviceName: serviceInput.serviceName,
+            petType: serviceInput.petType,
+            country: serviceInput.country,
+            district: serviceInput.district,
+            city: serviceInput.city,
+            street: serviceInput.street,
+            number: serviceInput.number,
+            floor: serviceInput.floor,
+            door: serviceInput.door,
+            bell: serviceInput.bell,
+            phone: serviceInput.phone,
+            email: serviceInput.email,
+            openingHours: serviceInput.openingHours,
+            serviceType: serviceInput.serviceType,
+            serviceSubtype: serviceInput.serviceSubtype,
+            description: serviceInput.description,
+            homepage: serviceInput.homepage
+        }
+        if (payload.petType === "") {
+            payload.petType = null;
+        }
+        if (payload.serviceType === "") {
+            payload.serviceType = null;
+        }
+        if (payload.serviceSubtype === "") {
+            payload.serviceSubtype = null;
+        }
+        return payload;
+    }
+
     const handleSave = async () => {
-        let response = await saveSearchResults(serviceInput);
+        validateDistrict();
+        let response = await saveNewService();
         if (response.username !== "") {
             setIsSuccessfulSave(true);
             setServiceInput({
                 username: username,
                 serviceName: "",
-                petType: null,
+                petType: "",
                 country: "",
                 district: "",
                 city: "",
@@ -51,12 +85,12 @@ function SaveServiceModal({setDisplayModal, open, setOpen, username}) {
                 phone: "",
                 email: "",
                 openingHours: "",
-                serviceType: null,
-                serviceSubtype: null,
+                serviceType: "",
+                serviceSubtype: "",
                 description: "",
                 homepage: "",
-                image: null
-            })
+                image: ""
+            });
         }
     }
 
@@ -71,25 +105,52 @@ function SaveServiceModal({setDisplayModal, open, setOpen, username}) {
         return nameError === "";
     }
 
-    const handleClose = async () => {
-        setOpen(false);
-        setDisplayModal(false);
+    const profile = async (tokenEncoded) => {
+        const res = await fetch(`/api/getuseralldata`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                //add token to header?
+                'Authorization': tokenEncoded,
+            },
+        })
+        let userDetails = await res.json();
+        console.log(userDetails);
+        setUser({...user, name: userDetails.username,
+            email: userDetails.email,
+            age: userDetails.age,
+            reg: userDetails.registrationTime,
+            role: userDetails.userType,
+            searches: userDetails.savedSearches,
+            services: userDetails.services
+        });
     }
 
-    const fetchSaveSearch = async (serviceInput) => {
+    const handleClose = () => {
+        setOpen(false);
+        setDisplayAddServiceModal(false);
+        profile(tokenEncoded);
+    }
+
+    const fetchSaveService = async () => {
+        // const formData = new FormData();
+        // for (const entry of Object.entries(serviceInput)) {
+        //     const [key, value] = entry;
+        //     formData.append(key, value);
+        // }
         const res = await fetch(`/api/service/save`,{
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json'  // remove if sending formData
             },
-            body: JSON.stringify(serviceInput)  // user identification?
+            body: JSON.stringify(makePayload())
         })
-        return await res.json();
+        return res.json();
     }
 
-    const saveSearchResults = async (serviceInput) => {
-        return await fetchSaveSearch(serviceInput);
+    const saveNewService = async () => {
+        return await fetchSaveService();
     }
 
     return (
@@ -201,7 +262,7 @@ function SaveServiceModal({setDisplayModal, open, setOpen, username}) {
                                 </Form.Group>
 
                                 <Row className="mb-3">
-                                    <Form.Group as={Col} controlId="formGridCountry">
+                                    <Form.Group as={Col} controlId="formGridEmail">
                                         <Form.Label>
                                             Country
                                         </Form.Label>
@@ -215,7 +276,7 @@ function SaveServiceModal({setDisplayModal, open, setOpen, username}) {
                                         </Col>
                                     </Form.Group>
 
-                                    <Form.Group as={Col} className="mb-3" controlId="formHorizontalCity">
+                                    <Form.Group as={Col} className="mb-3" controlId="formGridEmail">
                                         <Form.Label column sm={2}>
                                             City
                                         </Form.Label>
@@ -231,7 +292,7 @@ function SaveServiceModal({setDisplayModal, open, setOpen, username}) {
                                         </Col>
                                     </Form.Group>
 
-                                    <Form.Group as={Col} className="mb-3" controlId="formHorizontalDistrict">
+                                    <Form.Group as={Col} className="mb-3" controlId="formGridEmail">
                                         <Form.Label column sm={2}>
                                             District
                                         </Form.Label>
@@ -247,7 +308,7 @@ function SaveServiceModal({setDisplayModal, open, setOpen, username}) {
                                 </Row>
 
                                 <Row className="mb-3">
-                                    <Form.Group as={Col} controlId="formGridStreet">
+                                    <Form.Group as={Col} controlId="formGridEmail">
                                         <Form.Label>
                                             Street
                                         </Form.Label>
@@ -261,7 +322,7 @@ function SaveServiceModal({setDisplayModal, open, setOpen, username}) {
                                         </Col>
                                     </Form.Group>
 
-                                    <Form.Group as={Col} className="mb-3" controlId="formHorizontalNumber">
+                                    <Form.Group as={Col} className="mb-3" controlId="formGridEmail">
                                         <Form.Label column sm={2}>
                                             Number
                                         </Form.Label>
@@ -279,7 +340,7 @@ function SaveServiceModal({setDisplayModal, open, setOpen, username}) {
                                 </Row>
 
                                 <Row className="mb-3">
-                                    <Form.Group as={Col} controlId="formGridFloor">
+                                    <Form.Group as={Col} controlId="formGridEmail">
                                         <Form.Label>
                                             Floor
                                         </Form.Label>
@@ -293,7 +354,7 @@ function SaveServiceModal({setDisplayModal, open, setOpen, username}) {
                                         </Col>
                                     </Form.Group>
 
-                                    <Form.Group as={Col} className="mb-3" controlId="formHorizontalDoor">
+                                    <Form.Group as={Col} className="mb-3" controlId="formGridEmail">
                                         <Form.Label column sm={2}>
                                             Door
                                         </Form.Label>
@@ -309,7 +370,7 @@ function SaveServiceModal({setDisplayModal, open, setOpen, username}) {
                                         </Col>
                                     </Form.Group>
 
-                                    <Form.Group as={Col} className="mb-3" controlId="formHorizontalBell">
+                                    <Form.Group as={Col} className="mb-3" controlId="formBasicEmail">
                                         <Form.Label column sm={2}>
                                             Bell
                                         </Form.Label>
@@ -382,7 +443,7 @@ function SaveServiceModal({setDisplayModal, open, setOpen, username}) {
                                                 value="CAT"
                                                 name="formHorizontalRadios"
                                                 id="formHorizontalRadios1"
-                                                onChange={(e) => {setServiceInput({...serviceInput, serviceType: e.target.value})}}
+                                                onChange={(e) => {setServiceInput({...serviceInput, petType: e.target.value})}}
                                             />
                                             <Form.Check
                                                 type="radio"
@@ -390,7 +451,7 @@ function SaveServiceModal({setDisplayModal, open, setOpen, username}) {
                                                 value="DOG"
                                                 name="formHorizontalRadios"
                                                 id="formHorizontalRadios2"
-                                                onChange={(e) => {setServiceInput({...serviceInput, serviceType: e.target.value})}}
+                                                onChange={(e) => {setServiceInput({...serviceInput, petType: e.target.value})}}
                                             />
                                             <Form.Check
                                                 type="radio"
@@ -398,25 +459,24 @@ function SaveServiceModal({setDisplayModal, open, setOpen, username}) {
                                                 value="CATANDDOG"
                                                 name="formHorizontalRadios"
                                                 id="formHorizontalRadios3"
-                                                onChange={(e) => {setServiceInput({...serviceInput, serviceType: e.target.value})}}
+                                                onChange={(e) => {setServiceInput({...serviceInput, petType: e.target.value})}}
                                             />
                                         </Col>
                                     </Form.Group>
                                 </fieldset>
 
-                                <Form.Group as={Row} className="mb-3" controlId="formHorizontalImage">
-                                    <Form.Label column sm={2}>
-                                        Upload image
-                                    </Form.Label>
-                                    <Col sm={10}>
-                                        <Form.Control
-                                            type="file"
-                                            value={serviceInput.image}
-                                            onChange={(e) => {setServiceInput({...serviceInput, image: e.target.files[0]})}}
-                                            name="image"
-                                        />
-                                    </Col>
-                                </Form.Group>
+                                {/*<Form.Group as={Row} className="mb-3" controlId="formHorizontalImage">*/}
+                                {/*    <Form.Label column sm={2}>*/}
+                                {/*        Upload image*/}
+                                {/*    </Form.Label>*/}
+                                {/*    <Col sm={10}>*/}
+                                {/*        <Form.Control*/}
+                                {/*            type="file"*/}
+                                {/*            onChange={(e) => {setServiceInput({...serviceInput, image: e.target.files[0]})}}*/}
+                                {/*            name="image"*/}
+                                {/*        />*/}
+                                {/*    </Col>*/}
+                                {/*</Form.Group>*/}
 
 
                             < />

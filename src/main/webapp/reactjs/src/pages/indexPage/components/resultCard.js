@@ -24,12 +24,12 @@ function ResultCard({result, searches, setSearches, clearCheckbox}){
         if (!isCheckboxChecked) {
             setSearches({
                 ...searches,
-                searchedServices: [...searches.searchedServices, serviceId]   // conversion needed?
+                searchedServices: [...searches.searchedServices, serviceId]
             })
         } else {
             setSearches({
                 ...searches,
-                searchedServices: searches.searchedServices.filter((item) => (item !== serviceId))    // conversion needed?
+                searchedServices: searches.searchedServices.filter((item) => (item !== serviceId))
             })
         }
     }

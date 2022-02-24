@@ -42,13 +42,13 @@ class Initializer implements CommandLineRunner {
     public void run(String... strings) {
 
         // create user
-        User washAndVauUser = new User("WashAndVau", LocalDateTime.now(), "info@kutyamoso.hu",34, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
-        User washAndVauUserKecskemet = new User("WashAndVauKecskemét", LocalDateTime.now(), "kecskemet@kutyamoso.hu",1, bCryptPasswordEncoder.encode("1234"),UserType.NORMAL);
-        User bbsUser = new User("BBsBar&Grill", LocalDateTime.now(), "hello@bbzbar.hu", 12,bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
-        User hokedliUser = new User("Hokedli", LocalDateTime.now(), "hokedlidelivery@gmail.com",45, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
-        User wanHaoUser = new User("WanHao", LocalDateTime.now(), "info@monoricenter.hu",23, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
-        User terezaUser = new User("Tereza", LocalDateTime.now(), "RESERVATION@TEREZA.HU",34, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
-        User naspolyaUser = new User("Naspolya", LocalDateTime.now(), "info@naspolya.hu",32, bCryptPasswordEncoder.encode("1Aa123456"), UserType.NORMAL);
+        User washAndVauUser = new User("WashAndVau", LocalDateTime.now(), "info@kutyamoso.hu",34, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL, "WashAndVau");
+        User washAndVauUserKecskemet = new User("WashAndVauKecskemét", LocalDateTime.now(), "kecskemet@kutyamoso.hu",1, bCryptPasswordEncoder.encode("1234"),UserType.NORMAL, "WashAndVauKecskemét");
+        User bbsUser = new User("BBsBar&Grill", LocalDateTime.now(), "hello@bbzbar.hu", 12,bCryptPasswordEncoder.encode("1234"), UserType.NORMAL, "BBsBar&Grill");
+        User hokedliUser = new User("Hokedli", LocalDateTime.now(), "hokedlidelivery@gmail.com",45, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL, "Hokedli");
+//        User wanHaoUser = new User("WanHao", LocalDateTime.now(), "info@monoricenter.hu",23, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
+//        User terezaUser = new User("Tereza", LocalDateTime.now(), "RESERVATION@TEREZA.HU",34, bCryptPasswordEncoder.encode("1234"), UserType.NORMAL);
+        User naspolyaUser = new User("Naspolya", LocalDateTime.now(), "info@naspolya.hu",32, bCryptPasswordEncoder.encode("1Aa123456"), UserType.NORMAL, "Naspolya");
 
         // create contact
         Contact washAndVauCon= new Contact("+36205450145");
@@ -118,8 +118,8 @@ class Initializer implements CommandLineRunner {
         washAndVauKecskemet.setUser(washAndVauUserKecskemet);
         bbs.setUser(bbsUser);
         hokedli.setUser(hokedliUser);
-        wanHao.setUser(wanHaoUser);
-        tereza.setUser(terezaUser);
+//        wanHao.setUser(wanHaoUser);
+//        tereza.setUser(terezaUser);
         naspolya.setUser(naspolyaUser);
 
         // add service to user services
@@ -130,8 +130,8 @@ class Initializer implements CommandLineRunner {
         washAndVauUserKecskemet.getServices().add(washAndVauKecskemet);
         bbsUser.getServices().add(bbs);
         hokedliUser.getServices().add(hokedli);
-        wanHaoUser.getServices().add(wanHao);
-        terezaUser.getServices().add(tereza);
+//        wanHaoUser.getServices().add(wanHao);
+//        terezaUser.getServices().add(tereza);
         naspolyaUser.getServices().add(naspolya);
 
         // add user to memory/db
@@ -139,8 +139,8 @@ class Initializer implements CommandLineRunner {
         userDao.add(washAndVauUserKecskemet);
         userDao.add(bbsUser);
         userDao.add(hokedliUser);
-        userDao.add(wanHaoUser);
-        userDao.add(terezaUser);
+//        userDao.add(wanHaoUser);
+//        userDao.add(terezaUser);
         userDao.add(naspolyaUser);
 
         // add service to memory/db

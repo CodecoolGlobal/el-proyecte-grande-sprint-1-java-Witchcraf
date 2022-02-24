@@ -7,6 +7,7 @@ import UserProfile from "../profilePage/userProfile";
 function Profile(){
     const [user, setUser] = useState({
         name:"",
+        fullname:"",
         age:"",
         email:"",
         reg:"",
@@ -35,7 +36,8 @@ function Profile(){
                     reg: userDetails.registrationTime,
                     role: userDetails.userType,
                     searches: userDetails.savedSearches,
-                    services: userDetails.services
+                    services: userDetails.services,
+                    fullname: userDetails.fullName
                 });
             }
             profile(tokenEncoded)
@@ -49,7 +51,7 @@ function Profile(){
                         minHeight: "100vh"}}>
 
             {user.role === "ADMIN" ?
-                <ServiceProfile user={user} cards={user.services}/> : <UserProfile user={user} cards={user.searches}/>
+                <ServiceProfile user={user} cards={user.services}/> : <UserProfile user={user} setUser={setUser} cards={user.searches}/>
             }
             </div>
         </Layout>

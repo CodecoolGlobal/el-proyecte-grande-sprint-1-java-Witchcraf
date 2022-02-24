@@ -67,13 +67,14 @@ public class User {
     @ToString.Exclude
     private Set<Search> savedSearches = new HashSet<>();
 
-    public User(String userName, LocalDateTime registrationTime, String email, int age, String password, UserType userType) {
+    public User(String userName, LocalDateTime registrationTime, String email, int age, String password, UserType userType, String fullName) {
         this.username = userName;
         this.registrationTime = registrationTime;
         this.email = email;
         this.age = age;
         this.password = password;
         this.userType = userType;
+        this.fullName = fullName;
     }
 
     public User(String name,  String email, String password, UserType userType, String fullName, Gender gender) {

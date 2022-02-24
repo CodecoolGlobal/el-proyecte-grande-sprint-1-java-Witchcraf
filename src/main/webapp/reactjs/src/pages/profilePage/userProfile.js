@@ -2,11 +2,13 @@ import React, {useState} from "react";
 import Cards from "./components/cards";
 import ResultCard from "../indexPage/components/resultCard";
 import {Form} from "react-bootstrap";
-import EditModal from "./components/editModal"
+import EditProfileModal from "./components/EditProfileModal"
 
 
 function UserProfile({user, cards}) {
     const [displayModal, setDisplayModal] = useState(false);
+    const [open, setOpen] = useState(true);
+
 
     async function submit(event) {
         event.preventDefault();
@@ -27,12 +29,10 @@ function UserProfile({user, cards}) {
                                         alt="Generic placeholder image"
                                         className="img-fluid img-thumbnail mt-4 mb-2"
                                         style={{width: "150px",  zIndex:"1"}}/>
-                                    {/*<Form>*/}
-                                        <button type="button" className="btn btn-outline-dark"
-                                                data-mdb-ripple-color="dark" style={{zIndex: "1"}} onClick={submit}>
-                                            Edit profile
-                                        </button>
-                                    {/*</Form>*/}
+                                    <button type="button" className="btn btn-outline-dark"
+                                            data-mdb-ripple-color="dark" style={{zIndex: "1"}} onClick={submit}>
+                                        Edit profile
+                                    </button>
                                 </div>
                                 <div className="ms-3" style={{marginTop: "130px"}}>
                                     <h5>{user.name}</h5>
@@ -62,13 +62,12 @@ function UserProfile({user, cards}) {
                             <div>
                                 {
                                     displayModal ?
-                                        <EditModal
-                                            name={user.name}
-                                            age={user.age}
-                                            email={user.email}
+                                        <EditProfileModal
+                                            user={user}
+                                            setUser={setUser}
                                             setDisplayModal={setDisplayModal}
-                                            open={true}
-                                            setOpen={true}
+                                            open={open}
+                                            setOpen={setOpen}
                                         /> : null
                                 }
                             </div>

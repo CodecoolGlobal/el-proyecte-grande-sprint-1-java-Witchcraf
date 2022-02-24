@@ -10,7 +10,6 @@ function SearchResult({results}){
 
     const [displayModal, setDisplayModal] = useState(false);
     const [clearCheckbox, setClearCheckbox] = useState(false);
-    const [open, setOpen] = useState(true);
     const [searches, setSearches] = useState({
         username: username,
         // username: "Hokedli",    // change in saveSearchModal setSearches too!
@@ -57,8 +56,6 @@ function SearchResult({results}){
                                 searches={searches}
                                 setSearches={setSearches}
                                 setDisplayModal={setDisplayModal}
-                                open={open}
-                                setOpen={setOpen}
                                 setClearCheckbox={setClearCheckbox}
                                 username={username}
                             /> : null

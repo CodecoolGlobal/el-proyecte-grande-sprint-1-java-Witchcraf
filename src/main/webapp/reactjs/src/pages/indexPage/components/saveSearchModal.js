@@ -5,7 +5,9 @@ import Button from 'react-bootstrap/Button';
 
 
 
-function SaveSearchModal({searches, setSearches, setDisplayModal, open, setOpen, setClearCheckbox, username}) {
+function SaveSearchModal({searches, setSearches, setDisplayModal, setClearCheckbox, username}) {
+
+    const [open, setOpen] = useState(true);
 
     const [isSuccessfulSave, setIsSuccessfulSave] = useState(false);
 
@@ -36,7 +38,7 @@ function SaveSearchModal({searches, setSearches, setDisplayModal, open, setOpen,
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(searches)  // user identification?
+            body: JSON.stringify(searches)
         })
         return await res.json();
     }

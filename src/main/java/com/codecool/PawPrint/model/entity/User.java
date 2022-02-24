@@ -68,8 +68,8 @@ public class User {
     @ToString.Exclude
     private Set<Search> savedSearches = new HashSet<>();
 
-    public User(String userName, LocalDateTime registrationTime, String email, int age, String password, UserType userType) {
-        this.username = userName;
+    public User(String username, LocalDateTime registrationTime, String email, int age, String password, UserType userType) {
+        this.username = username;
         this.registrationTime = registrationTime;
         this.email = email;
         this.age = age;

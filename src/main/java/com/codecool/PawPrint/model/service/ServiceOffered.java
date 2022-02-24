@@ -7,8 +7,11 @@ import com.codecool.PawPrint.model.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -54,7 +57,9 @@ public class ServiceOffered {
     private String description;
     private String homepage;
     private String reservationUrl;
-    private String image;
+//    @Lob
+//    @Basic(fetch = FetchType.LAZY)
+//    private byte[] image;
     @ManyToMany(mappedBy = "searchedServices")
     @JsonProperty("searches")
     @ToString.Exclude

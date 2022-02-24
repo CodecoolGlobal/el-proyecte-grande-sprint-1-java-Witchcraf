@@ -1,6 +1,7 @@
 package com.codecool.PawPrint.controller;
 
 import com.codecool.PawPrint.model.controllerEntity.SaveSearchEntity;
+import com.codecool.PawPrint.model.controllerEntity.SaveServiceEntity;
 import com.codecool.PawPrint.model.controllerEntity.SearchService;
 import com.codecool.PawPrint.model.entity.Search;
 import com.codecool.PawPrint.model.entity.User;
@@ -10,9 +11,11 @@ import com.codecool.PawPrint.model.service.ServiceType;
 import com.codecool.PawPrint.service.ServiceService;
 import com.codecool.PawPrint.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -65,5 +68,18 @@ public class ServiceController {
         Search search = userService.saveSearch(user,services, saveSearchEntity.getSearchName(), saveSearchEntity.getDescription());
         System.out.println(search);
         return search;
+    }
+
+//    @PostMapping(value = "/service/save", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/service/save")
+    @ResponseBody
+    public ServiceOffered saveService(@RequestBody SaveServiceEntity saveServiceEntity) {
+        System.out.println(saveServiceEntity);
+        User user = userService.findUserByName(saveServiceEntity.getUsername());
+        ServiceOffered service = serviceService.convertSaveServiceEntityToServiceOffered(saveServiceEntity);
+        service.setUser(user);
+        ServiceOffered savedService = serviceService.saveService(service);
+        System.out.println(savedService);
+        return savedService;
     }
 }

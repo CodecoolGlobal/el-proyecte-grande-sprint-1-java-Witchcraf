@@ -45,6 +45,7 @@ function SearchForm ({setResults, setIsResult}) {
 
     const getSearchResults = async (search) => {
         const resultFromApi = await fetchResults(search);
+        console.log(resultFromApi);
         setResults(resultFromApi);
         setIsResult(true);
     }

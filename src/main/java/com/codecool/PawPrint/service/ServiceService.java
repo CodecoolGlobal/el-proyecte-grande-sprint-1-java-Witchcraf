@@ -11,9 +11,7 @@ import com.codecool.PawPrint.repository.ServiceDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -133,4 +131,5 @@ public class ServiceService {
         serviceDao.add(service);
         return service;
     }
+
 }

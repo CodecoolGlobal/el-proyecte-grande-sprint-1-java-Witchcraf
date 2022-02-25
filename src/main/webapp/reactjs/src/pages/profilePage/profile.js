@@ -2,9 +2,15 @@ import React, {useEffect, useState} from 'react';
 import Layout from "../../component/layout";
 import ServiceProfile from "../profilePage/serviceProfile";
 import UserProfile from "../profilePage/userProfile";
+import SaveServiceModal from "./saveServiceModal";
+import {Outlet} from "@mui/icons-material";
 
 
 function Profile(){
+
+    const [isAddServiceForm, setIsAddServiceForm] = useState(false);
+    const [displayAddServiceModal, setDisplayAddServiceModal] = useState(false);
+
     const [user, setUser] = useState({
         name:"",
         age:"",
@@ -16,6 +22,8 @@ function Profile(){
         services:[]
     })
     let tokenEncoded = window.localStorage.getItem("token");
+
+    const [savedSearch, setSavedSearch] = useState([]);
 
     useEffect(()=>{
             const profile = async (tokenEncoded) => {
@@ -44,13 +52,38 @@ function Profile(){
 
     return (
         <Layout>
-            <div style={{background: "radial-gradient(yellow, green)",
+            <div style={{background: "rgb(168, 230, 205)",
                         minWidth: "100%",
                         minHeight: "100vh"}}>
 
-            {user.role === "ADMIN" ?
-                <ServiceProfile user={user} cards={user.services}/> : <UserProfile user={user} cards={user.searches}/>
+            {
+                user.role === "ADMIN" ?
+                    <ServiceProfile
+                        user={user}
+                        cards={user.services}
+                        setDisplayAddServiceModal={setDisplayAddServiceModal}
+                    /> :
+                    <UserProfile
+                        user={user}
+                        cards={user.searches}
+                        setSavedSearch={setSavedSearch}
+                        tokenEncoded={tokenEncoded}
+                    />
             }
+                <Outlet context={{savedSearch}}/>
+                <div>
+                    {
+                        displayAddServiceModal ?
+                            <SaveServiceModal
+                                setDisplayAddServiceModal={setDisplayAddServiceModal}
+                                username={user.name}
+                                user={user}
+                                setUser={setUser}
+                                tokenEncoded={tokenEncoded}
+                            /> : null
+                    }
+
+                </div>
             </div>
         </Layout>
     );

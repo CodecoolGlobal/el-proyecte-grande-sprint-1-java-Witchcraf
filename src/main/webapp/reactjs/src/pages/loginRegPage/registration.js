@@ -25,7 +25,7 @@ function Registration() {
     const [inpass, setinpass] = useState("password");
     const [eye, seteye] = useState(true);
     const [isShow, setIsShow] = useState(false);
-    const [service, setService] = useState(true);
+    const [service, setService] = useState(false);
 
 
     const [inputText, setInputText] = useState({
@@ -94,9 +94,10 @@ function Registration() {
         let value;
         if(name ==="isService"){
             setService(!service)
-            value = service;
+            value = !service;
+            console.log(value);
         }
-        else{
+        else {
             value = event.target.value;
         }
         setInputText((lastValue) => {
@@ -108,6 +109,7 @@ function Registration() {
     }
 
     const fetchResults = async (inputText) => {
+        console.log(inputText);
         const res = await fetch(`/api/registerUser`,{
             method: 'POST',
             headers: {
@@ -283,7 +285,7 @@ function Registration() {
                                 </form>
 
                                 <Package.Register className="register">
-                                    <Package.RegisterP>Have you already an account?
+                                    <Package.RegisterP>You already have an account?
                                         <Package.RegisterA href="/login"> Login</Package.RegisterA>
                                     </Package.RegisterP>
                                 </Package.Register>
@@ -319,7 +321,7 @@ const Package = {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: radial-gradient(yellow, green);
+    background: rgb(168, 230, 205);
     `,
 
     ContainerCard: styled.div`

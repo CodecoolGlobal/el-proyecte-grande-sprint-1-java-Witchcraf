@@ -2,7 +2,7 @@ import React from "react";
 import Cards from "./components/cards";
 import ResultCard from "../indexPage/components/resultCard";
 
-function UserProfile({user, cards}) {
+function UserProfile({user, cards, setSavedSearch, tokenEncoded}) {
 
     return (
         <section className="h-100 gradient-custom-2">
@@ -42,8 +42,11 @@ function UserProfile({user, cards}) {
                                 <div className="row g-2">
                                     {cards.map((details, index) => (
                                         <Cards
+                                            key={index}
                                             user={user}
                                             details={details}
+                                            setSavedSearch={setSavedSearch}
+                                            tokenEncoded={tokenEncoded}
                                         />
                                     ))}
 

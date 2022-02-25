@@ -1,12 +1,13 @@
 package com.codecool.PawPrint.model.controllerEntity;
 
+import com.codecool.PawPrint.model.entity.Search;
 import com.codecool.PawPrint.model.service.ServiceSubtype;
 import com.codecool.PawPrint.model.service.ServiceType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class SearchService {
+public class SearchServiceEntity {
 
     private int userId;
     private String country;

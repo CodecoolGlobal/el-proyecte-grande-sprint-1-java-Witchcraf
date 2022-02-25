@@ -4,9 +4,7 @@ import com.codecool.PawPrint.filter.TokenAuthenticationFilter;
 import com.codecool.PawPrint.model.entity.User;
 import com.codecool.PawPrint.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,6 +26,7 @@ public class ProfileController {
     @GetMapping("/getuseralldata")
     public User getAllUserDataById(HttpServletRequest httpRequest) throws Exception {
         User user = userService.findUserByName(tokenAuthenticationFilter.tokenVerification(httpRequest));
+        System.out.println(user);
         return user;
     }
 }

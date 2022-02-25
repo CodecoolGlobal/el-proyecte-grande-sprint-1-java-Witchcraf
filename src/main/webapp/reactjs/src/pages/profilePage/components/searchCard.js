@@ -1,43 +1,16 @@
-import React, {useEffect, useState} from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import '../../../App.css';
 import {Avatar, Button, Checkbox, Rating, Typography} from "@mui/material";
-import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
-import SpaIcon from '@mui/icons-material/Spa';
-import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
-import PetsIcon from '@mui/icons-material/Pets';
+import SendIcon from "@mui/icons-material/Send";
+import React from "react";
 import {green, purple, red, yellow} from "@mui/material/colors";
-import SendIcon from '@mui/icons-material/Send';
+import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
+import SpaIcon from "@mui/icons-material/Spa";
+import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
+import PetsIcon from "@mui/icons-material/Pets";
 
 
-function ResultCard({result, searches, setSearches, clearCheckbox}){
+function SearchCard({result}) {
+
     let currentAvatar = createAvatarBasedOnServiceType(result.serviceType);
-
-    const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
-
-    useEffect(() => {
-        clearCheckbox ? setIsCheckboxChecked(false) : setIsCheckboxChecked(isCheckboxChecked);
-    }, [clearCheckbox])
-
-    const modifySearches = (event, id) => {
-        const serviceId = parseInt(id);
-        if (!isCheckboxChecked) {
-            setSearches({
-                ...searches,
-                searchedServices: [...searches.searchedServices, serviceId]
-            })
-        } else {
-            setSearches({
-                ...searches,
-                searchedServices: searches.searchedServices.filter((item) => (item !== serviceId))
-            })
-        }
-    }
-
-    const handleChange = (event, id) => {
-        setIsCheckboxChecked(!isCheckboxChecked);
-        modifySearches(event, id);
-    }
 
     return (
         <div className="container-fluid">
@@ -53,17 +26,6 @@ function ResultCard({result, searches, setSearches, clearCheckbox}){
                                 <p style={{ fontFamily: 'Playfair Display', fontSize:"25px"}}>Rating:
                                     <Typography component="legend" ></Typography>
                                     <Rating style={{marginLeft:"10px"}} name="half-rating-read" defaultValue={result.rating} precision={0.5} readOnly />
-                                    {
-                                        searches.username !== null ?
-                                            <>
-                                                &emsp;
-                                                <Checkbox
-                                                    checked={isCheckboxChecked}
-                                                    onChange={(event) => handleChange(event, result.id)}
-                                                />
-                                                <span style={{ fontSize:"16px"}}>Save</span>
-                                            </> : null
-                                    }
                                 </p>
                                 <p className="card-text" style={{ paddingBottom:"15px", fontFamily: 'Playfair Display',fontSize:"20px"}}>
                                     {result.description}
@@ -81,7 +43,6 @@ function ResultCard({result, searches, setSearches, clearCheckbox}){
         </div>
 
     );
-
 
     function createAvatarBasedOnServiceType(type){
         let avatar;
@@ -107,5 +68,7 @@ function ResultCard({result, searches, setSearches, clearCheckbox}){
         }
         return avatar;
     }
+
 }
-export default ResultCard;
+
+export default SearchCard;

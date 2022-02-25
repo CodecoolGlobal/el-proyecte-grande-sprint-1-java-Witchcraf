@@ -18,4 +18,9 @@ public class SearchDaoJPA implements SearchDao {
     public void add(Search search) {
         searchRepository.save(search);
     }
+
+    @Override
+    public Search findById(int searchId) {
+        return searchRepository.getById(searchId);
+    }
 }

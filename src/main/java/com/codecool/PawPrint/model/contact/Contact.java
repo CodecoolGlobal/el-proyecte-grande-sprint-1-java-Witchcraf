@@ -34,8 +34,7 @@ public class Contact {
     @ToString.Exclude
     private Address address;
     private String phone;
-    private String businessPhone;
-    private String businessEmail;
+    private String email;
 
     public Contact(String phone) {
         this.phone = phone;

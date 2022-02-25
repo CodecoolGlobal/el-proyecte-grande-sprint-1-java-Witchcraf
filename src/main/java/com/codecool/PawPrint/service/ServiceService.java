@@ -1,5 +1,8 @@
 package com.codecool.PawPrint.service;
 
+import com.codecool.PawPrint.model.contact.Address;
+import com.codecool.PawPrint.model.contact.Contact;
+import com.codecool.PawPrint.model.controllerEntity.SaveServiceEntity;
 import com.codecool.PawPrint.model.entity.PetType;
 import com.codecool.PawPrint.model.service.ServiceSubtype;
 import com.codecool.PawPrint.model.service.ServiceOffered;
@@ -91,4 +94,42 @@ public class ServiceService {
     public ServiceOffered findServiceById(int id) {
         return serviceDao.findById(id);
     }
+
+    public ServiceOffered convertSaveServiceEntityToServiceOffered(SaveServiceEntity saveServiceEntity) {
+        Address address = new Address();
+        address.setBell(saveServiceEntity.getBell());
+        address.setCity(saveServiceEntity.getCity());
+        address.setCountry(saveServiceEntity.getCountry());
+        address.setDistrict(saveServiceEntity.getDistrict());
+        address.setDoor(saveServiceEntity.getDoor());
+        address.setNumber(saveServiceEntity.getNumber());
+        address.setFloor(saveServiceEntity.getFloor());
+        address.setStreet(saveServiceEntity.getStreet());
+
+        Contact contact = new Contact();
+        contact.setAddress(address);
+        contact.setEmail(saveServiceEntity.getEmail());
+        contact.setPhone(saveServiceEntity.getPhone());
+
+        ServiceOffered service = new ServiceOffered();
+        service.setContact(contact);
+        service.setServiceType(saveServiceEntity.getServiceType());
+        service.setServiceSubtype(saveServiceEntity.getServiceSubtype());
+        service.setDescription(saveServiceEntity.getDescription());
+        service.setHomepage(saveServiceEntity.getHomepage());
+//        // convert incoming Multipart file into byte array
+//        MultipartFile file = saveServiceEntity.getImage();
+//        service.setImage(file.getBytes());
+        service.setName(saveServiceEntity.getServiceName());
+        service.setPetType(saveServiceEntity.getPetType());
+        service.setOpeningHours(saveServiceEntity.getOpeningHours());
+
+        return service;
+    }
+
+    public ServiceOffered saveService(ServiceOffered service) {
+        serviceDao.add(service);
+        return service;
+    }
+
 }

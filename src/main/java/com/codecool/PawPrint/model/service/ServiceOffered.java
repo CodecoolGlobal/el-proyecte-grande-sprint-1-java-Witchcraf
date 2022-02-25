@@ -7,8 +7,11 @@ import com.codecool.PawPrint.model.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -49,12 +52,14 @@ public class ServiceOffered {
     private String openingHours;
     private ServiceType serviceType;
     private ServiceSubtype serviceSubtype;
-    private String service;
+//    private String service;
     private int serviceLog;
     private String description;
-    private String serviceHomePage;
+    private String homepage;
     private String reservationUrl;
-    private String image;
+//    @Lob
+//    @Basic(fetch = FetchType.LAZY)
+//    private byte[] image;
     @ManyToMany(mappedBy = "searchedServices")
     @JsonProperty("searches")
     @ToString.Exclude
@@ -68,7 +73,7 @@ public class ServiceOffered {
         this.contact = contact;
     }
 
-    public ServiceOffered(String name, PetType petType, double rating, Contact contact, String openingHours, ServiceType serviceType, ServiceSubtype serviceSubtype, String description, String serviceHomePage) {
+    public ServiceOffered(String name, PetType petType, double rating, Contact contact, String openingHours, ServiceType serviceType, ServiceSubtype serviceSubtype, String description, String homepage) {
         this.name = name;
         this.petType = petType;
         this.rating = rating;
@@ -77,6 +82,6 @@ public class ServiceOffered {
         this.serviceType = serviceType;
         this.serviceSubtype = serviceSubtype;
         this.description = description;
-        this.serviceHomePage = serviceHomePage;
+        this.homepage = homepage;
     }
 }

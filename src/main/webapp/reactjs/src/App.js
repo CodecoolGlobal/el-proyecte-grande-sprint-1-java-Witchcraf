@@ -6,6 +6,7 @@ import Home from "./pages/indexPage/home";
 import Login from "./pages/loginRegPage/login";
 import Registration from "./pages/loginRegPage/registration";
 import Profile from "./pages/profilePage/profile";
+import ShowSearchPage from "./pages/profilePage/showSearchPage";
 
 
 function App() {
@@ -16,7 +17,9 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/registration" element={<Registration />} />
-                <Route path="/profile" element={<Profile />} />
+                <Route path="/profile" element={<Profile />}>
+                    <Route path="search-details" element={<ShowSearchPage/>} />
+                </Route>
             </Routes>
         </BrowserRouter>
     );

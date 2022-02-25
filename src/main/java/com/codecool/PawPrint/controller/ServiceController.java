@@ -1,24 +1,22 @@
 package com.codecool.PawPrint.controller;
 
+import com.codecool.PawPrint.filter.TokenAuthenticationFilter;
 import com.codecool.PawPrint.model.controllerEntity.SaveSearchEntity;
 import com.codecool.PawPrint.model.controllerEntity.SaveServiceEntity;
-import com.codecool.PawPrint.model.controllerEntity.SearchService;
+import com.codecool.PawPrint.model.controllerEntity.SearchServiceEntity;
 import com.codecool.PawPrint.model.entity.Search;
 import com.codecool.PawPrint.model.entity.User;
 import com.codecool.PawPrint.model.service.ServiceOffered;
 import com.codecool.PawPrint.model.service.ServiceSubtype;
 import com.codecool.PawPrint.model.service.ServiceType;
+import com.codecool.PawPrint.service.SearchService;
 import com.codecool.PawPrint.service.ServiceService;
 import com.codecool.PawPrint.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 @RestController
@@ -27,15 +25,19 @@ public class ServiceController {
 
     private ServiceService serviceService;
     private UserService userService;
+    private TokenAuthenticationFilter tokenAuthenticationFilter;
+    private SearchService searchService;
 
     @Autowired
-    public ServiceController(ServiceService serviceService, UserService userService) {
+    public ServiceController(ServiceService serviceService, UserService userService, TokenAuthenticationFilter tokenAuthenticationFilter, SearchService searchService) {
         this.serviceService = serviceService;
         this.userService = userService;
+        this.tokenAuthenticationFilter = tokenAuthenticationFilter;
+        this.searchService = searchService;
     }
 
     @PostMapping(value = "/search")
-    public Set<ServiceOffered> findServices(@RequestBody SearchService searchService) {
+    public Set<ServiceOffered> findServices(@RequestBody SearchServiceEntity searchService) {
         String country = searchService.getCountry();
         String city = searchService.getCity();
         String district = searchService.getDistrict();
@@ -74,12 +76,19 @@ public class ServiceController {
     @PostMapping(value = "/service/save")
     @ResponseBody
     public ServiceOffered saveService(@RequestBody SaveServiceEntity saveServiceEntity) {
-        System.out.println(saveServiceEntity);
         User user = userService.findUserByName(saveServiceEntity.getUsername());
         ServiceOffered service = serviceService.convertSaveServiceEntityToServiceOffered(saveServiceEntity);
         service.setUser(user);
         ServiceOffered savedService = serviceService.saveService(service);
-        System.out.println(savedService);
         return savedService;
+    }
+
+    @GetMapping("/getSearch/{searchId}")
+    public Search getSearch(HttpServletRequest httpRequest, @PathVariable int searchId) throws Exception {
+        User user = userService.findUserByName(tokenAuthenticationFilter.tokenVerification(httpRequest));
+        System.out.println(user);
+        Search search = searchService.getSearchById(searchId);
+        System.out.println(search);
+        return search;
     }
 }

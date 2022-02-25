@@ -3,6 +3,7 @@ import Layout from "../../component/layout";
 import ServiceProfile from "../profilePage/serviceProfile";
 import UserProfile from "../profilePage/userProfile";
 import SaveServiceModal from "./saveServiceModal";
+import {Outlet} from "@mui/icons-material";
 
 
 function Profile(){
@@ -21,6 +22,8 @@ function Profile(){
         services:[]
     })
     let tokenEncoded = window.localStorage.getItem("token");
+
+    const [savedSearch, setSavedSearch] = useState([]);
 
     useEffect(()=>{
             const profile = async (tokenEncoded) => {
@@ -63,9 +66,11 @@ function Profile(){
                     <UserProfile
                         user={user}
                         cards={user.searches}
+                        setSavedSearch={setSavedSearch}
+                        tokenEncoded={tokenEncoded}
                     />
             }
-                {/*<Outlet context={{user, cards:user.services}}/>*/}
+                <Outlet context={{savedSearch}}/>
                 <div>
                     {
                         displayAddServiceModal ?

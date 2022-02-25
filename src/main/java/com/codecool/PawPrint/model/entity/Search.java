@@ -10,7 +10,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
-@JsonIgnoreProperties(value = {"user", "searchedServices"})
+//@JsonIgnoreProperties(value = {"user", "searchedServices"})
+@JsonIgnoreProperties(value = {"user"})
 @EqualsAndHashCode(exclude = {"user", "searchedServices"})
 @NoArgsConstructor
 @AllArgsConstructor
@@ -43,7 +44,7 @@ public class Search {
             name = "saved_searches",
             joinColumns = @JoinColumn(name = "search_id"),
             inverseJoinColumns = @JoinColumn(name = "service_id"))
-    @JsonProperty("searchedServices")
+//    @JsonProperty("searchedServices")
     @JsonIgnoreProperties("searches")
     @ToString.Exclude
     private Set<ServiceOffered> searchedServices = new HashSet<>();

@@ -18,4 +18,9 @@ public class SearchDaoMem implements SearchDao {
     public void add(Search search) {
         searches.add(search);
     }
+
+    @Override
+    public Search findById(int searchId) {
+        return searches.stream().filter(search -> search.getId() == searchId).findFirst().orElse(null);
+    }
 }

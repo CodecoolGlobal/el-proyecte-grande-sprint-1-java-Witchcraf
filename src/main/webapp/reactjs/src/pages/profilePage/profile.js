@@ -3,7 +3,7 @@ import Layout from "../../component/layout";
 import ServiceProfile from "../profilePage/serviceProfile";
 import UserProfile from "../profilePage/userProfile";
 import SaveServiceModal from "./saveServiceModal";
-import {Outlet} from "@mui/icons-material";
+import {Outlet} from "react-router-dom";
 
 
 function Profile(){

@@ -17,7 +17,8 @@ function EditProfileModal({user, setUser, setDisplayModal}) {
         // password: "",
     });
 
-    async function updateUserInfo(){
+    async function updateUserInfo(event){
+        event.preventDefault();
         const valami = await fetchUserUpdate();
         const akrmi = await handleClose();
     }
@@ -28,7 +29,7 @@ function EditProfileModal({user, setUser, setDisplayModal}) {
         // setDisplayModal(false);
     }
 
-    const fetchUserUpdate = async (user) => {
+    const fetchUserUpdate = async () => {
         console.log("f")
         const res = await fetch(`/api/updateuser`,{
             method: 'POST',
@@ -86,7 +87,7 @@ function EditProfileModal({user, setUser, setDisplayModal}) {
                         </Package.InputTexts>
 
                         <Package.Button className="button">
-                            <Package.SubmitButton type="submit" onClick={() => {updateUserInfo()}}>Save</Package.SubmitButton>
+                            <Package.SubmitButton type="submit" onClick={updateUserInfo}>Save</Package.SubmitButton>
                         </Package.Button>
                     </form>
 

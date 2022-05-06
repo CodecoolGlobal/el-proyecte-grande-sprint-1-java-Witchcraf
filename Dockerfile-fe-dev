@@ -1,0 +1,16 @@
+FROM node:alpine
+
+WORKDIR /app
+
+COPY src/main/webapp/reactjs/package.json /app
+COPY src/main/webapp/reactjs/package-lock.json /app
+
+ARG BACKEND_URL
+
+RUN npm ci
+
+COPY src/main/webapp/reactjs /app
+
+RUN sed -i "s@.*proxy.*@  \"proxy\": \"${BACKEND_URL}\"@" package.json
+
+CMD npm run start
